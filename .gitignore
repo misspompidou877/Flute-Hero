@@ -16,6 +16,9 @@ dist-ssr
 .claude
 .agents
 
+# Large reference PDFs (kept locally, not in the repo)
+*.pdf
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
