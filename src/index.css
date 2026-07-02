@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  --color-coral-50:  #fff1f2;
+  --color-coral-100: #ffe4e6;
+  --color-coral-200: #fecdd3;
+  --color-coral-300: #fda4af;
+  --color-coral-400: #fb7185;
+  --color-coral-500: #f43f5e;
+  --color-coral-600: #e11d48;
+  --color-coral-700: #be123c;
+
+  --color-sunset-50:  #fffbeb;
+  --color-sunset-100: #fef3c7;
+  --color-sunset-200: #fde68a;
+  --color-sunset-400: #fbbf24;
+  --color-sunset-500: #f59e0b;
+  --color-sunset-600: #d97706;
+}
+
+:root {
+  font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2D2D2D;
+  background-color: #FAF4EE;
+}
+
+.bg-pattern {
+  background-image: radial-gradient(#f43f5e 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.045;
+  pointer-events: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+@keyframes fingering-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fingering-fade {
+  animation: fingering-fade-in 280ms ease-out;
+}
+
+.fingering-transition {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.fingering-transition:hover {
+  transform: translateY(-1px);
+}
+
+/* ── Foundations module CSS keyframes ── */
+@keyframes dot-pulse {
+  0%   { box-shadow: 0 0 0 0px rgba(0,110,233,0.6); }
+  100% { box-shadow: 0 0 0 6px rgba(0,110,233,0); }
+}
+@keyframes f-slide-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes f-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+@keyframes f-wobble {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px); }
+  40%     { transform: translateX(8px); }
+  60%     { transform: translateX(-6px); }
+  80%     { transform: translateX(6px); }
+}
+@keyframes f-badge-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes confetti-fall {
+  0%   { transform: translateY(-100px) rotate(0deg);   opacity: 1; }
+  100% { transform: translateY(100vh)  rotate(720deg); opacity: 0; }
+}
+@keyframes donut-fill {
+  from { stroke-dasharray: 0 var(--circ); }
+  to   { stroke-dasharray: var(--dash) var(--gap); }
+}
+@keyframes scale-pop-small {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+@keyframes scale-pop-large {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0;   }
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.animate-fade-in { animation: fade-in 300ms ease-out both; }
+.animate-scale-pop { animation: scale-pop 350ms ease-out both; }
+.confetti-lime  { background: #D0FFA3; }
+.confetti-blue  { background: #83E7FF; }
+@keyframes clef-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes note-tap-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+@keyframes play-pulse {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0;   }
+}
+/* ── Read Music module CSS ── */
+@keyframes rm-shake {
+  0%,100% { transform: translateX(0); }
+  15%     { transform: translateX(-10px); }
+  30%     { transform: translateX(10px); }
+  45%     { transform: translateX(-8px); }
+  60%     { transform: translateX(8px); }
+  75%     { transform: translateX(-5px); }
+  90%     { transform: translateX(5px); }
+}
+.rm-shake {
+  animation: rm-shake 0.45s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
