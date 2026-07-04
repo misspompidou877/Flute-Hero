@@ -76,7 +76,7 @@ export default function BottomNav() {
       style={{
         borderTop: '0.5px solid #F1EFE8',
         boxShadow: '0 -2px 12px rgba(0, 0, 0, 0.06)',
-        padding: '8px 4px calc(8px + env(safe-area-inset-bottom))',
+        padding: '8px max(4px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left))',
       }}
       aria-label="Main navigation"
     >
@@ -95,7 +95,7 @@ export default function BottomNav() {
                   style={{ color: isActive ? '#006EE9' : '#000180' }}
                 >
                   <Icon />
-                  <span style={{ fontSize: 9, fontWeight: isActive ? 600 : 500, lineHeight: 1.2 }}>
+                  <span style={{ fontSize: 10, fontWeight: isActive ? 600 : 500, lineHeight: 1.2 }}>
                     {label}
                   </span>
                   {isActive && (

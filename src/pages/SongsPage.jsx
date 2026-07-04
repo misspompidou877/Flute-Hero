@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SONGS } from '../data/songs'
 import { useProgress } from '../context/ProgressContext'
+import PaywallCard from '../components/paywall/PaywallCard'
+import { FREE_MAX_LEVEL, PAYWALL } from '../data/freemium'
 
 const LEVEL_INFO = {
   1: {
@@ -89,7 +91,7 @@ function ChevronRightIcon() {
 
 export default function SongsPage() {
   const navigate = useNavigate()
-  const { progress: { currentLevel } } = useProgress()
+  const { progress: { currentLevel, isPremium } } = useProgress()
 
   // Cap display level at 8; treat 99 (dev override) as all unlocked
   const unlockedUpTo = Math.min(currentLevel, 8)
@@ -167,6 +169,22 @@ export default function SongsPage() {
               }}>
                 {lvlInfo.name}
               </span>
+              {!isPremium && (
+                <span style={{
+                  marginTop: 5,
+                  fontSize: 10,
+                  fontWeight: 800,
+                  letterSpacing: '0.3px',
+                  textTransform: 'uppercase',
+                  padding: '2px 6px',
+                  borderRadius: 999,
+                  lineHeight: 1,
+                  color: lvl <= FREE_MAX_LEVEL ? '#2E7D32' : '#B26A00',
+                  background: lvl <= FREE_MAX_LEVEL ? '#E8F5E9' : '#FDF0D9',
+                }}>
+                  {lvl <= FREE_MAX_LEVEL ? PAYWALL.freeTag : PAYWALL.proTag}
+                </span>
+              )}
             </button>
           )
         })}
@@ -202,7 +220,7 @@ export default function SongsPage() {
             </p>
             {isLevelLocked && (
               <p style={{ fontSize: 10, fontWeight: 500, color: '#999999', marginTop: 2 }}>
-                Master more notes to unlock
+                {!isPremium ? 'Unlock with Premium' : 'Master more notes to unlock'}
               </p>
             )}
           </div>
@@ -210,7 +228,12 @@ export default function SongsPage() {
       </div>
 
       {/* Song list */}
-      {isLevelLocked ? (
+      {isLevelLocked && !isPremium ? (
+        <PaywallCard
+          levelName={`Level ${selectedLevel} — ${info.name}`}
+          onUnlock={() => navigate('/unlock')}
+        />
+      ) : isLevelLocked ? (
         <div
           className="flex flex-col items-center justify-center bg-white"
           style={{ borderRadius: 16, padding: 32, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', textAlign: 'center' }}

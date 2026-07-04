@@ -147,7 +147,7 @@ export default function SongScore({ notes, title, currentNoteIndex = -1, beatsPe
   return (
     <div>
       {title && <h3 className="mb-2 font-semibold text-slate-700">{title}</h3>}
-      <div ref={containerRef} style={{ width: '100%' }} />
+      <div ref={containerRef} style={{ width: '100%', overflowX: 'auto' }} />
     </div>
   )
 }

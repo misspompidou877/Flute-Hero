@@ -696,6 +696,7 @@ export default function ReadMusicPage() {
         top: 0,
         zIndex: 10,
         background: '#FAFAF8',
+        paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 12,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
@@ -743,7 +744,7 @@ export default function ReadMusicPage() {
           position: 'sticky',
           bottom: 0,
           background: 'linear-gradient(to top, #FAFAF8 75%, transparent)',
-          padding: '20px 0 8px',
+          padding: '20px 0 calc(8px + env(safe-area-inset-bottom))',
         }}>
           <button
             onClick={() => setStep(s => s + 1)}

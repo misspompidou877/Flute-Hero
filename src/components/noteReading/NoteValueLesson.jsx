@@ -188,10 +188,12 @@ function TimeSignatureExplainer({ variant }) {
           fontSize: '16px',
           color: '#006EE9',
           padding: '10px 18px',
+          minHeight: '56px',
           cursor: 'pointer',
           lineHeight: 1,
           display: 'inline-flex',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {content.promptLabel}
@@ -505,7 +507,7 @@ function TwoQuaverDemo() {
           onClick={handlePlay}
           disabled={isPlaying}
           style={{
-            height: '52px',
+            height: '56px',
             padding: '0 20px',
             borderRadius: '26px',
             border: 'none',

@@ -120,17 +120,17 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
           {/* Flute body tube — extended when ghost keys are shown */}
           <rect x="28" y="92" width={showGhostKeys ? 748 : 690} height="56" rx="28" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2.5" />
           <ellipse cx="72" cy="120" rx="21" ry="16" fill="#ffffff" stroke="#94a3b8" strokeWidth="2.5" />
-          <text x="72" y="168" textAnchor="middle" fontSize="14" fill="#334155" fontWeight="700">
+          <text x="72" y="168" textAnchor="middle" fontSize="18" fill="#334155" fontWeight="700">
             Head joint
           </text>
 
-          <text x="375" y="54" textAnchor="middle" fontSize="20" fill="#1d4ed8" fontWeight="800">
+          <text x="375" y="54" textAnchor="middle" fontSize="26" fill="#1d4ed8" fontWeight="800">
             Left Hand
           </text>
-          <text x="587" y="54" textAnchor="middle" fontSize="20" fill="#15803d" fontWeight="800">
+          <text x="587" y="54" textAnchor="middle" fontSize="26" fill="#15803d" fontWeight="800">
             Right Hand
           </text>
-          <text x="307" y="190" textAnchor="middle" fontSize="14" fill="#37A0FE" fontWeight="700">
+          <text x="307" y="190" textAnchor="middle" fontSize="18" fill="#37A0FE" fontWeight="700">
             Thumb
           </text>
 
@@ -201,7 +201,7 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
           <button
             type="button"
             onClick={() => playReferenceTone(audioRef, freq)}
-            className="h-10 rounded-full px-5 text-sm font-semibold text-white transition"
+            className="inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold text-white transition"
             style={{
               background: '#006EE9',
               fontFamily: "'Nunito', sans-serif",

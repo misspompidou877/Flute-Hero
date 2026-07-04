@@ -105,7 +105,7 @@ function FoundationsHub() {
                     style={{
                       fontFamily: 'Nunito, sans-serif',
                       fontWeight: 400,
-                      fontSize: '14px',
+                      fontSize: '16px',
                       color: '#666666',
                       marginBottom: '2px',
                     }}
@@ -115,7 +115,7 @@ function FoundationsHub() {
                   <div
                     style={{
                       fontFamily: 'Nunito, sans-serif',
-                      fontSize: '12px',
+                      fontSize: '14px',
                       color: '#999999',
                     }}
                   >
@@ -183,8 +183,8 @@ function FoundationsHub() {
           >
             <Link
               to="/"
-              className="inline-block py-3 px-4 rounded-lg text-sm font-semibold text-[#006EE9] bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-colors"
-              style={{ fontFamily: 'Nunito, sans-serif' }}
+              className="inline-flex items-center justify-center py-4 px-5 rounded-lg text-sm font-semibold text-[#006EE9] bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-colors"
+              style={{ fontFamily: 'Nunito, sans-serif', minHeight: 56 }}
             >
               Skip to Level 1 →
             </Link>

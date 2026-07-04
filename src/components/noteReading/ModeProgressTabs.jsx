@@ -45,14 +45,14 @@ export default function ModeProgressTabs({ currentMode, completedModes, onModeSe
             disabled={locked}
             style={{
               flex: 1,
-              minHeight: '48px',
+              minHeight: '56px',
               borderRadius: '999px',
               border: 'none',
               background: bg,
               color,
               fontFamily: 'Nunito, sans-serif',
               fontWeight: 700,
-              fontSize: '15px',
+              fontSize: '16px',
               cursor: locked ? 'not-allowed' : 'pointer',
               opacity,
               display: 'flex',

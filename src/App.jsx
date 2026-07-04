@@ -10,6 +10,7 @@ import FingeringLibraryPage from './pages/FingeringLibraryPage'
 import FoundationsPage from './pages/FoundationsPage'
 import ReadMusicPage from './pages/ReadMusicPage'
 import BasicsPage from './pages/BasicsPage'
+import UnlockPage from './pages/UnlockPage'
 
 function App() {
   const location = useLocation()
@@ -44,6 +45,7 @@ function App() {
           <Route path="/foundations/:module" element={<FoundationsPage />} />
           <Route path="/read-music" element={<ReadMusicPage />} />
           <Route path="/basics" element={<BasicsPage />} />
+          <Route path="/unlock" element={<UnlockPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

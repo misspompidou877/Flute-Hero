@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FingeringDiagramForNote } from '../components/FingeringDiagrams'
 import { NOTES, NOTES_BY_LEVEL, ALTERNATE_FINGERINGS } from '../notes'
 import { useProgress } from '../context/ProgressContext'
@@ -27,7 +28,8 @@ function LockIcon() {
 
 function FingeringLibraryPage() {
   // ── All logic unchanged ───────────────────────────────────────────────────
-  const { progress: { currentLevel, masteredNotes } } = useProgress()
+  const navigate = useNavigate()
+  const { progress: { currentLevel, masteredNotes, isPremium } } = useProgress()
   const [activeNoteId, setActiveNoteId] = useState('B4')
   const [showChart,    setShowChart]    = useState(false)
 
@@ -200,6 +202,42 @@ function FingeringLibraryPage() {
             )
           })}
 
+          {/* ── Premium upsell — free users only ─────────────────────────── */}
+          {!isPremium && (
+            <button
+              type="button"
+              onClick={() => navigate('/unlock')}
+              className="transition-all active:scale-95"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                width: '100%',
+                minHeight: 44,
+                padding: '10px 14px',
+                borderRadius: 12,
+                border: '1.5px solid #F5A623',
+                background: '#FDF7EF',
+                cursor: 'pointer',
+                textAlign: 'left',
+                fontFamily: "'Nunito', sans-serif",
+              }}
+            >
+              <span style={{ fontSize: 20, lineHeight: 1 }}>🔓</span>
+              <span style={{ flex: 1, minWidth: 0 }}>
+                <span style={{ display: 'block', fontSize: 13, fontWeight: 800, color: '#000180' }}>
+                  Unlock all notes
+                </span>
+                <span style={{ display: 'block', fontSize: 11, fontWeight: 500, color: '#8A6D3B' }}>
+                  Get Levels 2–8 with Trill Premium
+                </span>
+              </span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9,18 15,12 9,6" />
+              </svg>
+            </button>
+          )}
+
           {/* ── "How to read" — collapsible chart reference ─────────────── */}
           <div
             style={{
@@ -250,7 +288,7 @@ function FingeringLibraryPage() {
             <div
               style={{
                 overflow: 'hidden',
-                maxHeight: showChart ? 600 : 0,
+                maxHeight: showChart ? 1000 : 0,
                 transition: 'max-height 300ms ease',
               }}
             >
