@@ -8,9 +8,13 @@ import SongScore, { groupIntoMeasures } from '../components/SongScore'
 import { FingeringDiagramForNote } from '../components/FingeringDiagrams'
 import BadgeToast from '../components/BadgeToast'
 import FluteCharacter from '../components/FluteCharacter'
+import PaywallCard from '../components/paywall/PaywallCard'
 
 const MEASURES_PER_PAGE = 4
-const PRACTICE_MIN_WIDTH = 900
+// Tablet-width screens (iPad portrait ~744–820px) render the practice layout in
+// portrait per the "portrait + landscape on iPad" rule; only narrower phones in
+// portrait get the rotate prompt.
+const PRACTICE_MIN_WIDTH = 700
 
 // ── Orientation hook ─────────────────────────────────────────
 function usePracticeLayoutMode() {
@@ -231,7 +235,7 @@ function TuningBar({ cents, isActive, note }) {
 export default function PracticePage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { progress: { currentLevel } } = useProgress()
+  const { progress: { currentLevel, isPremium } } = useProgress()
   const mode = usePracticeLayoutMode()
 
   const [selectedSongId, setSelectedSongId] = useState(() => searchParams.get('song') ?? null)
@@ -346,6 +350,19 @@ export default function PracticePage() {
 
   if (mode === 'rotate') return <RotatePrompt />
 
+  // Premium-gated deep link — e.g. ?song=<a Level 2+ song> opened by a free user.
+  // The song picker already filters by level, so this only catches direct links.
+  const requestedSong = selectedSongId ? SONGS.find(s => s.id === selectedSongId) : null
+  if (requestedSong && !isPremium && requestedSong.level > currentLevel) {
+    return (
+      <div className="flex items-center justify-center" style={{ minHeight: 'calc(100dvh - 7rem)', padding: 16 }}>
+        <div style={{ width: '100%', maxWidth: 420 }}>
+          <PaywallCard levelName={requestedSong.title} onUnlock={() => navigate('/unlock')} />
+        </div>
+      </div>
+    )
+  }
+
   // Song complete screen
   if (songComplete) {
     return (
@@ -453,13 +470,13 @@ export default function PracticePage() {
       {/* ── Top bar ── */}
       <div
         className="flex-shrink-0 flex items-center justify-between"
-        style={{ padding: '10px 14px 6px' }}
+        style={{ padding: 'calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) 6px calc(14px + env(safe-area-inset-left))' }}
       >
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigate('/songs')}
             className="flex items-center justify-center rounded-full bg-white active:scale-95 transition-transform flex-shrink-0"
-            style={{ width: 40, height: 40, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer' }}
             aria-label="Back to songs"
           >
             <ChevronLeftIcon />
@@ -491,7 +508,7 @@ export default function PracticePage() {
           </div>
           <button
             className="flex items-center justify-center rounded-full bg-white active:scale-95 transition-transform"
-            style={{ width: 40, height: 40, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer' }}
             aria-label="Settings"
           >
             <GearIcon />
@@ -500,7 +517,7 @@ export default function PracticePage() {
       </div>
 
       {/* ── Two-column body ── */}
-      <div className="flex-1 flex gap-2 min-h-0" style={{ padding: '0 10px calc(70px + env(safe-area-inset-bottom))' }}>
+      <div className="flex-1 flex gap-2 min-h-0" style={{ padding: '0 calc(10px + env(safe-area-inset-right)) calc(70px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left))' }}>
 
         {/* Left column — music staff (60%) */}
         <div className="flex flex-col" style={{ flex: 3, minWidth: 0 }}>
@@ -577,10 +594,11 @@ export default function PracticePage() {
         {/* Right column — fingering + tuning (40%) */}
         <div
           className="flex flex-col gap-2"
-          style={{ flex: 2, minWidth: 0, overflowY: 'auto' }}
+          style={{ flex: 2, minWidth: 0, minHeight: 0 }}
         >
-          {/* Fingering diagram — scales naturally to the narrower column width */}
-          <div style={{ flexShrink: 0 }}>
+          {/* Fingering diagram — scrolls internally so the tuning card below stays
+              visible even in short landscape (the core feedback loop). */}
+          <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
             {expectedNoteId ? (
               <FingeringDiagramForNote noteId={expectedNoteId} />
             ) : (

@@ -54,7 +54,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
       <Sparkle color="#83E7FF" size={16} style={{ bottom: 80, right: 40, opacity: 0.5 }} />
 
       {/* Centred content column */}
-      <div style={{ maxWidth: 700, margin: '0 auto', padding: '40px 16px', position: 'relative' }}>
+      <div style={{ maxWidth: 700, margin: '0 auto', padding: '40px max(16px, env(safe-area-inset-right)) 40px max(16px, env(safe-area-inset-left))', position: 'relative' }}>
 
         {/* "GAMES" badge pill */}
         <div style={{
@@ -83,7 +83,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
 
           {/* ── Card 1: Echo Game ── */}
           <div
-            className="hover:-translate-y-1 active:-translate-y-1 transition-all duration-200 cursor-pointer"
+            className="hover:-translate-y-1 active:-translate-y-1 transition-all duration-200"
             style={{
               flex: '1 1 200px',
               background: 'rgba(255,255,255,0.07)',
@@ -153,7 +153,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
 
           {/* ── Card 2: Note Quiz ── */}
           <div
-            className="hover:-translate-y-1 active:-translate-y-1 transition-all duration-200 cursor-pointer"
+            className="hover:-translate-y-1 active:-translate-y-1 transition-all duration-200"
             style={{
               flex: '1 1 200px',
               background: 'rgba(255,255,255,0.07)',
@@ -240,7 +240,7 @@ function GamePage({ children, centred = false }) {
       className="pb-24"
     >
       <div
-        className={`mx-auto max-w-[680px] px-4 pt-10 ${centred ? 'flex min-h-[80vh] flex-col items-center justify-center' : ''}`}
+        className={`mx-auto max-w-[680px] px-4 pt-10 ${centred ? 'flex min-h-[80dvh] flex-col items-center justify-center' : ''}`}
       >
         {children}
       </div>
@@ -577,7 +577,8 @@ function EchoGame({ onStartQuiz }) {
             onClick={() => setShowHint(h => !h)}
             style={{
               marginTop: 12, width: '100%', borderRadius: 12,
-              border: '1.5px solid #006EE9', padding: '8px 0',
+              border: '1.5px solid #006EE9', padding: '8px 0', minHeight: 44,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 14, fontWeight: 700, color: '#0056C7',
               background: showHint ? 'transparent' : '#FFF3E0', cursor: 'pointer',
               fontFamily: "'Nunito', sans-serif",

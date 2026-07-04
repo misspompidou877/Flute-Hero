@@ -135,9 +135,9 @@ function TuningBar({ cents, isActive }) {
 
       {/* Labels */}
       <div className="flex justify-between" style={{ marginTop: 4 }}>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>Flat</span>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>In tune</span>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>Sharp</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#000180' }}>Flat</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#000180' }}>In tune</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#000180' }}>Sharp</span>
       </div>
 
       {/* Pitch correction hint */}
@@ -229,7 +229,7 @@ export default function LessonPage() {
     <div className="flex flex-col" style={{ background: '#FAFAF8', minHeight: '100%' }}>
 
       {/* Top bar */}
-      <div className="flex items-center justify-between" style={{ padding: '14px 16px 6px' }}>
+      <div className="flex items-center justify-between" style={{ padding: 'calc(14px + env(safe-area-inset-top)) 16px 6px' }}>
         <button
           onClick={() => navigate(-1)}
           className="flex items-center justify-center rounded-full bg-white active:scale-95 transition-transform"

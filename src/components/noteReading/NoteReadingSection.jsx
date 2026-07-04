@@ -135,7 +135,7 @@ function NoteReadingIntro({ onDone }) {
               Music is written on 5 lines
             </p>
             <p style={{
-              fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 15,
+              fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 16,
               color: '#555555', margin: 0, lineHeight: 1.6,
             }}>
               This is called the <strong>staff</strong>. Notes sit either <strong>on</strong> a line or in a <strong>space</strong> between lines.
@@ -173,7 +173,7 @@ function NoteReadingIntro({ onDone }) {
               Where it sits = what it's called
             </p>
             <p style={{
-              fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 15,
+              fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 16,
               color: '#555555', margin: 0, lineHeight: 1.6,
             }}>
               Each position on the staff has its own letter name — <strong>A, B, C, D, E, F or G</strong>. Move the note up or down and its name changes.
@@ -217,7 +217,7 @@ function NoteReadingIntro({ onDone }) {
               The name tells you which key to press
             </p>
             <p style={{
-              fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 15,
+              fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 16,
               color: '#555555', margin: 0, lineHeight: 1.6,
             }}>
               Once you know a note's name, you know exactly which fingering to use on your flute. That's why reading music is so powerful — the dots on the page tell your fingers what to do!
@@ -397,8 +397,8 @@ export default function NoteReadingSection({ onComplete }) {
             <button
               onClick={() => navigate('/foundations')}
               style={{
-                width: '44px',
-                height: '44px',
+                width: '56px',
+                height: '56px',
                 borderRadius: '50%',
                 border: '2px solid #EEEEEE',
                 background: '#FFFFFF',
@@ -433,7 +433,7 @@ export default function NoteReadingSection({ onComplete }) {
                 style={{
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 600,
-                  fontSize: '15px',
+                  fontSize: '16px',
                   color: '#888888',
                   margin: '2px 0 0',
                 }}

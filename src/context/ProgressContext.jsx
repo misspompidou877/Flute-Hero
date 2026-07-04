@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { STORAGE_KEY, defaultProgress } from './progressDefaults'
-import { computeLevel } from '../notes'
+import { FREE_MAX_LEVEL } from '../data/freemium'
 
 const ProgressContext = createContext(null)
 
@@ -14,6 +14,7 @@ function safeLoadProgress() {
       ...parsed,
       masteredNotes: Array.isArray(parsed.masteredNotes) ? parsed.masteredNotes : [],
       badgesEarned: Array.isArray(parsed.badgesEarned) ? parsed.badgesEarned : [],
+      isPremium: parsed.isPremium === true,
     }
   } catch {
     return defaultProgress
@@ -24,8 +25,10 @@ export function ProgressProvider({ children }) {
   const [progress, setProgress] = useState(safeLoadProgress)
 
   const value = useMemo(() => {
-    // TODO: remove override before shipping — unlocks all levels for review
-    const currentLevel = 99 // computeLevel(progress.masteredNotes)
+    // Free users are capped at Level 1; premium unlocks every level.
+    // NOTE: when strict note-progression is re-enabled for premium users,
+    // replace `99` with `computeLevel(progress.masteredNotes)`.
+    const currentLevel = progress.isPremium ? 99 : FREE_MAX_LEVEL
     const enrichedProgress = { ...progress, currentLevel }
 
     const save = (next) => {
@@ -68,6 +71,15 @@ export function ProgressProvider({ children }) {
 
       resetProgress() {
         setProgress(save(defaultProgress))
+      },
+
+      // Premium entitlement — client-side flag, no backend (placeholder purchase).
+      unlockPremium() {
+        setProgress(prev => (prev.isPremium ? prev : save({ ...prev, isPremium: true })))
+      },
+
+      lockPremium() {
+        setProgress(prev => (!prev.isPremium ? prev : save({ ...prev, isPremium: false })))
       },
     }
   }, [progress])

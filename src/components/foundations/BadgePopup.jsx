@@ -51,6 +51,7 @@ export default function BadgePopup({
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
+        padding: 'env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)',
       }}
     >
       {confettiPieces.map((piece, i) => (

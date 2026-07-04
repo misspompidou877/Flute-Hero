@@ -343,6 +343,38 @@ export default function HomePage() {
         </button>
       </div>
 
+      {/* Premium upsell — free users only */}
+      {!progress.isPremium && (
+        <div style={{ margin: '0 14px 12px' }}>
+          <button
+            onClick={() => navigate('/unlock')}
+            className="w-full flex items-center gap-3 active:scale-95 transition-transform"
+            style={{
+              borderRadius: 14,
+              padding: 12,
+              minHeight: 44,
+              border: '1.5px solid #F5A623',
+              background: '#FDF7EF',
+              cursor: 'pointer',
+              textAlign: 'left',
+            }}
+          >
+            <span style={{ fontSize: 24, lineHeight: 1 }}>🔓</span>
+            <div className="flex-1" style={{ minWidth: 0 }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: '#000180' }}>
+                Unlock the full course
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 500, color: '#8A6D3B' }}>
+                Level 1 is free — open Levels 2–8 with Premium
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9,18 15,12 9,6" />
+            </svg>
+          </button>
+        </div>
+      )}
+
       {/* Quick-launch row */}
       <div className="flex gap-2" style={{ margin: '0 14px 12px' }}>
         <button
@@ -393,8 +425,8 @@ export default function HomePage() {
           </p>
           <Link
             to="/trophies"
-            className="inline-block rounded-lg transition-colors hover:bg-blue-50 active:bg-blue-100"
-            style={{ fontSize: 12, fontWeight: 600, color: '#006EE9', padding: '8px 12px' }}
+            className="inline-flex items-center rounded-lg transition-colors hover:bg-blue-50 active:bg-blue-100"
+            style={{ fontSize: 12, fontWeight: 600, color: '#006EE9', padding: '8px 12px', minHeight: 44 }}
           >
             See all
           </Link>
@@ -434,6 +466,9 @@ export default function HomePage() {
               style={{
                 flexShrink: 0,
                 padding: '8px 14px',
+                minHeight: 44,
+                display: 'flex',
+                alignItems: 'center',
                 borderRadius: 10,
                 background: 'linear-gradient(to right, #006EE9, #0056C7)',
                 boxShadow: '0 4px 12px rgba(0,110,233,0.3)',

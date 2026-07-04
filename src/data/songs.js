@@ -162,6 +162,74 @@ export const SONGS = [
     ],
   },
 
+  {
+    id: 'three-little-notes',
+    title: 'Three Little Notes',
+    level: 1,
+    description: 'A gentle warm-up that steps up and down your three notes.',
+    notes: [
+      q('g/4'), q('a/4'), q('b/4'), q('a/4'),
+      q('g/4'), q('a/4'), h('g/4'),
+      q('b/4'), q('a/4'), q('g/4'), q('a/4'),
+      q('b/4'), q('b/4'), h('b/4'),
+      q('g/4'), q('a/4'), q('b/4'), q('a/4'),
+      q('g/4'), q('a/4'), h('g/4'),
+      q('b/4'), q('a/4'), q('g/4'), q('a/4'),
+      h('g/4'), h('g/4'),
+    ],
+  },
+
+  {
+    id: 'bouncing-ball',
+    title: 'Bouncing Ball',
+    level: 1,
+    description: 'A hoppy tune — feel the notes bounce between A and B.',
+    notes: [
+      q('g/4'), e('b/4'), e('b/4'), q('a/4'), q('g/4'),
+      e('g/4'), e('a/4'), e('b/4'), e('a/4'), h('g/4'),
+      q('a/4'), e('b/4'), e('b/4'), q('a/4'), q('a/4'),
+      q('b/4'), q('a/4'), h('g/4'),
+      q('g/4'), e('b/4'), e('b/4'), q('a/4'), q('g/4'),
+      e('g/4'), e('a/4'), e('b/4'), e('a/4'), h('g/4'),
+      q('b/4'), q('b/4'), q('a/4'), q('a/4'),
+      q('g/4'), q('a/4'), h('g/4'),
+    ],
+  },
+
+  {
+    id: 'ring-the-bell',
+    title: 'Ring the Bell',
+    level: 1,
+    description: 'Call and answer — ring out high, then settle down low.',
+    notes: [
+      q('b/4'), q('b/4'), q('a/4'), q('a/4'),
+      q('g/4'), q('g/4'), h('g/4'),
+      q('b/4'), q('a/4'), q('g/4'), q('a/4'),
+      q('b/4'), q('b/4'), h('b/4'),
+      q('b/4'), q('b/4'), q('a/4'), q('a/4'),
+      q('g/4'), q('g/4'), h('g/4'),
+      q('a/4'), q('b/4'), q('a/4'), q('g/4'),
+      h('a/4'), h('g/4'),
+    ],
+  },
+
+  {
+    id: 'seesaw-song',
+    title: 'Seesaw Song',
+    level: 1,
+    description: 'Up and down like a seesaw — B on top, G at the bottom.',
+    notes: [
+      q('b/4'), q('g/4'), q('b/4'), q('g/4'),
+      q('a/4'), q('b/4'), h('a/4'),
+      q('g/4'), q('b/4'), q('g/4'), q('b/4'),
+      q('a/4'), q('g/4'), h('g/4'),
+      q('b/4'), q('g/4'), q('b/4'), q('g/4'),
+      q('a/4'), q('b/4'), h('a/4'),
+      q('b/4'), q('a/4'), q('g/4'), q('a/4'),
+      h('b/4'), h('g/4'),
+    ],
+  },
+
   // ════════════════════════════════════════════════════
   // LEVEL 2 — adds C5, D5
   // ════════════════════════════════════════════════════

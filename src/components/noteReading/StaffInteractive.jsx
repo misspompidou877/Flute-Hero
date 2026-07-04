@@ -71,6 +71,23 @@ export default function StaffInteractive({ mode, tappedCounts, onNoteTap, active
   const showMnemonics = mode === 0
   const showSpaceLetters = mode === 1
 
+  // Map a tap anywhere on the staff to the closest note by x-position. This gives
+  // each note an unambiguous, full-height hit zone — fixing the mixed-mode case
+  // where fixed r=26 circles overlapped (spacing ~46 units < 52 diameter) and taps
+  // between two notes were ambiguous.
+  function handleTap(e) {
+    const r = e.currentTarget.getBoundingClientRect()
+    if (!r.width) return
+    const svgX = ((e.clientX - r.left) / r.width) * 480
+    let nearest = null
+    let best = Infinity
+    notes.forEach((note, idx) => {
+      const d = Math.abs(getNoteX(mode, idx) - svgX)
+      if (d < best) { best = d; nearest = note }
+    })
+    if (nearest) onNoteTap(nearest.id)
+  }
+
   return (
     <>
       <style>{`
@@ -194,17 +211,6 @@ export default function StaffInteractive({ mode, tappedCounts, onNoteTap, active
                 }}
               />
 
-              {/* Invisible wide touch target */}
-              <circle
-                cx={x}
-                cy={note.y}
-                r="26"
-                fill="transparent"
-                onClick={() => onNoteTap(note.id)}
-                style={{ cursor: 'pointer' }}
-                aria-label={`Note ${note.id}`}
-              />
-
               {/* Mastery checkmark */}
               {mastered && (
                 <text
@@ -312,6 +318,19 @@ export default function StaffInteractive({ mode, tappedCounts, onNoteTap, active
             </g>
           )
         })()}
+
+        {/* Nearest-note tap layer — sits on top and routes every tap to the
+            closest note, so hit zones never overlap or go ambiguous. */}
+        <rect
+          x="0"
+          y="0"
+          width="480"
+          height="188"
+          fill="transparent"
+          onClick={handleTap}
+          style={{ cursor: 'pointer', pointerEvents: 'all' }}
+          aria-label="Tap the closest note"
+        />
       </svg>
     </>
   )

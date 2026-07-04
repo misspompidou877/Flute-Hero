@@ -59,7 +59,7 @@ export default function MirrorPrompt({ onConfirm }) {
             <button
               onClick={onConfirm}
               style={{
-                height: '48px',
+                height: '56px',
                 padding: '0 20px',
                 borderRadius: '24px',
                 border: 'none',
@@ -77,7 +77,7 @@ export default function MirrorPrompt({ onConfirm }) {
             <button
               onClick={() => setShowChecklist(true)}
               style={{
-                height: '48px',
+                height: '56px',
                 padding: '0 20px',
                 borderRadius: '24px',
                 border: '2px solid #EEEEEE',
