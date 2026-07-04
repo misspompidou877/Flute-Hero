@@ -118,6 +118,20 @@ function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature
       xCursor += staveWidth
     })
   })
+
+  // Make the rendered SVG scale to fit its container (both width AND height) so
+  // the music is always fully visible — critical on short landscape phones where
+  // the fixed-height staff would otherwise be clipped.
+  const svg = el.querySelector('svg')
+  if (svg) {
+    svg.setAttribute('viewBox', `0 0 ${totalWidth} ${totalHeight}`)
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
+    svg.setAttribute('width', '100%')
+    svg.setAttribute('height', '100%')
+    svg.style.display = 'block'
+    svg.style.width = '100%'
+    svg.style.height = '100%'
+  }
 }
 
 export default function SongScore({ notes, title, currentNoteIndex = -1, beatsPerMeasure = 4, startMeasure = 0, measuresPerPage }) {
@@ -145,9 +159,9 @@ export default function SongScore({ notes, title, currentNoteIndex = -1, beatsPe
   }, [notes, currentNoteIndex, beatsPerMeasure, startMeasure, endMeasure])
 
   return (
-    <div>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {title && <h3 className="mb-2 font-semibold text-slate-700">{title}</h3>}
-      <div ref={containerRef} style={{ width: '100%', overflowX: 'auto' }} />
+      <div ref={containerRef} style={{ width: '100%', flex: 1, minHeight: 0 }} />
     </div>
   )
 }

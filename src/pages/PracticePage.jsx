@@ -549,7 +549,7 @@ export default function PracticePage() {
               disabled={currentPage === 0}
               className="flex-1 flex items-center justify-center rounded-xl transition-colors active:bg-[#006EE9] active:text-white"
               style={{
-                height: 44, border: '2px solid #006EE9', background: 'white',
+                height: 36, border: '2px solid #006EE9', background: 'white',
                 color: '#006EE9', fontSize: 12, fontWeight: 700, cursor: 'pointer',
                 opacity: currentPage === 0 ? 0.3 : 1,
               }}
@@ -561,7 +561,7 @@ export default function PracticePage() {
               onClick={isActive ? handleStop : handleStart}
               className="flex items-center justify-center gap-2 active:scale-95 transition-transform flex-shrink-0"
               style={{
-                height: 44, padding: '0 24px', borderRadius: 999, border: 'none',
+                height: 36, padding: '0 20px', borderRadius: 999, border: 'none',
                 background: isActive ? '#F1EFE8' : 'linear-gradient(to right, #006EE9, #0056C7)',
                 boxShadow: isActive ? 'none' : '0 4px 16px rgba(0,110,233,0.35)',
                 color: isActive ? '#000180' : 'white',
@@ -581,7 +581,7 @@ export default function PracticePage() {
               disabled={currentPage === totalPages - 1}
               className="flex-1 flex items-center justify-center rounded-xl transition-colors active:bg-[#006EE9] active:text-white"
               style={{
-                height: 44, border: '2px solid #006EE9', background: 'white',
+                height: 36, border: '2px solid #006EE9', background: 'white',
                 color: '#006EE9', fontSize: 12, fontWeight: 700, cursor: 'pointer',
                 opacity: currentPage === totalPages - 1 ? 0.3 : 1,
               }}
