@@ -7,7 +7,7 @@ const FOUNDATIONS_NOTES = ['B4', 'A4', 'G4', 'C5', 'D5']
 
 // Line notes for the mnemonic preview (Every Good Boy Deserves Fruit)
 const LINE_BUBBLES = [
-  { letter: 'E', color: '#42A5F5' },
+  { letter: 'E', color: '#26CCC2' },
   { letter: 'G', color: '#66BB6A' },
   { letter: 'B', color: '#AB47BC' },
   { letter: 'D', color: '#F5A623' },
@@ -52,7 +52,7 @@ function FoundationsCard({ masteredNotes }) {
             🎵
           </div>
           <div style={{ flex: 1 }}>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#2D2D2D', margin: 0 }}>
+            <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#0B3D3A', margin: 0 }}>
               Foundations
             </p>
             <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 400, fontSize: 13, color: '#666666', margin: 0 }}>
@@ -91,7 +91,7 @@ function ReadMusicCard({ isUnlocked }) {
       style={{
         background: 'white',
         borderRadius: 16,
-        borderLeft: '4px solid #4CAF50',
+        borderLeft: '4px solid #26CCC2',
         boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
         padding: 16,
         cursor: 'pointer',
@@ -103,14 +103,14 @@ function ReadMusicCard({ isUnlocked }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{
           width: 40, height: 40, borderRadius: '50%',
-          background: '#E8F5E9',
+          background: 'rgba(106,236,225,0.12)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0, fontSize: 20,
         }}>
           🎼
         </div>
         <div style={{ flex: 1 }}>
-          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#2D2D2D', margin: 0 }}>
+          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#0B3D3A', margin: 0 }}>
             Read Music
           </p>
           <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 400, fontSize: 13, color: '#666666', margin: 0 }}>
@@ -122,7 +122,7 @@ function ReadMusicCard({ isUnlocked }) {
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 700,
             fontSize: 12,
-            color: '#4CAF50',
+            color: '#26CCC2',
             flexShrink: 0,
           }}>
             Unlocked ✓
@@ -193,7 +193,7 @@ function FingeringLibraryCard({ masteredNotes }) {
         style={{
           background: 'white',
           borderRadius: 16,
-          borderLeft: '4px solid #42A5F5',
+          borderLeft: '4px solid #26CCC2',
           boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
           padding: 16,
         }}
@@ -202,14 +202,14 @@ function FingeringLibraryCard({ masteredNotes }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{
             width: 40, height: 40, borderRadius: '50%',
-            background: '#E3F2FD',
+            background: 'rgba(106,236,225,0.12)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             flexShrink: 0, fontSize: 20,
           }}>
             👋
           </div>
           <div style={{ flex: 1 }}>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#2D2D2D', margin: 0 }}>
+            <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#0B3D3A', margin: 0 }}>
               Fingering Library
             </p>
             <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 400, fontSize: 13, color: '#666666', margin: 0 }}>
@@ -217,13 +217,13 @@ function FingeringLibraryCard({ masteredNotes }) {
             </p>
           </div>
           <div style={{
-            background: '#E3F2FD',
+            background: 'rgba(106,236,225,0.12)',
             borderRadius: 999,
             padding: '3px 10px',
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 700,
             fontSize: 12,
-            color: '#42A5F5',
+            color: '#26CCC2',
             flexShrink: 0,
           }}>
             {noteCount} note{noteCount !== 1 ? 's' : ''}
@@ -244,7 +244,7 @@ function FingeringLibraryCard({ masteredNotes }) {
                     padding: '0 8px',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    background: '#FFF8EE',
+                    background: '#FAFAF8',
                     border: '1px solid #F5A623',
                     fontFamily: 'Nunito, sans-serif',
                     fontWeight: 600,
@@ -321,7 +321,7 @@ export default function BasicsSection() {
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 700,
             fontSize: 20,
-            color: '#2D2D2D',
+            color: '#0B3D3A',
           }}>
             My Learning
           </span>

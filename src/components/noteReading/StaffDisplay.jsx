@@ -11,10 +11,10 @@ const TOTAL_HEIGHT = 170    // total SVG height
 
 // ── Canonical note colours (from STYLE_GUIDE.md — Note Badge Circles) ──────
 const NOTE_COLORS = {
-  G4: '#26A69A',  // teal
-  A4: '#AB47BC',  // purple
-  B4: '#EF5350',  // red
-  C5: '#42A5F5',  // blue
+  G4: '#26CCC2',  // teal
+  A4: '#6AECE1',  // mint
+  B4: '#FFB76C',  // mango
+  C5: '#FFF57E',  // sunshine
   D5: '#A855F7',
 }
 
@@ -120,7 +120,7 @@ function renderStaff({
       svgRoot.appendChild(svgEl('rect', {
         x: noteStartX, y: y - halfGap,
         width: bandW, height: halfGap * 2,
-        fill: type === 'line' ? 'rgba(79,195,247,0.25)' : 'rgba(131,231,255,0.25)',
+        fill: type === 'line' ? 'rgba(38,204,194,0.25)' : 'rgba(106,236,225,0.25)',
         'pointer-events': 'none',
       }))
     })
@@ -171,7 +171,7 @@ function renderStaff({
   // ── notes mode: 5 coloured whole notes + click targets + labels ──────────
   if (mode === 'notes' && Array.isArray(notes) && notes.length > 0) {
     const staveNotes = notes.map(({ id }) => {
-      const color = NOTE_COLORS[id] || '#2D2D2D'
+      const color = NOTE_COLORS[id] || '#0B3D3A'
       const sn = new StaveNote({ keys: [NOTE_KEYS[id] || 'b/4'], duration: 'w' })
       sn.setStyle({ fillStyle: color, strokeStyle: color })
       return sn
@@ -189,7 +189,7 @@ function renderStaff({
     // Overlay: click targets and letter labels
     staveNotes.forEach((sn, i) => {
       const noteId = notes[i].id
-      const color = NOTE_COLORS[noteId] || '#2D2D2D'
+      const color = NOTE_COLORS[noteId] || '#0B3D3A'
       const noteX = sn.getAbsoluteX()
       const noteY = sn.getYs()[0]
       const noteName = noteId.replace(/\d/, '')  // 'G4' → 'G'
@@ -241,7 +241,7 @@ function renderStaff({
   // ── single mode: one note (for Name That Note game) ──────────────────────
   if (mode === 'single' && singleNote) {
     const noteId = singleNote.id
-    const color = NOTE_COLORS[noteId] || singleNote.color || '#2D2D2D'
+    const color = NOTE_COLORS[noteId] || singleNote.color || '#0B3D3A'
     const key = NOTE_KEYS[noteId]
     if (!key) return
 

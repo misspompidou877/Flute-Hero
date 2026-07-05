@@ -11,24 +11,24 @@ const LINE_IDS   = ['E4', 'G4', 'B4', 'D5', 'F5']
 const SPACE_IDS  = ['F4', 'A4', 'C5', 'E5']
 
 const FIRST_DATA = [
-  { id: 'B4', letter: 'B', desc: 'Sits on the middle line of the staff',    bg: '#D0FFA3', fg: '#000180' },
-  { id: 'A4', letter: 'A', desc: 'Floats in the space just below B',        bg: '#83E7FF', fg: '#000180' },
-  { id: 'G4', letter: 'G', desc: 'Sits on the second line from the bottom', bg: '#E7A0FE', fg: '#000180' },
+  { id: 'B4', letter: 'B', desc: 'Sits on the middle line of the staff',    bg: '#FFF57E', fg: '#0B3D3A' },
+  { id: 'A4', letter: 'A', desc: 'Floats in the space just below B',        bg: '#6AECE1', fg: '#0B3D3A' },
+  { id: 'G4', letter: 'G', desc: 'Sits on the second line from the bottom', bg: '#FFB76C', fg: '#0B3D3A' },
 ]
 
 const LINE_DATA = [
-  { id: 'E4', letter: 'E', word: 'Every',    bg: '#83E7FF', fg: '#000180' },
-  { id: 'G4', letter: 'G', word: 'Good',     bg: '#006EE9', fg: '#FFFFFF', known: true },
-  { id: 'B4', letter: 'B', word: 'Boy',      bg: '#D0FFA3', fg: '#000180', known: true },
-  { id: 'D5', letter: 'D', word: 'Deserves', bg: '#E7A0FE', fg: '#000180' },
-  { id: 'F5', letter: 'F', word: 'Fruit',    bg: '#83E7FF', fg: '#000180' },
+  { id: 'E4', letter: 'E', word: 'Every',    bg: '#6AECE1', fg: '#0B3D3A' },
+  { id: 'G4', letter: 'G', word: 'Good',     bg: '#26CCC2', fg: '#0B3D3A', known: true },
+  { id: 'B4', letter: 'B', word: 'Boy',      bg: '#FFF57E', fg: '#0B3D3A', known: true },
+  { id: 'D5', letter: 'D', word: 'Deserves', bg: '#FFB76C', fg: '#0B3D3A' },
+  { id: 'F5', letter: 'F', word: 'Fruit',    bg: '#6AECE1', fg: '#0B3D3A' },
 ]
 
 const SPACE_DATA = [
-  { id: 'F4', letter: 'F', bg: '#83E7FF', fg: '#000180' },
-  { id: 'A4', letter: 'A', bg: '#006EE9', fg: '#FFFFFF', known: true },
-  { id: 'C5', letter: 'C', bg: '#E7A0FE', fg: '#000180' },
-  { id: 'E5', letter: 'E', bg: '#D0FFA3', fg: '#000180' },
+  { id: 'F4', letter: 'F', bg: '#6AECE1', fg: '#0B3D3A' },
+  { id: 'A4', letter: 'A', bg: '#26CCC2', fg: '#0B3D3A', known: true },
+  { id: 'C5', letter: 'C', bg: '#FFB76C', fg: '#0B3D3A' },
+  { id: 'E5', letter: 'E', bg: '#FFF57E', fg: '#0B3D3A' },
 ]
 
 const QUIZ_EASY   = ['B4', 'A4', 'G4']
@@ -40,9 +40,9 @@ const NOTE_LETTER = {
   C5: 'C', D5: 'D', E5: 'E', F5: 'F',
 }
 
-const FIRST_COLORS  = { G4: '#E7A0FE', A4: '#83E7FF', B4: '#D0FFA3' }
-const LINE_COLORS   = { E4: '#83E7FF', G4: '#006EE9', B4: '#D0FFA3', D5: '#E7A0FE', F5: '#83E7FF' }
-const SPACE_COLORS  = { F4: '#83E7FF', A4: '#006EE9', C5: '#E7A0FE', E5: '#D0FFA3' }
+const FIRST_COLORS  = { G4: '#FFB76C', A4: '#6AECE1', B4: '#FFF57E' }
+const LINE_COLORS   = { E4: '#6AECE1', G4: '#26CCC2', B4: '#FFF57E', D5: '#FFB76C', F5: '#6AECE1' }
+const SPACE_COLORS  = { F4: '#6AECE1', A4: '#26CCC2', C5: '#FFB76C', E5: '#FFF57E' }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -108,7 +108,7 @@ function StepProgress({ step }) {
             flex: i === step ? 3 : 1,
             height: 6,
             borderRadius: 999,
-            background: i < step ? '#006EE9' : i === step ? '#83E7FF' : '#E0E0E0',
+            background: i < step ? '#26CCC2' : i === step ? '#6AECE1' : '#E0E0E0',
             transition: 'flex 0.4s ease, background 0.3s ease',
           }}
         />
@@ -120,8 +120,8 @@ function StepProgress({ step }) {
 function TipCard({ icon = '💡', children }) {
   return (
     <div style={{
-      background: 'rgba(131,231,255,0.12)',
-      border: '2px solid #83E7FF',
+      background: 'rgba(106,236,225,0.12)',
+      border: '2px solid #6AECE1',
       borderRadius: 14,
       padding: '14px 16px',
       display: 'flex',
@@ -129,7 +129,7 @@ function TipCard({ icon = '💡', children }) {
       alignItems: 'flex-start',
     }}>
       <span style={{ fontSize: 20, lineHeight: 1, flexShrink: 0 }}>{icon}</span>
-      <div style={{ ...F, fontSize: 14, fontWeight: 600, color: '#000180', lineHeight: 1.6 }}>
+      <div style={{ ...F, fontSize: 14, fontWeight: 600, color: '#0B3D3A', lineHeight: 1.6 }}>
         {children}
       </div>
     </div>
@@ -139,8 +139,8 @@ function TipCard({ icon = '💡', children }) {
 function KnownCallout({ children }) {
   return (
     <div style={{
-      background: 'rgba(208,255,163,0.22)',
-      border: '2px solid #D0FFA3',
+      background: 'rgba(255,245,126,0.22)',
+      border: '2px solid #FFF57E',
       borderRadius: 14,
       padding: '12px 16px',
       display: 'flex',
@@ -148,7 +148,7 @@ function KnownCallout({ children }) {
       alignItems: 'center',
     }}>
       <span style={{ fontSize: 20, flexShrink: 0 }}>⭐</span>
-      <div style={{ ...F, fontSize: 14, fontWeight: 700, color: '#000180', lineHeight: 1.5 }}>
+      <div style={{ ...F, fontSize: 14, fontWeight: 700, color: '#0B3D3A', lineHeight: 1.5 }}>
         {children}
       </div>
     </div>
@@ -157,7 +157,7 @@ function KnownCallout({ children }) {
 
 function NavyCard({ title, subtitle }) {
   return (
-    <div style={{ background: '#000180', borderRadius: 16, padding: '18px 16px' }}>
+    <div style={{ background: '#0B3D3A', borderRadius: 16, padding: '18px 16px' }}>
       <p style={{ ...F, fontWeight: 800, fontSize: 18, color: '#FFFFFF', margin: '0 0 6px' }}>
         {title}
       </p>
@@ -171,7 +171,7 @@ function NavyCard({ title, subtitle }) {
 // ── Step 0: The staff ─────────────────────────────────────────────────────────
 function Step0() {
   const [tapped, setTapped] = useState(new Set())
-  const introColors = { E4: '#83E7FF', B4: '#D0FFA3', F5: '#E7A0FE' }
+  const introColors = { E4: '#6AECE1', B4: '#FFF57E', F5: '#FFB76C' }
 
   const handleClick = useCallback((noteId) => {
     setTapped(prev => { const n = new Set(prev); n.add(noteId); return n })
@@ -181,7 +181,7 @@ function Step0() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{
-        background: '#000180',
+        background: '#0B3D3A',
         borderRadius: 16,
         padding: '20px 16px',
         display: 'flex',
@@ -190,22 +190,22 @@ function Step0() {
       }}>
         <div style={{
           width: 6, alignSelf: 'stretch', borderRadius: 999, flexShrink: 0,
-          background: 'linear-gradient(to bottom, #83E7FF, #D0FFA3, #E7A0FE)',
+          background: 'linear-gradient(to bottom, #6AECE1, #FFF57E, #FFB76C)',
         }} />
         <div>
           <p style={{ ...F, fontWeight: 800, fontSize: 18, color: '#FFFFFF', margin: '0 0 8px' }}>
             Music lives on a staff
           </p>
           <p style={{ ...F, fontWeight: 600, fontSize: 14, color: 'rgba(255,255,255,0.82)', margin: 0, lineHeight: 1.65 }}>
-            The staff has <strong style={{ color: '#83E7FF' }}>5 lines</strong>.
-            Notes that sit <strong style={{ color: '#E7A0FE' }}>higher</strong> on the staff sound higher.
-            Notes that sit <strong style={{ color: '#83E7FF' }}>lower</strong> on the staff sound lower.
+            The staff has <strong style={{ color: '#6AECE1' }}>5 lines</strong>.
+            Notes that sit <strong style={{ color: '#FFB76C' }}>higher</strong> on the staff sound higher.
+            Notes that sit <strong style={{ color: '#6AECE1' }}>lower</strong> on the staff sound lower.
           </p>
         </div>
       </div>
 
       <div style={{ background: '#FFFFFF', borderRadius: 16, padding: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-        <p style={{ ...F, fontWeight: 700, fontSize: 15, color: '#000180', margin: '0 0 12px', textAlign: 'center' }}>
+        <p style={{ ...F, fontWeight: 700, fontSize: 15, color: '#0B3D3A', margin: '0 0 12px', textAlign: 'center' }}>
           Tap each note — hear how the pitch changes!
         </p>
         <StaffNoteGuide
@@ -217,9 +217,9 @@ function Step0() {
         />
         <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: 10 }}>
           {[
-            { label: '⬇ Low',    color: '#83E7FF' },
-            { label: '— Middle', color: '#D0FFA3' },
-            { label: '⬆ High',   color: '#E7A0FE' },
+            { label: '⬇ Low',    color: '#6AECE1' },
+            { label: '— Middle', color: '#FFF57E' },
+            { label: '⬆ High',   color: '#FFB76C' },
           ].map(({ label, color }) => (
             <span key={label} style={{ ...F, fontWeight: 700, fontSize: 13, color }}>
               {label}
@@ -270,7 +270,7 @@ function Step1() {
             style={{
               width: 76, height: 76,
               borderRadius: 18,
-              border: selected === id ? '3px solid #000180' : '3px solid transparent',
+              border: selected === id ? '3px solid #0B3D3A' : '3px solid transparent',
               background: bg,
               color: fg,
               ...F,
@@ -292,7 +292,7 @@ function Step1() {
 
       {/* Staff */}
       <div style={{ background: '#FFFFFF', borderRadius: 16, padding: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-        <p style={{ ...F, fontWeight: 700, fontSize: 14, color: '#000180', margin: '0 0 10px', textAlign: 'center' }}>
+        <p style={{ ...F, fontWeight: 700, fontSize: 14, color: '#0B3D3A', margin: '0 0 10px', textAlign: 'center' }}>
           Now tap them on the staff too:
         </p>
         <StaffNoteGuide
@@ -392,7 +392,7 @@ function Step2() {
 
       {/* Staff */}
       <div style={{ background: '#FFFFFF', borderRadius: 16, padding: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-        <p style={{ ...F, fontWeight: 700, fontSize: 14, color: '#000180', margin: '0 0 10px', textAlign: 'center' }}>
+        <p style={{ ...F, fontWeight: 700, fontSize: 14, color: '#0B3D3A', margin: '0 0 10px', textAlign: 'center' }}>
           Tap each note on the staff to hear it:
         </p>
         <StaffNoteGuide
@@ -467,7 +467,7 @@ function Step3() {
 
       {/* Staff */}
       <div style={{ background: '#FFFFFF', borderRadius: 16, padding: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-        <p style={{ ...F, fontWeight: 700, fontSize: 14, color: '#000180', margin: '0 0 10px', textAlign: 'center' }}>
+        <p style={{ ...F, fontWeight: 700, fontSize: 14, color: '#0B3D3A', margin: '0 0 10px', textAlign: 'center' }}>
           Tap each space note on the staff:
         </p>
         <StaffNoteGuide
@@ -551,20 +551,20 @@ function Step4() {
         <div style={{
           width: 96, height: 96,
           borderRadius: '50%',
-          background: '#D0FFA3',
+          background: '#FFF57E',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 52,
         }}>
           🎵
         </div>
-        <p style={{ ...F, fontWeight: 800, fontSize: 26, color: '#000180', margin: 0 }}>
+        <p style={{ ...F, fontWeight: 800, fontSize: 26, color: '#0B3D3A', margin: 0 }}>
           {perfect ? 'Perfect!' : 'Well done!'}
         </p>
         <div style={{
-          background: '#000180', borderRadius: 999,
+          background: '#0B3D3A', borderRadius: 999,
           padding: '8px 24px',
         }}>
-          <span style={{ ...F, fontWeight: 800, fontSize: 18, color: '#D0FFA3' }}>
+          <span style={{ ...F, fontWeight: 800, fontSize: 18, color: '#FFF57E' }}>
             {score + 1} / {notes.length} correct
           </span>
         </div>
@@ -579,11 +579,11 @@ function Step4() {
             marginTop: 8,
             padding: '14px 36px',
             borderRadius: 14,
-            border: '2.5px solid #006EE9',
+            border: '2.5px solid #26CCC2',
             background: '#FFFFFF',
-            ...F, fontWeight: 800, fontSize: 16, color: '#006EE9',
+            ...F, fontWeight: 800, fontSize: 16, color: '#26CCC2',
             cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,110,233,0.12)',
+            boxShadow: '0 2px 8px rgba(38,204,194,0.12)',
           }}
         >
           Try Again
@@ -596,7 +596,7 @@ function Step4() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {/* Header with progress dots */}
       <div style={{
-        background: '#000180', borderRadius: 16, padding: '16px 18px',
+        background: '#0B3D3A', borderRadius: 16, padding: '16px 18px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         <p style={{ ...F, fontWeight: 800, fontSize: 16, color: '#FFFFFF', margin: 0 }}>
@@ -610,7 +610,7 @@ function Step4() {
                 width: i === idx ? 12 : 8,
                 height: i === idx ? 12 : 8,
                 borderRadius: '50%',
-                background: i < idx ? '#D0FFA3' : i === idx ? '#FFFFFF' : 'rgba(255,255,255,0.28)',
+                background: i < idx ? '#FFF57E' : i === idx ? '#FFFFFF' : 'rgba(255,255,255,0.28)',
                 transition: 'all 0.25s ease',
               }}
             />
@@ -623,7 +623,7 @@ function Step4() {
         key={currentNote}
         noteIds={[currentNote]}
         tappedNotes={new Set([currentNote])}
-        activeColors={{ [currentNote]: '#006EE9' }}
+        activeColors={{ [currentNote]: '#26CCC2' }}
         onNoteClick={() => {}}
         showAllLabels={false}
       />
@@ -642,12 +642,12 @@ function Step4() {
           const isCorrect = letter === NOTE_LETTER[currentNote]
           let bg     = '#FFFFFF'
           let border = '2px solid #E0E0E0'
-          let color  = '#000180'
+          let color  = '#0B3D3A'
           if (feedback === 'correct' && isCorrect) {
-            bg = '#D0FFA3'; border = '2px solid #D0FFA3'
+            bg = '#FFF57E'; border = '2px solid #FFF57E'
           }
           if (feedback === 'wrong' && isCorrect) {
-            bg = 'rgba(208,255,163,0.4)'; border = '2px solid #D0FFA3'
+            bg = 'rgba(255,245,126,0.4)'; border = '2px solid #FFF57E'
           }
           return (
             <button
@@ -713,12 +713,12 @@ export default function ReadMusicPage() {
             aria-label="Back"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="#2D2D2D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              stroke="#0B3D3A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15,18 9,12 15,6" />
             </svg>
           </button>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ ...F, fontWeight: 800, fontSize: 20, color: '#000180', margin: 0, lineHeight: 1.2 }}>
+            <p style={{ ...F, fontWeight: 800, fontSize: 20, color: '#0B3D3A', margin: 0, lineHeight: 1.2 }}>
               Reading Music 🎼
             </p>
             <p style={{ ...F, fontWeight: 600, fontSize: 13, color: '#999999', margin: 0 }}>
@@ -753,11 +753,11 @@ export default function ReadMusicPage() {
               minHeight: 52,
               borderRadius: 14,
               border: 'none',
-              background: 'linear-gradient(to right, #006EE9, #0056C7)',
-              color: '#FFFFFF',
+              background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+              color: '#0B3D3A',
               ...F, fontWeight: 800, fontSize: 17,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(0,110,233,0.35)',
+              boxShadow: '0 4px 14px rgba(38,204,194,0.35)',
             }}
           >
             {step === 3 ? 'Start Quiz →' : 'Next →'}

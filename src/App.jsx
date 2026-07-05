@@ -11,10 +11,32 @@ import FoundationsPage from './pages/FoundationsPage'
 import ReadMusicPage from './pages/ReadMusicPage'
 import BasicsPage from './pages/BasicsPage'
 import UnlockPage from './pages/UnlockPage'
+import ParentZonePage from './pages/ParentZonePage'
+import OnboardingPage from './pages/OnboardingPage'
+
+// First-run gate: true unless the user still needs onboarding. Defaults to
+// "done" if localStorage is unavailable so we never trap the user in a loop.
+function isOnboardingComplete() {
+  try {
+    return localStorage.getItem('onboarding.complete') === 'true'
+  } catch {
+    return true
+  }
+}
 
 function App() {
   const location = useLocation()
   const isPractice = location.pathname === '/practice'
+
+  // First-run onboarding gate: send new users to /onboarding before anything else.
+  if (!isOnboardingComplete() && location.pathname !== '/onboarding') {
+    return <Navigate to="/onboarding" replace />
+  }
+
+  // Onboarding renders full-screen (no bottom nav / app chrome).
+  if (location.pathname === '/onboarding') {
+    return <OnboardingPage />
+  }
 
   if (isPractice) {
     return (
@@ -23,13 +45,12 @@ function App() {
           <Route path="/practice" element={<PracticePage />} />
           <Route path="*" element={<Navigate to="/practice" replace />} />
         </Routes>
-        <BottomNav />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#FAFAF8', color: '#000180' }}>
+    <div className="min-h-screen" style={{ background: '#FAFAF8', color: '#0B3D3A' }}>
       <main
         className="mx-auto flex min-h-screen w-full max-w-[1280px] flex-col px-4 pt-6"
         style={{ paddingBottom: 'calc(7rem + env(safe-area-inset-bottom))' }}
@@ -46,6 +67,7 @@ function App() {
           <Route path="/read-music" element={<ReadMusicPage />} />
           <Route path="/basics" element={<BasicsPage />} />
           <Route path="/unlock" element={<UnlockPage />} />
+          <Route path="/parent" element={<ParentZonePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

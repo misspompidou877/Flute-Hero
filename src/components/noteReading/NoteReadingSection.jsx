@@ -88,7 +88,7 @@ function NoteReadingIntro({ onDone }) {
     <div
       style={{
         minHeight: '100dvh',
-        background: '#FAF4EE',
+        background: '#FAFAF8',
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '680px',
@@ -102,13 +102,13 @@ function NoteReadingIntro({ onDone }) {
       <div>
         <p style={{
           fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 12,
-          color: '#006EE9', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 6px',
+          color: '#26CCC2', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 6px',
         }}>
           Note Reading
         </p>
         <h1 style={{
           fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 28,
-          color: '#2D2D2D', margin: '0 0 4px', lineHeight: 1.2,
+          color: '#0B3D3A', margin: '0 0 4px', lineHeight: 1.2,
         }}>
           Every note has a name
         </h1>
@@ -130,7 +130,7 @@ function NoteReadingIntro({ onDone }) {
           <div>
             <p style={{
               fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 18,
-              color: '#2D2D2D', margin: '0 0 6px',
+              color: '#0B3D3A', margin: '0 0 6px',
             }}>
               Music is written on 5 lines
             </p>
@@ -148,13 +148,13 @@ function NoteReadingIntro({ onDone }) {
             <line key={y} x1="10" y1={y} x2="290" y2={y} stroke="#CCCCCC" strokeWidth="1.4" />
           ))}
           {/* Note ON a line */}
-          <ellipse cx="100" cy="39" rx="10" ry="7" fill="#006EE9" transform="rotate(-15,100,39)" />
-          <line x1="110" y1="39" x2="110" y2="10" stroke="#006EE9" strokeWidth="1.5" />
-          <text x="100" y="75" textAnchor="middle" fontSize="11" fontFamily="Nunito, sans-serif" fill="#006EE9" fontWeight="700">on a line</text>
+          <ellipse cx="100" cy="39" rx="10" ry="7" fill="#26CCC2" transform="rotate(-15,100,39)" />
+          <line x1="110" y1="39" x2="110" y2="10" stroke="#26CCC2" strokeWidth="1.5" />
+          <text x="100" y="75" textAnchor="middle" fontSize="11" fontFamily="Nunito, sans-serif" fill="#26CCC2" fontWeight="700">on a line</text>
           {/* Note IN a space */}
-          <ellipse cx="210" cy="45" rx="10" ry="7" fill="#E7A0FE" transform="rotate(-15,210,45)" />
-          <line x1="220" y1="45" x2="220" y2="16" stroke="#E7A0FE" strokeWidth="1.5" />
-          <text x="210" y="75" textAnchor="middle" fontSize="11" fontFamily="Nunito, sans-serif" fill="#E7A0FE" fontWeight="700">in a space</text>
+          <ellipse cx="210" cy="45" rx="10" ry="7" fill="#FFB76C" transform="rotate(-15,210,45)" />
+          <line x1="220" y1="45" x2="220" y2="16" stroke="#FFB76C" strokeWidth="1.5" />
+          <text x="210" y="75" textAnchor="middle" fontSize="11" fontFamily="Nunito, sans-serif" fill="#FFB76C" fontWeight="700">in a space</text>
         </svg>
       </div>
 
@@ -168,7 +168,7 @@ function NoteReadingIntro({ onDone }) {
           <div>
             <p style={{
               fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 18,
-              color: '#2D2D2D', margin: '0 0 6px',
+              color: '#0B3D3A', margin: '0 0 6px',
             }}>
               Where it sits = what it's called
             </p>
@@ -186,11 +186,11 @@ function NoteReadingIntro({ onDone }) {
             <line key={y} x1="10" y1={y} x2="290" y2={y} stroke="#CCCCCC" strokeWidth="1.4" />
           ))}
           {[
-            { x: 50,  y: 68, letter: 'E', color: '#83E7FF', textColor: '#000180' },
-            { x: 100, y: 62, letter: 'F', color: '#006EE9', textColor: '#FFFFFF' },
-            { x: 150, y: 56, letter: 'G', color: '#D0FFA3', textColor: '#000180' },
-            { x: 200, y: 50, letter: 'A', color: '#E7A0FE', textColor: '#000180' },
-            { x: 250, y: 44, letter: 'B', color: '#83E7FF', textColor: '#000180' },
+            { x: 50,  y: 68, letter: 'E', color: '#6AECE1', textColor: '#0B3D3A' },
+            { x: 100, y: 62, letter: 'F', color: '#26CCC2', textColor: '#0B3D3A' },
+            { x: 150, y: 56, letter: 'G', color: '#FFF57E', textColor: '#0B3D3A' },
+            { x: 200, y: 50, letter: 'A', color: '#FFB76C', textColor: '#0B3D3A' },
+            { x: 250, y: 44, letter: 'B', color: '#6AECE1', textColor: '#0B3D3A' },
           ].map(({ x, y, letter, color, textColor }) => (
             <g key={letter + x}>
               <ellipse cx={x} cy={y} rx="10" ry="7" fill={color} transform={`rotate(-15,${x},${y})`} />
@@ -212,7 +212,7 @@ function NoteReadingIntro({ onDone }) {
           <div>
             <p style={{
               fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 18,
-              color: '#2D2D2D', margin: '0 0 6px',
+              color: '#0B3D3A', margin: '0 0 6px',
             }}>
               The name tells you which key to press
             </p>
@@ -231,10 +231,10 @@ function NoteReadingIntro({ onDone }) {
         onClick={onDone}
         style={{
           width: '100%', height: 56, borderRadius: 28, border: 'none',
-          background: 'linear-gradient(to right, #006EE9, #0056C7)',
-          color: '#FFFFFF', fontFamily: 'Nunito, sans-serif',
+          background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+          color: '#0B3D3A', fontFamily: 'Nunito, sans-serif',
           fontWeight: 700, fontSize: 20, cursor: 'pointer',
-          boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
+          boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
           marginTop: 8,
         }}
       >
@@ -373,7 +373,7 @@ export default function NoteReadingSection({ onComplete }) {
       <div
         style={{
           minHeight: '100dvh',
-          background: '#FAF4EE',
+          background: '#FAFAF8',
           display: 'flex',
           flexDirection: 'column',
           maxWidth: '680px',
@@ -422,7 +422,7 @@ export default function NoteReadingSection({ onComplete }) {
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 800,
                   fontSize: '26px',
-                  color: '#2D2D2D',
+                  color: '#0B3D3A',
                   margin: 0,
                   lineHeight: 1.2,
                 }}
@@ -474,7 +474,7 @@ export default function NoteReadingSection({ onComplete }) {
                     fontFamily: 'Nunito, sans-serif',
                     fontWeight: 700,
                     fontSize: '13px',
-                    color: '#006EE9',
+                    color: '#26CCC2',
                     textTransform: 'uppercase',
                     letterSpacing: '0.06em',
                   }}
@@ -486,11 +486,11 @@ export default function NoteReadingSection({ onComplete }) {
                     fontFamily: 'Nunito, sans-serif',
                     fontWeight: 800,
                     fontSize: '20px',
-                    color: '#2D2D2D',
+                    color: '#0B3D3A',
                     lineHeight: 1.2,
                   }}
                 >
-                  {info.title} — <span style={{ color: '#006EE9' }}>{info.subtitle}</span>
+                  {info.title} — <span style={{ color: '#26CCC2' }}>{info.subtitle}</span>
                 </div>
               </div>
             </div>
@@ -537,7 +537,7 @@ export default function NoteReadingSection({ onComplete }) {
           {modeJustCompleted && completedModes.has(currentMode) && (
             <div
               style={{
-                background: '#D0FFA3',
+                background: '#FFF57E',
                 borderRadius: '16px',
                 padding: '20px',
                 textAlign: 'center',
@@ -553,7 +553,7 @@ export default function NoteReadingSection({ onComplete }) {
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 800,
                   fontSize: '22px',
-                  color: '#000180',
+                  color: '#0B3D3A',
                   marginBottom: '4px',
                 }}
               >
@@ -568,7 +568,7 @@ export default function NoteReadingSection({ onComplete }) {
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 600,
                   fontSize: '16px',
-                  color: '#000180',
+                  color: '#0B3D3A',
                   margin: 0,
                 }}
               >
@@ -588,13 +588,13 @@ export default function NoteReadingSection({ onComplete }) {
                 height: '56px',
                 borderRadius: '28px',
                 border: 'none',
-                background: 'linear-gradient(to right, #006EE9, #0056C7)',
-                color: '#FFFFFF',
+                background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+                color: '#0B3D3A',
                 fontFamily: 'Nunito, sans-serif',
                 fontWeight: 700,
                 fontSize: '20px',
                 cursor: 'pointer',
-                boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
+                boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
                 animation: 'nextBtnFadeIn 0.4s ease-out',
               }}
             >
@@ -620,7 +620,7 @@ export default function NoteReadingSection({ onComplete }) {
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 800,
                   fontSize: '26px',
-                  color: '#2D2D2D',
+                  color: '#0B3D3A',
                   marginBottom: '8px',
                 }}
               >
@@ -644,13 +644,13 @@ export default function NoteReadingSection({ onComplete }) {
                   height: '56px',
                   borderRadius: '28px',
                   border: 'none',
-                  background: 'linear-gradient(to right, #006EE9, #0056C7)',
-                  color: '#FFFFFF',
+                  background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+                  color: '#0B3D3A',
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 700,
                   fontSize: '20px',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
+                  boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
                 }}
               >
                 Let's learn about rhythm! →

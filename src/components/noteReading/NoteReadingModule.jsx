@@ -9,7 +9,7 @@ const headingStyle = {
   fontFamily: 'Nunito, sans-serif',
   fontWeight: 800,
   fontSize: '36px',
-  color: '#2D2D2D',
+  color: '#0B3D3A',
   marginBottom: '16px',
   lineHeight: 1.2,
 }
@@ -18,7 +18,7 @@ const bodyStyle = {
   fontFamily: 'Nunito, sans-serif',
   fontWeight: 600,
   fontSize: '20px',
-  color: '#2D2D2D',
+  color: '#0B3D3A',
   marginBottom: '12px',
   lineHeight: 1.5,
 }

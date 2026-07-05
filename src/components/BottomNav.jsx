@@ -92,7 +92,7 @@ export default function BottomNav() {
               {({ isActive }) => (
                 <div
                   className="flex flex-col items-center justify-center gap-0.5"
-                  style={{ color: isActive ? '#006EE9' : '#000180' }}
+                  style={{ color: isActive ? '#26CCC2' : '#0B3D3A' }}
                 >
                   <Icon />
                   <span style={{ fontSize: 10, fontWeight: isActive ? 600 : 500, lineHeight: 1.2 }}>
@@ -104,7 +104,7 @@ export default function BottomNav() {
                         width: 4,
                         height: 4,
                         borderRadius: '50%',
-                        background: '#D0FFA3',
+                        background: '#FFF57E',
                         marginTop: 1,
                       }}
                     />

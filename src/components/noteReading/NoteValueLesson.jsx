@@ -186,7 +186,7 @@ function TimeSignatureExplainer({ variant }) {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 500,
           fontSize: '16px',
-          color: '#006EE9',
+          color: '#26CCC2',
           padding: '10px 18px',
           minHeight: '56px',
           cursor: 'pointer',
@@ -222,7 +222,7 @@ function TimeSignatureExplainer({ variant }) {
               fontFamily: 'Nunito, sans-serif',
               fontWeight: 700,
               fontSize: '18px',
-              color: '#2D2D2D',
+              color: '#0B3D3A',
               marginBottom: '12px',
             }}
           >
@@ -259,7 +259,7 @@ function TimeSignatureExplainer({ variant }) {
                       fontFamily: 'Nunito, sans-serif',
                       fontWeight: 800,
                       fontSize: '48px',
-                      color: '#006EE9',
+                      color: '#26CCC2',
                       lineHeight: 1.1,
                       display: 'block',
                     }}
@@ -292,7 +292,7 @@ function TimeSignatureExplainer({ variant }) {
                       fontFamily: 'Nunito, sans-serif',
                       fontWeight: 800,
                       fontSize: '48px',
-                      color: '#006EE9',
+                      color: '#26CCC2',
                       lineHeight: 1.1,
                       display: 'block',
                     }}
@@ -328,7 +328,7 @@ function TimeSignatureExplainer({ variant }) {
                     fontFamily: 'Nunito, sans-serif',
                     fontWeight: 700,
                     fontSize: '20px',
-                    color: active ? '#006EE9' : '#666666',
+                    color: active ? '#26CCC2' : '#666666',
                     marginBottom: '8px',
                   }}
                 >
@@ -348,7 +348,7 @@ function TimeSignatureExplainer({ variant }) {
               fontFamily: 'Nunito, sans-serif',
               fontWeight: 500,
               fontSize: '16px',
-              color: '#4CAF50',
+              color: '#26CCC2',
               padding: '10px 18px',
               cursor: 'pointer',
               lineHeight: 1,
@@ -378,7 +378,7 @@ function ComparisonBars({ highlight }) {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 700,
           fontSize: '16px',
-          color: '#2D2D2D',
+          color: '#0B3D3A',
           marginBottom: '12px',
         }}
       >
@@ -402,7 +402,7 @@ function ComparisonBars({ highlight }) {
                     fontFamily: 'Nunito, sans-serif',
                     fontWeight: 700,
                     fontSize: '16px',
-                    color: '#2D2D2D',
+                    color: '#0B3D3A',
                   }}
                 >
                   {label}
@@ -430,7 +430,7 @@ function ComparisonBars({ highlight }) {
                   style={{
                     height: '100%',
                     width: `${pct}%`,
-                    background: '#006EE9',
+                    background: '#26CCC2',
                     borderRadius: '7px',
                     opacity: active ? 1 : 0.4,
                   }}
@@ -471,7 +471,7 @@ function TwoQuaverDemo() {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 700,
           fontSize: '16px',
-          color: '#2D2D2D',
+          color: '#0B3D3A',
           marginBottom: '12px',
         }}
       >
@@ -488,9 +488,9 @@ function TwoQuaverDemo() {
                 height: '52px',
                 borderRadius: '50%',
                 background: lit
-                  ? 'linear-gradient(to right, #006EE9, #0056C7)'
-                  : 'rgba(0,110,233,0.06)',
-                border: `2px solid ${lit ? '#0056C7' : '#006EE9'}`,
+                  ? 'linear-gradient(to right, #26CCC2, #1AA89F)'
+                  : 'rgba(38,204,194,0.06)',
+                border: `2px solid ${lit ? '#1AA89F' : '#26CCC2'}`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -513,8 +513,8 @@ function TwoQuaverDemo() {
             border: 'none',
             background: isPlaying
               ? '#CCCCCC'
-              : 'linear-gradient(to right, #006EE9, #0056C7)',
-            color: '#FFFFFF',
+              : 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            color: '#0B3D3A',
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 700,
             fontSize: '16px',
@@ -632,7 +632,7 @@ export default function NoteValueLesson({ noteType }) {
               fontFamily: 'Nunito, sans-serif',
               fontWeight: 500,
               fontSize: '16px',
-              color: '#2D2D2D',
+              color: '#0B3D3A',
               textAlign: 'center',
             }}
           >
@@ -694,7 +694,7 @@ export default function NoteValueLesson({ noteType }) {
                 position: 'absolute',
                 inset: '-8px',
                 borderRadius: '50%',
-                border: '3px solid #006EE9',
+                border: '3px solid #26CCC2',
                 animation: 'play-pulse 1s ease-out infinite',
                 pointerEvents: 'none',
               }}
@@ -711,14 +711,14 @@ export default function NoteValueLesson({ noteType }) {
               height: '72px',
               borderRadius: '50%',
               border: 'none',
-              background: 'linear-gradient(to right, #006EE9, #0056C7)',
-              color: '#FFFFFF',
+              background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+              color: '#0B3D3A',
               fontSize: '28px',
               cursor: playing ? 'default' : 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,110,233,0.4)',
+              boxShadow: '0 4px 12px rgba(38,204,194,0.4)',
             }}
           >
             {playing ? '♪' : '▶'}
@@ -730,7 +730,7 @@ export default function NoteValueLesson({ noteType }) {
             fontFamily: 'Nunito, sans-serif',
             fontSize: '18px',
             fontWeight: 600,
-            color: feedback ? '#4CAF50' : '#666666',
+            color: feedback ? '#26CCC2' : '#666666',
             minHeight: '28px',
             transition: 'color 0.2s',
           }}
@@ -752,7 +752,7 @@ export default function NoteValueLesson({ noteType }) {
             style={{
               height: '100%',
               width: `${barPct}%`,
-              background: 'linear-gradient(to right, #006EE9, #0056C7)',
+              background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
               borderRadius: '6px',
               transition:
                 barPct === 0 && played

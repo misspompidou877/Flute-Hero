@@ -16,28 +16,28 @@ const ALL_NOTES = [
 ]
 
 const NOTE_COLORS = {
-  E4: '#83E7FF',
-  G4: '#006EE9',
-  B4: '#D0FFA3',
-  D5: '#E7A0FE',
-  F5: '#83E7FF',
-  F4: '#006EE9',
-  A4: '#E7A0FE',
-  C5: '#D0FFA3',
-  E5: '#83E7FF',
+  E4: '#6AECE1',
+  G4: '#26CCC2',
+  B4: '#FFF57E',
+  D5: '#FFB76C',
+  F5: '#6AECE1',
+  F4: '#26CCC2',
+  A4: '#FFB76C',
+  C5: '#FFF57E',
+  E5: '#6AECE1',
 }
 
 // Text colour that contrasts with each note's fill colour
 const NOTE_TEXT_COLORS = {
-  E4: '#000180',
-  G4: '#FFFFFF',
-  B4: '#000180',
-  D5: '#000180',
-  F5: '#000180',
-  F4: '#FFFFFF',
-  A4: '#000180',
-  C5: '#000180',
-  E5: '#000180',
+  E4: '#0B3D3A',
+  G4: '#0B3D3A',
+  B4: '#0B3D3A',
+  D5: '#0B3D3A',
+  F5: '#0B3D3A',
+  F4: '#0B3D3A',
+  A4: '#0B3D3A',
+  C5: '#0B3D3A',
+  E5: '#0B3D3A',
 }
 
 // Mixed mode: pitch order E4→F4→G4→A4→B4→C5→D5→E5→F5
@@ -146,8 +146,8 @@ export default function StaffInteractive({ mode, tappedCounts, onNoteTap, active
           let strokeWidth = 1.2
 
           if (mastered) {
-            fill = '#D0FFA3'
-            stroke = '#A8D47F'
+            fill = '#FFF57E'
+            stroke = '#F0D64E'
             strokeWidth = 1.5
           } else if (isActive) {
             fill = NOTE_COLORS[note.id]
@@ -190,7 +190,7 @@ export default function StaffInteractive({ mode, tappedCounts, onNoteTap, active
                 y1={stemY1}
                 x2={stemX}
                 y2={stemY2}
-                stroke={mastered ? '#A8D47F' : tappedOnce ? '#888888' : '#CCCCCC'}
+                stroke={mastered ? '#F0D64E' : tappedOnce ? '#888888' : '#CCCCCC'}
                 strokeWidth="1.6"
                 style={{ pointerEvents: 'none' }}
               />
@@ -218,7 +218,7 @@ export default function StaffInteractive({ mode, tappedCounts, onNoteTap, active
                   y={note.y - 24}
                   textAnchor="middle"
                   fontSize="15"
-                  fill="#4CAF50"
+                  fill="#26CCC2"
                   fontFamily="Nunito, sans-serif"
                   fontWeight="700"
                   style={{

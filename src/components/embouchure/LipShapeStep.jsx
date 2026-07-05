@@ -65,7 +65,7 @@ const INCORRECT = [
 
 function PhotoCard({ src, alt, caption, isCorrect, maxHeight }) {
   const [errored, setErrored] = useState(false)
-  const color = isCorrect ? '#4CAF50' : '#F06292'
+  const color = isCorrect ? '#26CCC2' : '#F06292'
   const badge = isCorrect ? '✓' : '✕'
   const filename = src.split('/').pop()
 
@@ -135,7 +135,7 @@ function PhotoCard({ src, alt, caption, isCorrect, maxHeight }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#FFFFFF',
+            color: isCorrect ? '#0B3D3A' : '#FFFFFF',
             fontSize: '14px',
             fontWeight: 700,
             boxShadow: '0 1px 4px rgba(0,0,0,0.18)',
@@ -205,7 +205,7 @@ export default function LipShapeStep() {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 700,
           fontSize: '20px',
-          color: '#2D2D2D',
+          color: '#0B3D3A',
           margin: '0 0 8px',
         }}
       >
@@ -238,7 +238,7 @@ export default function LipShapeStep() {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            background: '#FAF4EE',
+            background: '#FAFAF8',
             padding: '0 12px',
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 600,

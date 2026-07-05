@@ -108,7 +108,7 @@ export default function MicActivityBar({ onLevel }) {
             height: '100%',
             width: `${levelPct}%`,
             background: isDetecting
-              ? 'linear-gradient(to right, #4CAF50, #66BB6A)'
+              ? 'linear-gradient(to right, #26CCC2, #1AA89F)'
               : '#CCCCCC',
             borderRadius: '28px',
             transition: 'width 100ms linear',
@@ -123,7 +123,7 @@ export default function MicActivityBar({ onLevel }) {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: isDetecting ? 600 : 500,
           fontSize: '16px',
-          color: isDetecting ? '#4CAF50' : '#999999',
+          color: isDetecting ? '#26CCC2' : '#999999',
           marginTop: '8px',
           marginBottom: 0,
         }}

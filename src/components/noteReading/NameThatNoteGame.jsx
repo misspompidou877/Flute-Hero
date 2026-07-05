@@ -3,11 +3,11 @@ import StaffDisplay from './StaffDisplay'
 import { playTone, NOTE_FREQUENCIES } from '../../utils/playTone'
 
 const NOTE_COLORS = {
-  G4: '#006EE9',
-  A4: '#F06292',
+  G4: '#26CCC2',
+  A4: '#FFB76C',
   B4: '#A855F7',
-  C5: '#4CAF50',
-  D5: '#FFC107',
+  C5: '#6AECE1',
+  D5: '#FFF57E',
 }
 
 const NOTE_POSITIONS = {
@@ -95,7 +95,7 @@ export default function NameThatNoteGame({ onComplete }) {
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 800,
             fontSize: '24px',
-            color: '#2D2D2D',
+            color: '#0B3D3A',
           }}
         >
           You got them all!
@@ -157,18 +157,18 @@ export default function NameThatNoteGame({ onComplete }) {
           const isWrongFeedback = feedback === 'wrong' && feedbackNote === choice
 
           let bg = '#FFFFFF'
-          let color = '#2D2D2D'
+          let color = '#0B3D3A'
           let border = '2px solid #EEEEEE'
           let anim = 'none'
 
           if (isCorrectFeedback) {
-            bg = '#4CAF50'
-            color = '#FFFFFF'
+            bg = '#26CCC2'
+            color = '#0B3D3A'
             border = 'none'
             anim = 'f-pop 0.3s ease-out'
           } else if (isWrongFeedback) {
-            bg = '#FFF8EE'
-            color = '#FFFFFF'
+            bg = '#FAFAF8'
+            color = '#0B3D3A'
             border = 'none'
             anim = 'f-wobble 0.4s ease-out'
           }

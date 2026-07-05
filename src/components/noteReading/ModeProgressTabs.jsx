@@ -28,14 +28,14 @@ export default function ModeProgressTabs({ currentMode, completedModes, onModeSe
         if (locked) {
           opacity = 0.45
         } else if (active) {
-          bg = '#006EE9'
-          color = '#FFFFFF'
+          bg = '#26CCC2'
+          color = '#0B3D3A'
         } else if (done) {
           bg = '#FFFFFF'
-          color = '#000180'
+          color = '#0B3D3A'
         } else {
           bg = '#FFFFFF'
-          color = '#2D2D2D'
+          color = '#0B3D3A'
         }
 
         return (
@@ -60,7 +60,7 @@ export default function ModeProgressTabs({ currentMode, completedModes, onModeSe
               justifyContent: 'center',
               gap: '4px',
               transition: 'background 0.2s ease, color 0.2s ease, opacity 0.2s ease',
-              boxShadow: active ? '0 2px 8px rgba(0,110,233,0.25)' : 'none',
+              boxShadow: active ? '0 2px 8px rgba(38,204,194,0.25)' : 'none',
               padding: '0 8px',
             }}
           >
@@ -68,7 +68,7 @@ export default function ModeProgressTabs({ currentMode, completedModes, onModeSe
             {done && (
               <span
                 style={{
-                  color: active ? '#D0FFA3' : '#4CAF50',
+                  color: active ? '#0B3D3A' : '#26CCC2',
                   fontSize: '14px',
                   transition: 'color 0.2s ease',
                 }}

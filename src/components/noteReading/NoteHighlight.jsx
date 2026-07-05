@@ -8,10 +8,10 @@ const SPACING = 15
 const TOTAL_HEIGHT = 170
 
 const NOTE_COLORS = {
-  G4: '#26A69A',
-  A4: '#AB47BC',
-  B4: '#EF5350',
-  C5: '#42A5F5',
+  G4: '#26CCC2',
+  A4: '#6AECE1',
+  B4: '#FFB76C',
+  C5: '#FFF57E',
   D5: '#A855F7',
 }
 
@@ -50,7 +50,7 @@ export default function NoteHighlight({ noteId, duration = 'w' }) {
       stave.addClef('treble')
       stave.setContext(ctx).draw()
 
-      const color = NOTE_COLORS[noteId] || '#2D2D2D'
+      const color = NOTE_COLORS[noteId] || '#0B3D3A'
       const key   = NOTE_KEYS[noteId]
       if (!key) return
 

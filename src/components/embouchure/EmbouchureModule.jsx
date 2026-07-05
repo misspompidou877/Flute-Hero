@@ -16,7 +16,7 @@ const H = {
   fontFamily: 'Nunito, sans-serif',
   fontWeight: 800,
   fontSize: '36px',
-  color: '#2D2D2D',
+  color: '#0B3D3A',
   marginBottom: '16px',
   marginTop: 0,
   lineHeight: 1.2,
@@ -25,7 +25,7 @@ const BODY = {
   fontFamily: 'Nunito, sans-serif',
   fontWeight: 600,
   fontSize: '20px',
-  color: '#2D2D2D',
+  color: '#0B3D3A',
   margin: '0 0 12px',
   lineHeight: 1.5,
 }
@@ -43,15 +43,15 @@ function TipCard({ children }) {
   return (
     <div
       style={{
-        background: '#FFF8EE',
-        borderLeft: '3px solid #006EE9',
+        background: '#FAFAF8',
+        borderLeft: '3px solid #26CCC2',
         borderRadius: '12px',
         padding: '16px 20px',
         marginBottom: '16px',
         fontFamily: 'Nunito, sans-serif',
         fontWeight: 500,
         fontSize: '18px',
-        color: '#2D2D2D',
+        color: '#0B3D3A',
         lineHeight: 1.5,
       }}
     >
@@ -72,7 +72,7 @@ function WarningCard({ children }) {
         fontFamily: 'Nunito, sans-serif',
         fontWeight: 500,
         fontSize: '18px',
-        color: '#2D2D2D',
+        color: '#0B3D3A',
         lineHeight: 1.5,
       }}
     >
@@ -96,7 +96,7 @@ function BreathComparison() {
         style={{
           flex: 1,
           background: '#F0FBF0',
-          borderLeft: '3px solid #4CAF50',
+          borderLeft: '3px solid #26CCC2',
           borderRadius: '12px',
           padding: '16px',
           textAlign: 'center',
@@ -105,7 +105,7 @@ function BreathComparison() {
         <svg viewBox="0 0 120 48" style={{ width: '100%', marginBottom: '8px' }} aria-hidden="true">
           <path
             d="M5,24 C20,8 35,40 55,24 C75,8 90,40 115,24"
-            stroke="#4CAF50"
+            stroke="#26CCC2"
             strokeWidth="3"
             fill="none"
             strokeLinecap="round"
@@ -130,7 +130,7 @@ function BreathComparison() {
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 700,
             fontSize: '15px',
-            color: '#4CAF50',
+            color: '#26CCC2',
             margin: 0,
           }}
         >
@@ -219,14 +219,14 @@ function HandPositionDiagram() {
       ))}
 
       {/* Left hand bracket (top area) */}
-      <path d="M68,72 L68,58 L175,58 L175,72" stroke="#006EE9" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <text x="122" y="50" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="14" fontWeight="800" fill="#006EE9">
+      <path d="M68,72 L68,58 L175,58 L175,72" stroke="#26CCC2" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <text x="122" y="50" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="14" fontWeight="800" fill="#26CCC2">
         LEFT HAND 🫲
       </text>
 
       {/* Right hand bracket (bottom area) */}
-      <path d="M175,110 L175,128 L262,128 L262,110" stroke="#4CAF50" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <text x="218" y="146" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="14" fontWeight="800" fill="#4CAF50">
+      <path d="M175,110 L175,128 L262,128 L262,110" stroke="#26CCC2" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <text x="218" y="146" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="14" fontWeight="800" fill="#26CCC2">
         RIGHT HAND 🫱
       </text>
 
@@ -475,8 +475,8 @@ export default function EmbouchureModule() {
                 padding: '0 24px',
                 borderRadius: '28px',
                 border: 'none',
-                background: 'linear-gradient(to right, #006EE9, #0056C7)',
-                color: '#FFFFFF',
+                background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+                color: '#0B3D3A',
                 fontFamily: 'Nunito, sans-serif',
                 fontWeight: 700,
                 fontSize: '18px',
@@ -517,7 +517,7 @@ export default function EmbouchureModule() {
           <div
             style={{
               background: '#F0FBF0',
-              borderLeft: '3px solid #4CAF50',
+              borderLeft: '3px solid #26CCC2',
               borderRadius: '12px',
               padding: '16px 20px',
               fontFamily: 'Nunito, sans-serif',
@@ -588,7 +588,7 @@ export default function EmbouchureModule() {
             <div
               style={{
                 marginTop: '24px',
-                background: '#FFF8EE',
+                background: '#FAFAF8',
                 borderRadius: '16px',
                 padding: '20px',
                 animation: 'f-slide-in 280ms ease-out',
@@ -599,7 +599,7 @@ export default function EmbouchureModule() {
                   fontFamily: 'Nunito, sans-serif',
                   fontWeight: 600,
                   fontSize: '18px',
-                  color: '#2D2D2D',
+                  color: '#0B3D3A',
                   margin: '0 0 12px',
                   lineHeight: 1.5,
                 }}

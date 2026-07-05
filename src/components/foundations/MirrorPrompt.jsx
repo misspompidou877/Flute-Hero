@@ -12,9 +12,9 @@ export default function MirrorPrompt({ onConfirm }) {
   return (
     <div
       style={{
-        background: '#EBF6FF',
+        background: 'rgba(106,236,225,0.12)',
         borderRadius: '16px',
-        border: '2px solid #90CAF9',
+        border: '2px solid #6AECE1',
         padding: '20px 20px 20px',
         marginTop: '20px',
         animation: 'f-slide-in 280ms ease-out',
@@ -27,7 +27,7 @@ export default function MirrorPrompt({ onConfirm }) {
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 600,
             fontSize: '18px',
-            color: '#2D2D2D',
+            color: '#0B3D3A',
             margin: 0,
             lineHeight: 1.4,
           }}
@@ -41,7 +41,7 @@ export default function MirrorPrompt({ onConfirm }) {
           style={{
             fontFamily: 'Nunito, sans-serif',
             fontSize: '17px',
-            color: '#2D2D2D',
+            color: '#0B3D3A',
             margin: '0 0 16px',
             paddingLeft: '24px',
             lineHeight: 1.8,
@@ -63,8 +63,8 @@ export default function MirrorPrompt({ onConfirm }) {
                 padding: '0 20px',
                 borderRadius: '24px',
                 border: 'none',
-                background: '#4CAF50',
-                color: '#FFFFFF',
+                background: '#26CCC2',
+                color: '#0B3D3A',
                 fontFamily: 'Nunito, sans-serif',
                 fontWeight: 700,
                 fontSize: '17px',
@@ -101,8 +101,8 @@ export default function MirrorPrompt({ onConfirm }) {
               padding: '0 24px',
               borderRadius: '24px',
               border: 'none',
-              background: '#4CAF50',
-              color: '#FFFFFF',
+              background: '#26CCC2',
+              color: '#0B3D3A',
               fontFamily: 'Nunito, sans-serif',
               fontWeight: 700,
               fontSize: '17px',
