@@ -10,10 +10,14 @@ import BadgeToast from '../components/BadgeToast'
 import FluteCharacter from '../components/FluteCharacter'
 import PaywallCard from '../components/paywall/PaywallCard'
 
-const MEASURES_PER_PAGE = 4
+// Two stacked staff lines of 4 bars each = 8 bars per page (the "reads like real
+// sheet music" layout the redesign asks for).
+const MEASURES_PER_PAGE = 8
+const MEASURES_PER_ROW = 4
 // Tablet-width screens (iPad portrait ~744–820px) render the practice layout in
-// portrait per the "portrait + landscape on iPad" rule; only narrower phones in
-// portrait get the rotate prompt.
+// portrait per the CLAUDE.md "portrait + landscape on iPad" rule; only narrower
+// phones in portrait get the rotate prompt. (The redesign prompt's own worked
+// example says an iPad in portrait should pass, so the threshold sits below 768.)
 const PRACTICE_MIN_WIDTH = 700
 
 // ── Orientation hook ─────────────────────────────────────────
@@ -66,24 +70,29 @@ function buildNoteToMeasure(notes, beatsPerMeasure) {
   return map
 }
 
-// ── Song confetti ────────────────────────────────────────────
+// Strip the trailing octave digit for the big note readouts (e.g. "D5" → "D").
+function noteName(n) {
+  return n ? n.replace(/\d+$/, '') : n
+}
+
+// ── Song confetti (v2 palette) ───────────────────────────────
 const SONG_CONFETTI = [
-  { color: '#D0FFA3', left: '8%',  delay: '0ms' },
-  { color: '#E7A0FE', left: '18%', delay: '80ms' },
-  { color: '#83E7FF', left: '30%', delay: '40ms' },
-  { color: '#006EE9', left: '43%', delay: '120ms' },
-  { color: '#D0FFA3', left: '55%', delay: '20ms' },
-  { color: '#E7A0FE', left: '66%', delay: '100ms' },
-  { color: '#83E7FF', left: '76%', delay: '60ms' },
-  { color: '#006EE9', left: '87%', delay: '140ms' },
-  { color: '#D0FFA3', left: '22%', delay: '180ms' },
-  { color: '#E7A0FE', left: '48%', delay: '200ms' },
+  { color: '#FFF57E', left: '8%',  delay: '0ms' },
+  { color: '#FFB76C', left: '18%', delay: '80ms' },
+  { color: '#6AECE1', left: '30%', delay: '40ms' },
+  { color: '#26CCC2', left: '43%', delay: '120ms' },
+  { color: '#FFF57E', left: '55%', delay: '20ms' },
+  { color: '#FFB76C', left: '66%', delay: '100ms' },
+  { color: '#6AECE1', left: '76%', delay: '60ms' },
+  { color: '#26CCC2', left: '87%', delay: '140ms' },
+  { color: '#FFF57E', left: '22%', delay: '180ms' },
+  { color: '#FFB76C', left: '48%', delay: '200ms' },
 ]
 
-// ── SVG icons ────────────────────────────────────────────────
+// ── SVG icons (Deep Teal ink) ────────────────────────────────
 function ChevronLeftIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="15,18 9,12 15,6" />
     </svg>
   )
@@ -91,7 +100,7 @@ function ChevronLeftIcon() {
 
 function GearIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="3" />
       <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
     </svg>
@@ -100,7 +109,7 @@ function GearIcon() {
 
 function MetronomeIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2" strokeLinecap="round">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2" strokeLinecap="round">
       <path d="M12 22V12M8 22l4-10 4 10M5 7l7-5 7 5" />
     </svg>
   )
@@ -111,123 +120,29 @@ function RotatePrompt() {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center"
-      style={{ background: '#FAFAF8', padding: 24 }}
+      style={{ background: 'var(--color-page)', padding: 24 }}
     >
       <div
         className="rounded-2xl bg-white p-8 text-center"
-        style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)', maxWidth: 320 }}
+        style={{ boxShadow: 'var(--shadow-card)', maxWidth: 320 }}
       >
         <div
           className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-          style={{ background: 'rgba(0, 110, 233, 0.1)' }}
+          style={{ background: 'rgba(38, 204, 194, 0.12)' }}
         >
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#006EE9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#26CCC2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="9" y="4" width="14" height="24" rx="2" />
             <path d="M14 24 h4" />
             <path d="M3 16 a13 13 0 0 1 13 -13" strokeDasharray="2 2" />
             <path d="M3 16 l3 -3 m-3 3 l3 3" />
           </svg>
         </div>
-        <h2 className="mb-2 text-lg font-bold" style={{ color: '#000180' }}>Rotate to landscape</h2>
-        <p className="text-sm" style={{ color: '#000180', lineHeight: 1.5 }}>
+        <h2 className="mb-2 text-lg font-bold" style={{ color: '#0B3D3A' }}>Rotate to landscape</h2>
+        <p className="text-sm" style={{ color: '#0B3D3A', lineHeight: 1.5 }}>
           Practice mode works best when your phone is sideways — that way you can see all of the music at once.
         </p>
       </div>
     </div>
-  )
-}
-
-// ── Tuning bar ───────────────────────────────────────────────
-function TuningBar({ cents, isActive, note }) {
-  const inTune = isActive && cents !== null && Math.abs(cents) <= 20
-  const flat = isActive && cents !== null && cents < -20
-  const sharp = isActive && cents !== null && cents > 20
-
-  const indicatorLeft = cents !== null
-    ? Math.max(5, Math.min(95, 50 + cents))
-    : 50
-
-  const statusText = inTune ? 'In tune' : flat ? 'Flat' : sharp ? 'Sharp' : '—'
-  const statusBg = inTune ? '#D0FFA3' : '#F1EFE8'
-  const statusDot = inTune ? '#000180' : '#666666'
-  const statusColor = inTune ? '#000180' : '#666666'
-
-  return (
-    <>
-      {/* Header */}
-      <div className="flex items-start justify-between" style={{ marginBottom: 6 }}>
-        <div>
-          <p style={{ fontSize: 9, fontWeight: 600, color: '#000180', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
-            You're playing
-          </p>
-          <div className="flex items-baseline gap-1.5" style={{ marginTop: 1 }}>
-            <span style={{ fontSize: 24, fontWeight: 800, color: '#000180', lineHeight: 1 }}>
-              {isActive ? (note ?? '—') : '—'}
-            </span>
-            {isActive && cents !== null && (
-              <span style={{ fontSize: 11, fontWeight: 600, color: '#000180' }}>
-                {cents > 0 ? '+' : ''}{cents}¢
-              </span>
-            )}
-          </div>
-        </div>
-        <div
-          className="flex items-center gap-1.5"
-          style={{
-            background: statusBg,
-            borderRadius: 999,
-            padding: '4px 10px',
-          }}
-        >
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: statusDot }} />
-          <span style={{ fontSize: 10, fontWeight: 700, color: statusColor }}>{statusText}</span>
-        </div>
-      </div>
-
-      {/* Bar */}
-      <div style={{ position: 'relative', height: 22, background: '#F1EFE8', borderRadius: 11, overflow: 'visible' }}>
-        <div
-          style={{
-            position: 'absolute',
-            top: 3, bottom: 3,
-            left: '35%', right: '35%',
-            background: '#D0FFA3',
-            borderRadius: 8,
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            top: 0, bottom: 0,
-            left: '50%',
-            width: 1,
-            background: 'rgba(0,1,128,0.3)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: `${indicatorLeft}%`,
-            transform: 'translate(-50%, -50%)',
-            width: 20,
-            height: 28,
-            background: '#006EE9',
-            border: '2.5px solid white',
-            borderRadius: 10,
-            boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
-            transition: 'left 0.1s ease',
-          }}
-        />
-      </div>
-
-      {/* Labels */}
-      <div className="flex justify-between" style={{ marginTop: 4 }}>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>Flat</span>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>In tune</span>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>Sharp</span>
-      </div>
-    </>
   )
 }
 
@@ -366,7 +281,7 @@ export default function PracticePage() {
   // Song complete screen
   if (songComplete) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center overflow-hidden" style={{ background: '#FAFAF8' }}>
+      <div className="fixed inset-0 flex items-center justify-center overflow-hidden" style={{ background: 'var(--color-page)' }}>
         {SONG_CONFETTI.map((c, i) => (
           <div
             key={i}
@@ -381,7 +296,7 @@ export default function PracticePage() {
         ))}
         <div style={{ background: 'white', borderRadius: 24, padding: '36px 44px', boxShadow: '0 8px 32px rgba(0,0,0,0.08)', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <span style={{ fontSize: 72, display: 'block', lineHeight: 1.1 }}>🎉</span>
-          <p style={{ fontSize: 24, fontWeight: 800, color: '#000180', marginTop: 12 }}>Song complete!</p>
+          <p style={{ fontSize: 24, fontWeight: 800, color: '#0B3D3A', marginTop: 12 }}>Song complete!</p>
           <p style={{ fontSize: 14, color: '#666666', marginTop: 4 }}>Great playing — you nailed every note.</p>
           <button
             onClick={handleNextSong}
@@ -389,9 +304,9 @@ export default function PracticePage() {
             style={{
               display: 'block', width: '100%', marginTop: 20,
               padding: '12px 32px', borderRadius: 999, border: 'none',
-              background: 'linear-gradient(to right, #006EE9, #0056C7)',
-              boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
-              color: 'white', fontWeight: 700, fontSize: 15, cursor: 'pointer',
+              background: 'var(--grad-primary)',
+              boxShadow: 'var(--shadow-primary)',
+              color: '#0B3D3A', fontWeight: 800, fontSize: 15, cursor: 'pointer',
             }}
           >
             Next Song →
@@ -403,112 +318,142 @@ export default function PracticePage() {
     )
   }
 
-  // Compact tuning bar used inside the right panel
-  function CompactTuningBar() {
+  // ── Inline tuning meter (redesign spec · Screen 2 · D right column) ──
+  function TuningMeterInline() {
     const inTune = isActive && cents !== null && Math.abs(cents) <= 20
     const flat   = isActive && cents !== null && cents < -20
     const sharp  = isActive && cents !== null && cents > 20
     const indicatorLeft = cents !== null ? Math.max(5, Math.min(95, 50 + cents)) : 50
-    const statusText = inTune ? 'In tune ✓' : flat ? 'Flat' : sharp ? 'Sharp' : isActive ? 'Listening…' : '—'
-    const statusColor = inTune ? '#006EE9' : '#666666'
+    const statusText = inTune ? 'In tune' : flat ? 'Flat' : sharp ? 'Sharp' : isActive ? 'Listening…' : '—'
+    const statusBg  = inTune ? '#FFF57E' : '#F1EFE8'
+    const statusDot = inTune ? '#0B3D3A' : '#666666'
 
     return (
       <div>
-        <div className="flex items-center justify-between" style={{ marginBottom: 5 }}>
-          <div className="flex items-baseline gap-1.5">
-            <span style={{ fontSize: 20, fontWeight: 800, color: '#000180', lineHeight: 1 }}>
-              {isActive ? (note?.replace(/\d+$/, '') ?? '—') : '—'}
-            </span>
-            {isActive && cents !== null && (
-              <span style={{ fontSize: 10, fontWeight: 600, color: '#000180' }}>
-                {cents > 0 ? '+' : ''}{cents}¢
+        {/* Header: detected note + status pill */}
+        <div className="flex items-start justify-between" style={{ marginBottom: 8 }}>
+          <div>
+            <p style={{ fontSize: 9, fontWeight: 600, color: '#0B3D3A', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+              You're playing
+            </p>
+            <div className="flex items-baseline gap-1.5" style={{ marginTop: 1 }}>
+              <span style={{ fontSize: 24, fontWeight: 800, color: '#0B3D3A', lineHeight: 1 }}>
+                {isActive ? (noteName(note) ?? '—') : '—'}
               </span>
-            )}
+              {isActive && cents !== null && (
+                <span style={{ fontSize: 11, fontWeight: 600, color: '#0B3D3A' }}>
+                  {cents > 0 ? '+' : ''}{cents}¢
+                </span>
+              )}
+            </div>
           </div>
-          <span style={{ fontSize: 10, fontWeight: 600, color: statusColor }}>{statusText}</span>
+          <div
+            className="flex items-center gap-1.5"
+            style={{ background: statusBg, borderRadius: 999, padding: '4px 10px' }}
+          >
+            <div style={{ width: 5, height: 5, borderRadius: '50%', background: statusDot }} />
+            <span style={{ fontSize: 10, fontWeight: 700, color: inTune ? '#0B3D3A' : '#666666' }}>{statusText}</span>
+          </div>
         </div>
 
         {/* Bar */}
-        <div style={{ position: 'relative', height: 16, background: '#F1EFE8', borderRadius: 8 }}>
-          <div style={{ position: 'absolute', top: 3, bottom: 3, left: '35%', right: '35%', background: '#D0FFA3', borderRadius: 5 }} />
-          <div style={{ position: 'absolute', top: 0, bottom: 0, left: '50%', width: 1, background: 'rgba(0,1,128,0.25)' }} />
+        <div style={{ position: 'relative', height: 22, background: '#F1EFE8', borderRadius: 11, overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: 3, bottom: 3, left: '35%', right: '35%', background: '#FFF57E', borderRadius: 8 }} />
+          <div style={{ position: 'absolute', top: 0, bottom: 0, left: '50%', width: 1, background: 'rgba(11,61,58,0.3)' }} />
           <div style={{
             position: 'absolute',
             top: '50%', left: `${indicatorLeft}%`,
             transform: 'translate(-50%, -50%)',
-            width: 14, height: 22,
-            background: '#006EE9',
+            width: 20, height: 28,
+            background: '#26CCC2',
             border: '2.5px solid white',
-            borderRadius: 7,
-            boxShadow: '0 2px 8px rgba(0,110,233,0.4)',
+            borderRadius: 10,
+            boxShadow: 'var(--shadow-primary)',
             transition: 'left 0.1s ease',
-            opacity: isActive && cents !== null ? 1 : 0.25,
+            opacity: isActive && cents !== null ? 1 : 0.3,
           }} />
         </div>
 
-        <div className="flex justify-between" style={{ marginTop: 3 }}>
-          <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>Flat</span>
-          <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>In tune</span>
-          <span style={{ fontSize: 9, fontWeight: 500, color: '#000180' }}>Sharp</span>
+        {/* Labels */}
+        <div className="flex justify-between" style={{ marginTop: 4 }}>
+          <span style={{ fontSize: 9, fontWeight: 500, color: '#0B3D3A' }}>Flat</span>
+          <span style={{ fontSize: 9, fontWeight: 500, color: '#0B3D3A' }}>In tune</span>
+          <span style={{ fontSize: 9, fontWeight: 500, color: '#0B3D3A' }}>Sharp</span>
         </div>
 
         {/* Pitch correction hint */}
         {isActive && cents !== null && Math.abs(cents) > 20 && (
-          <p style={{ fontSize: 9, fontWeight: 500, color: '#666666', marginTop: 5, textAlign: 'center', lineHeight: 1.4 }}>
-            {cents < 0
-              ? 'Faster air · roll flute forward'
-              : 'Slower air · roll flute back'}
+          <p style={{ fontSize: 9, fontWeight: 500, color: '#666666', marginTop: 6, textAlign: 'center', lineHeight: 1.4 }}>
+            {cents < 0 ? 'Faster air · roll flute forward' : 'Slower air · roll flute back'}
           </p>
         )}
       </div>
     )
   }
 
+  const transportOutlineStyle = {
+    minHeight: 44, border: '2px solid #26CCC2', background: 'white',
+    color: '#0B3D3A', fontSize: 12, fontWeight: 700, cursor: 'pointer',
+    padding: 8, borderRadius: 10,
+  }
+
   return (
-    <div className="fixed inset-0 flex flex-col" style={{ background: '#FAFAF8' }}>
+    <div className="fixed inset-0 flex flex-col" style={{ background: 'var(--color-page)' }}>
 
       {/* ── Top bar ── */}
       <div
         className="flex-shrink-0 flex items-center justify-between"
-        style={{ padding: 'calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) 6px calc(14px + env(safe-area-inset-left))' }}
+        style={{ padding: 'calc(12px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) 8px calc(16px + env(safe-area-inset-left))' }}
       >
-        <div className="flex items-center gap-2">
+        {/* Left: back + song title */}
+        <div className="flex items-center gap-2 min-w-0">
           <button
             onClick={() => navigate('/songs')}
             className="flex items-center justify-center rounded-full bg-white active:scale-95 transition-transform flex-shrink-0"
-            style={{ width: 44, height: 44, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, boxShadow: 'var(--shadow-card)', border: 'none', cursor: 'pointer' }}
             aria-label="Back to songs"
           >
             <ChevronLeftIcon />
           </button>
-          <div>
-            <p style={{ fontSize: 9, fontWeight: 600, color: '#000180', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+          <div className="min-w-0">
+            <p style={{ fontSize: 9, fontWeight: 600, color: '#0B3D3A', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
               Now Practicing
             </p>
-            <p style={{ fontSize: 13, fontWeight: 700, color: '#000180', lineHeight: 1.1 }}>
+            <p className="truncate" style={{ fontSize: 14, fontWeight: 700, color: '#0B3D3A', lineHeight: 1.1 }}>
               {song?.title ?? 'Select a song'}
             </p>
           </div>
         </div>
 
-        <p style={{ fontSize: 10, fontWeight: 600, color: '#000180' }}>
+        {/* Centre: bar count */}
+        <p className="flex-shrink-0" style={{ fontSize: 10, fontWeight: 600, color: '#0B3D3A', padding: '0 8px' }}>
           Bar {currentBar} / {totalMeasures}
         </p>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5" style={{ background: 'rgba(208,255,163,0.4)', borderRadius: 999, padding: '5px 9px' }}>
+        {/* Right: bpm pill + mastery pip + settings */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <div
+            className="flex items-center gap-1.5"
+            style={{ background: 'white', borderRadius: 999, padding: '6px 12px', boxShadow: 'var(--shadow-card)' }}
+          >
+            <MetronomeIcon />
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#0B3D3A' }}>80 bpm</span>
+          </div>
+
+          <div className="flex items-center gap-1.5" style={{ background: 'rgba(255,245,126,0.4)', borderRadius: 999, padding: '6px 10px' }}>
             {[0, 1, 2].map(i => (
               <div key={i} style={{
                 width: 7, height: 7, borderRadius: '50%',
-                background: i < masteryDots ? '#D0FFA3' : 'white',
-                border: `1.5px solid ${i < masteryDots ? '#006EE9' : '#D3D1C7'}`,
+                background: i < masteryDots ? '#FFF57E' : 'white',
+                border: `1.5px solid ${i < masteryDots ? '#26CCC2' : '#D3D1C7'}`,
                 transition: 'background 0.2s ease',
               }} />
             ))}
           </div>
+
           <button
             className="flex items-center justify-center rounded-full bg-white active:scale-95 transition-transform"
-            style={{ width: 44, height: 44, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: 'none', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, boxShadow: 'var(--shadow-card)', border: 'none', cursor: 'pointer' }}
             aria-label="Settings"
           >
             <GearIcon />
@@ -516,110 +461,107 @@ export default function PracticePage() {
         </div>
       </div>
 
-      {/* ── Two-column body ── */}
-      <div className="flex-1 flex gap-2 min-h-0" style={{ padding: '0 calc(10px + env(safe-area-inset-right)) calc(70px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left))' }}>
+      {/* ── Main grid: staff (1fr) over fingering+tuning bottom row (auto) ── */}
+      <div
+        style={{
+          flex: 1, display: 'grid', gridTemplateRows: 'minmax(0, 1fr) auto', gap: 10, minHeight: 0,
+          padding: '0 calc(14px + env(safe-area-inset-right)) calc(12px + 70px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))',
+        }}
+      >
 
-        {/* Left column — music staff (60%) */}
-        <div className="flex flex-col" style={{ flex: 3, minWidth: 0 }}>
-
-          {/* Staff card */}
-          <div
-            className="bg-white flex-1"
-            style={{
-              borderRadius: 14,
-              padding: '10px 12px 8px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-              minHeight: 0,
-              overflow: 'hidden',
-            }}
-          >
+        {/* ── Music staff card (transport lives inside) ── */}
+        <div
+          className="bg-white flex flex-col"
+          style={{ borderRadius: 16, padding: '16px 20px', boxShadow: 'var(--shadow-card)', minHeight: 0 }}
+        >
+          {/* Two stacked 4-bar staff lines */}
+          <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
             <SongScore
               notes={song?.notes ?? []}
               currentNoteIndex={currentNoteIndex}
               beatsPerMeasure={beatsPerMeasure}
               startMeasure={startMeasure}
               measuresPerPage={MEASURES_PER_PAGE}
+              measuresPerRow={MEASURES_PER_ROW}
             />
           </div>
 
           {/* Transport controls */}
-          <div className="flex-shrink-0 flex items-center gap-2" style={{ marginTop: 8 }}>
+          <div className="flex-shrink-0 flex items-center gap-2" style={{ marginTop: 12 }}>
             <button
               onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
               disabled={currentPage === 0}
-              className="flex-1 flex items-center justify-center rounded-xl transition-colors active:bg-[#006EE9] active:text-white"
-              style={{
-                height: 36, border: '2px solid #006EE9', background: 'white',
-                color: '#006EE9', fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                opacity: currentPage === 0 ? 0.3 : 1,
-              }}
+              className="flex-1 flex items-center justify-center transition-colors hover:brightness-95 active:bg-[#26CCC2] active:text-[#0B3D3A]"
+              style={{ ...transportOutlineStyle, opacity: currentPage === 0 ? 0.3 : 1 }}
             >
-              ← Prev
+              ← Prev bar
             </button>
 
             <button
               onClick={isActive ? handleStop : handleStart}
               className="flex items-center justify-center gap-2 active:scale-95 transition-transform flex-shrink-0"
               style={{
-                height: 36, padding: '0 20px', borderRadius: 999, border: 'none',
-                background: isActive ? '#F1EFE8' : 'linear-gradient(to right, #006EE9, #0056C7)',
-                boxShadow: isActive ? 'none' : '0 4px 16px rgba(0,110,233,0.35)',
-                color: isActive ? '#000180' : 'white',
-                fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                minHeight: 44, padding: '0 24px', borderRadius: 999, border: 'none',
+                background: isActive ? '#F1EFE8' : 'var(--grad-primary)',
+                boxShadow: isActive ? 'none' : 'var(--shadow-primary)',
+                color: '#0B3D3A',
+                fontSize: 12, fontWeight: 700, cursor: 'pointer',
               }}
               aria-label={isActive ? 'Stop' : 'Play along'}
             >
               {isActive ? (
-                <><svg width="10" height="10" viewBox="0 0 24 24" fill="#000180"><rect x="4" y="4" width="16" height="16" rx="2" /></svg> Stop</>
+                <><svg width="12" height="12" viewBox="0 0 24 24" fill="#0B3D3A"><rect x="4" y="4" width="16" height="16" rx="2" /></svg> Stop</>
               ) : (
-                <><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21" /></svg> Play along</>
+                <><svg width="14" height="14" viewBox="0 0 24 24" fill="#0B3D3A"><polygon points="5,3 19,12 5,21" /></svg> Play along</>
               )}
             </button>
 
             <button
               onClick={() => setCurrentPage(p => Math.min(totalPages - 1, p + 1))}
-              disabled={currentPage === totalPages - 1}
-              className="flex-1 flex items-center justify-center rounded-xl transition-colors active:bg-[#006EE9] active:text-white"
-              style={{
-                height: 36, border: '2px solid #006EE9', background: 'white',
-                color: '#006EE9', fontSize: 12, fontWeight: 700, cursor: 'pointer',
-                opacity: currentPage === totalPages - 1 ? 0.3 : 1,
-              }}
+              disabled={currentPage >= totalPages - 1}
+              className="flex-1 flex items-center justify-center transition-colors hover:brightness-95 active:bg-[#26CCC2] active:text-[#0B3D3A]"
+              style={{ ...transportOutlineStyle, opacity: currentPage >= totalPages - 1 ? 0.3 : 1 }}
             >
-              Next →
+              Next bar →
             </button>
           </div>
         </div>
 
-        {/* Right column — fingering + tuning (40%) */}
-        <div
-          className="flex flex-col gap-2"
-          style={{ flex: 2, minWidth: 0, minHeight: 0 }}
-        >
-          {/* Fingering diagram — scrolls internally so the tuning card below stays
-              visible even in short landscape (the core feedback loop). */}
-          <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
-            {expectedNoteId ? (
-              <FingeringDiagramForNote noteId={expectedNoteId} />
-            ) : (
-              <div
-                className="bg-white flex items-center justify-center"
-                style={{ borderRadius: 14, padding: 20, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', minHeight: 80 }}
-              >
-                <p style={{ fontSize: 12, color: '#D3D1C7', fontWeight: 600 }}>No note</p>
+        {/* ── Bottom row: fingering (1.7fr) + tuning (1fr) ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 10, minHeight: 0 }}>
+
+          {/* Fingering card */}
+          <div
+            className="bg-white flex flex-col"
+            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: 'var(--shadow-card)', minHeight: 0, maxHeight: '38vh' }}
+          >
+            <div className="flex items-baseline justify-between" style={{ marginBottom: 8 }}>
+              <div className="flex items-baseline gap-2">
+                <span style={{ fontSize: 9, fontWeight: 600, color: '#0B3D3A', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                  Fingering
+                </span>
+                <span style={{ fontSize: 18, fontWeight: 800, color: '#0B3D3A', lineHeight: 1 }}>
+                  {expectedNoteId ?? '—'}
+                </span>
               </div>
-            )}
+              <span style={{ fontSize: 10, fontWeight: 500, color: '#666666' }}>Updates with each note</span>
+            </div>
+
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 0, overflow: 'auto' }}>
+              {expectedNoteId ? (
+                <FingeringDiagramForNote noteId={expectedNoteId} />
+              ) : (
+                <p style={{ fontSize: 12, color: '#D3D1C7', fontWeight: 600 }}>No note</p>
+              )}
+            </div>
           </div>
 
-          {/* Tuning card */}
+          {/* Tuning meter card */}
           <div
-            className="bg-white flex-shrink-0"
-            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+            className="bg-white flex flex-col justify-center"
+            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: 'var(--shadow-card)', maxHeight: '38vh' }}
           >
-            <p style={{ fontSize: 9, fontWeight: 600, color: '#000180', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: 8 }}>
-              Tuning
-            </p>
-            <CompactTuningBar />
+            <TuningMeterInline />
           </div>
         </div>
       </div>

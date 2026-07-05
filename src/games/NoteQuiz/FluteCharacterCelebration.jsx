@@ -98,7 +98,7 @@ const CONFETTI_EXTRA = [
   { cx: 50, cy: -45 }, { cx: -50, cy: -50 }, { cx: 90, cy: -55 },
   { cx: -80, cy: -15 }, { cx: 20, cy: -90 }, { cx: -25, cy: -35 },
 ]
-const CONFETTI_COLORS = ['#D0FFA3', '#83E7FF', '#D0FFA3', '#83E7FF', '#D0FFA3', '#83E7FF']
+const CONFETTI_COLORS = ['#FFF57E', '#6AECE1', '#FFF57E', '#6AECE1', '#FFF57E', '#6AECE1']
 
 // ── Inline FluteCharacter SVG (happy mood, for celebrations) ──────────────────
 
@@ -107,24 +107,24 @@ function CelebrationSVG({ size }) {
   return (
     <svg viewBox="0 0 80 180" width={size} height={bodyHeight} aria-hidden="true">
       <ellipse cx="40" cy="174" rx="22" ry="5" fill="rgba(0,0,0,0.10)" />
-      <rect x="28" y="50" width="24" height="122" rx="12" fill="#83E7FF" />
+      <rect x="28" y="50" width="24" height="122" rx="12" fill="#6AECE1" />
       <rect x="31" y="54" width="7" height="114" rx="3.5" fill="rgba(255,255,255,0.28)" />
-      <circle cx="40" cy="95"  r="5" fill="#006EE9" />
-      <circle cx="40" cy="112" r="5" fill="#006EE9" />
-      <circle cx="40" cy="129" r="5" fill="#006EE9" />
-      <circle cx="40" cy="146" r="5" fill="#006EE9" />
-      <circle cx="40" cy="34" r="26" fill="#83E7FF" />
+      <circle cx="40" cy="95"  r="5" fill="#26CCC2" />
+      <circle cx="40" cy="112" r="5" fill="#26CCC2" />
+      <circle cx="40" cy="129" r="5" fill="#26CCC2" />
+      <circle cx="40" cy="146" r="5" fill="#26CCC2" />
+      <circle cx="40" cy="34" r="26" fill="#6AECE1" />
       <circle cx="32" cy="26" r="7" fill="rgba(255,255,255,0.20)" />
       <circle cx="31" cy="30" r="6.5" fill="white" />
-      <circle cx="31.5" cy="30.5" r="3" fill="#1A1A2E" />
+      <circle cx="31.5" cy="30.5" r="3" fill="#0B3D3A" />
       <circle cx="29.5" cy="28.5" r="1.5" fill="white" />
       <circle cx="49" cy="30" r="6.5" fill="white" />
-      <circle cx="49.5" cy="30.5" r="3" fill="#1A1A2E" />
+      <circle cx="49.5" cy="30.5" r="3" fill="#0B3D3A" />
       <circle cx="47.5" cy="28.5" r="1.5" fill="white" />
-      <path d="M 28 40 Q 40 54 52 40" fill="none" stroke="#1A1A2E" strokeWidth="2.5" strokeLinecap="round" />
-      <ellipse cx="24" cy="38" rx="5" ry="3" fill="#F48FB1" opacity="0.5" />
-      <ellipse cx="56" cy="38" rx="5" ry="3" fill="#F48FB1" opacity="0.5" />
-      <text x="64" y="30" fontSize="16" fill="#006EE9" fontWeight="bold">♪</text>
+      <path d="M 28 40 Q 40 54 52 40" fill="none" stroke="#0B3D3A" strokeWidth="2.5" strokeLinecap="round" />
+      <ellipse cx="24" cy="38" rx="5" ry="3" fill="#FFB76C" opacity="0.5" />
+      <ellipse cx="56" cy="38" rx="5" ry="3" fill="#FFB76C" opacity="0.5" />
+      <text x="64" y="30" fontSize="16" fill="#26CCC2" fontWeight="bold">♪</text>
     </svg>
   )
 }
@@ -182,7 +182,7 @@ export default function FluteCharacterCelebration({ visible, move, streak, score
         <div style={{
           position: 'absolute',
           top: 0, left: 0, right: 0, bottom: 0,
-          background: '#D0FFA3',
+          background: '#FFF57E',
           animation: 'nq-flash 200ms ease forwards',
         }} />
       )}
@@ -194,7 +194,7 @@ export default function FluteCharacterCelebration({ visible, move, streak, score
         fontFamily: "'Nunito', sans-serif",
         fontWeight: 800,
         fontSize: 28,
-        color: '#000180',
+        color: '#FFFFFF',
         animation: 'nq-score-float 700ms ease forwards',
         whiteSpace: 'nowrap',
       }}>
@@ -237,7 +237,7 @@ export default function FluteCharacterCelebration({ visible, move, streak, score
           fontFamily: "'Nunito', sans-serif",
           fontWeight: 700,
           fontSize: 14,
-          color: '#83E7FF',
+          color: '#6AECE1',
           marginTop: 8,
           animation: 'nq-label-fade 500ms ease forwards',
           whiteSpace: 'nowrap',

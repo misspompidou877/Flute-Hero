@@ -6,20 +6,20 @@ function getCardStyle(status) {
   switch (status) {
     case 'active':
       return {
-        borderColor: '#006EE9',
+        borderColor: '#26CCC2',
         background: 'rgba(245,166,35,0.07)',
-        boxShadow: '0 0 14px rgba(131,231,255,0.25)',
+        boxShadow: '0 0 14px rgba(106,236,225,0.25)',
       }
     case 'correct':
       return {
-        borderColor: '#4CAF50',
-        background: '#F0FBF0',
-        boxShadow: '0 0 16px rgba(76,175,80,0.2)',
+        borderColor: '#F0D64E',
+        background: 'rgba(255,245,126,0.10)',
+        boxShadow: '0 0 16px rgba(255,245,126,0.6)',
       }
     case 'wrong':
       return {
-        borderColor: '#006EE9',
-        background: '#FFF8EE',
+        borderColor: '#FFB76C',
+        background: '#FAFAF8',
         boxShadow: 'none',
       }
     case 'hidden':
@@ -47,7 +47,7 @@ export default function EchoNoteCard({ noteId, status, showFingering = false, si
   }, [status])
 
   const animStyle = popAnim
-    ? { animation: 'scale-pop 200ms ease-out', boxShadow: '0 0 16px rgba(76,175,80,0.5)' }
+    ? { animation: 'scale-pop 200ms ease-out', boxShadow: '0 0 16px rgba(255,245,126,0.6)' }
     : {}
 
   if (size === 'small') {
@@ -56,14 +56,14 @@ export default function EchoNoteCard({ noteId, status, showFingering = false, si
         className="flex h-16 w-14 flex-col items-center justify-center rounded-xl border-2 transition-all"
         style={{ ...cardStyle, ...animStyle }}
       >
-        <span className="text-base font-black leading-tight text-[#2D2D2D]">
+        <span className="text-base font-black leading-tight text-[#0B3D3A]">
           {isHidden ? '?' : label}
         </span>
         {!isHidden && (
           <span className="text-xs" style={{ color: '#666666' }}>{octave}</span>
         )}
-        {status === 'correct' && <span className="text-xs font-bold" style={{ color: '#4CAF50' }}>✓</span>}
-        {status === 'wrong'   && <span className="text-xs font-bold" style={{ color: '#006EE9' }}>✗</span>}
+        {status === 'correct' && <span className="text-xs font-bold" style={{ color: '#0B3D3A' }}>✓</span>}
+        {status === 'wrong'   && <span className="text-xs font-bold" style={{ color: '#0B3D3A' }}>✗</span>}
       </div>
     )
   }
@@ -75,7 +75,7 @@ export default function EchoNoteCard({ noteId, status, showFingering = false, si
       style={{ ...cardStyle, ...animStyle }}
     >
       <div className="mb-2 text-center">
-        <span className="text-6xl font-black leading-none text-[#2D2D2D]">
+        <span className="text-6xl font-black leading-none text-[#0B3D3A]">
           {isHidden ? '?' : label}
         </span>
         {!isHidden && (
@@ -83,10 +83,10 @@ export default function EchoNoteCard({ noteId, status, showFingering = false, si
         )}
       </div>
       {status === 'correct' && (
-        <p className="mt-2 text-center text-2xl font-bold" style={{ color: '#4CAF50' }}>✓</p>
+        <p className="mt-2 text-center text-2xl font-bold" style={{ color: '#0B3D3A' }}>✓</p>
       )}
       {status === 'wrong' && (
-        <p className="mt-2 text-center text-2xl font-bold" style={{ color: '#006EE9' }}>✗</p>
+        <p className="mt-2 text-center text-2xl font-bold" style={{ color: '#0B3D3A' }}>✗</p>
       )}
       {showFingering && !isHidden && (
         <div className="mt-4">

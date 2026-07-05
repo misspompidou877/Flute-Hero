@@ -13,7 +13,7 @@ const MNEMONIC_LINE = {
   notes: ['E4',    'G4',   'B4',  'D5',        'F5'],
 }
 
-const FACE_COLORS = { F4: '#83E7FF', A4: '#006EE9', C5: '#D0FFA3', E5: '#E7A0FE' }
+const FACE_COLORS = { F4: '#6AECE1', A4: '#26CCC2', C5: '#FFF57E', E5: '#FFB76C' }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -49,8 +49,8 @@ function MnemonicHint({ noteId }) {
   if (isLine) {
     return (
       <div style={{
-        background: '#FFF8EE',
-        border: '1.5px solid #006EE9',
+        background: '#FAFAF8',
+        border: '1.5px solid #26CCC2',
         borderRadius: 12,
         padding: '10px 14px',
         marginTop: 12,
@@ -65,7 +65,7 @@ function MnemonicHint({ noteId }) {
             <span
               key={word}
               style={{
-                color: MNEMONIC_LINE.notes[i] === noteId ? '#006EE9' : '#2D2D2D',
+                color: MNEMONIC_LINE.notes[i] === noteId ? '#26CCC2' : '#0B3D3A',
                 fontWeight: MNEMONIC_LINE.notes[i] === noteId ? 900 : 600,
                 marginRight: i < 4 ? 6 : 0,
               }}
@@ -88,8 +88,8 @@ function MnemonicHint({ noteId }) {
 
   return (
     <div style={{
-      background: '#FFF8EE',
-      border: '1.5px solid #006EE9',
+      background: '#FAFAF8',
+      border: '1.5px solid #26CCC2',
       borderRadius: 12,
       padding: '10px 14px',
       marginTop: 12,
@@ -219,7 +219,7 @@ export default function NoteNameQuiz() {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 800,
           fontSize: 22,
-          color: '#2D2D2D',
+          color: '#0B3D3A',
           margin: '0 0 8px',
         }}>
           Note Name Quiz
@@ -243,8 +243,8 @@ export default function NoteNameQuiz() {
             paddingRight: 32,
             borderRadius: 999,
             border: 'none',
-            background: 'linear-gradient(to right, #006EE9, #0056C7)',
-            color: '#FFFFFF',
+            background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            color: '#0B3D3A',
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 800,
             fontSize: 18,
@@ -275,7 +275,7 @@ export default function NoteNameQuiz() {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 800,
           fontSize: 24,
-          color: '#2D2D2D',
+          color: '#0B3D3A',
           margin: '0 0 8px',
         }}>
           {isPerfect ? 'Perfect score!' : 'Good effort!'}
@@ -284,7 +284,7 @@ export default function NoteNameQuiz() {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 700,
           fontSize: 36,
-          color: isPerfect ? '#4CAF50' : '#006EE9',
+          color: isPerfect ? '#1AA89F' : '#26CCC2',
           margin: '8px 0 16px',
         }}>
           {score} / 10
@@ -295,8 +295,8 @@ export default function NoteNameQuiz() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: 10,
-            background: '#FFF8EE',
-            border: '2px solid #006EE9',
+            background: '#FAFAF8',
+            border: '2px solid #26CCC2',
             borderRadius: 12,
             padding: '10px 18px',
             marginBottom: 20,
@@ -308,7 +308,7 @@ export default function NoteNameQuiz() {
                 fontFamily: 'Nunito, sans-serif',
                 fontWeight: 800,
                 fontSize: 15,
-                color: '#2D2D2D',
+                color: '#0B3D3A',
                 margin: 0,
               }}>
                 Badge earned: Note Reader!
@@ -344,8 +344,8 @@ export default function NoteNameQuiz() {
             paddingRight: 32,
             borderRadius: 999,
             border: 'none',
-            background: 'linear-gradient(to right, #006EE9, #0056C7)',
-            color: '#FFFFFF',
+            background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            color: '#0B3D3A',
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 800,
             fontSize: 18,
@@ -381,8 +381,8 @@ export default function NoteNameQuiz() {
           Question {currentIdx + 1} / 10
         </span>
         <span style={{
-          fontSize: 15, fontWeight: 800, color: '#2D2D2D',
-          background: '#FAF4EE', borderRadius: 20, padding: '3px 12px',
+          fontSize: 15, fontWeight: 800, color: '#0B3D3A',
+          background: '#FAFAF8', borderRadius: 20, padding: '3px 12px',
         }}>
           Score: {score}
         </span>
@@ -403,7 +403,7 @@ export default function NoteNameQuiz() {
         fontFamily: 'Nunito, sans-serif',
         fontWeight: 700,
         fontSize: 18,
-        color: '#2D2D2D',
+        color: '#0B3D3A',
         textAlign: 'center',
         margin: '0 0 16px',
       }}>
@@ -435,10 +435,10 @@ export default function NoteNameQuiz() {
                 border: isThisCorrect ? 'none'
                   : isThisWrong ? 'none'
                   : '2px solid #EEEEEE',
-                background: isThisCorrect ? '#4CAF50'
-                  : isThisWrong ? '#FFAAAA'
+                background: isThisCorrect ? '#26CCC2'
+                  : isThisWrong ? '#FFB76C'
                   : '#FFFFFF',
-                color: isSelected ? '#FFFFFF' : '#2D2D2D',
+                color: '#0B3D3A',
                 fontFamily: 'Nunito, sans-serif',
                 fontWeight: 900,
                 fontSize: 22,
@@ -459,7 +459,7 @@ export default function NoteNameQuiz() {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 800,
           fontSize: 18,
-          color: '#4CAF50',
+          color: '#26CCC2',
           textAlign: 'center',
           margin: 0,
           animation: 'f-pop 0.3s ease',

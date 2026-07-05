@@ -17,7 +17,7 @@ export default function LessonCard({
     <div
       style={{
         minHeight: '100dvh',
-        background: '#FAF4EE',
+        background: '#FAFAF8',
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '680px',
@@ -43,7 +43,7 @@ export default function LessonCard({
         style={{
           padding: '16px',
           paddingBottom: `calc(16px + env(safe-area-inset-bottom, 0px))`,
-          background: '#FAF4EE',
+          background: '#FAFAF8',
           display: 'flex',
           flexDirection: 'row',
           gap: '12px',
@@ -82,9 +82,9 @@ export default function LessonCard({
               borderRadius: '28px',
               border: 'none',
               background: nextDisabled
-                ? '#006EE9'
-                : 'linear-gradient(to right, #006EE9, #0056C7)',
-              color: '#FFFFFF',
+                ? '#26CCC2'
+                : 'linear-gradient(to right, #26CCC2, #1AA89F)',
+              color: '#0B3D3A',
               fontFamily: 'Nunito, sans-serif',
               fontWeight: 700,
               fontSize: '20px',

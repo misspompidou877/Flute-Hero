@@ -56,9 +56,9 @@ function renderGuide({
     const isRevealed = revealNote === id
     const isTapped   = tappedNotes.has(id)
     const color = isRevealed
-      ? '#4CAF50'
+      ? '#26CCC2'
       : isTapped
-        ? (activeColors[id] ?? '#006EE9')
+        ? (activeColors[id] ?? '#26CCC2')
         : '#555555'
 
     const sn = new StaveNote({ keys: [NOTE_KEYS[id] || 'b/4'], duration: 'w' })
@@ -83,9 +83,9 @@ function renderGuide({
     const isRevealed = revealNote === noteId
     const isTapped   = tappedNotes.has(noteId)
     const color = isRevealed
-      ? '#4CAF50'
+      ? '#26CCC2'
       : isTapped
-        ? (activeColors[noteId] ?? '#006EE9')
+        ? (activeColors[noteId] ?? '#26CCC2')
         : '#555555'
 
     const noteX    = sn.getAbsoluteX()

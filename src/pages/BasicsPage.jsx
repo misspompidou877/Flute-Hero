@@ -34,7 +34,7 @@ function Card({ to, borderColor, iconBg, emoji, title, subtitle, meta }) {
           {emoji}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#2D2D2D', margin: 0 }}>
+          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 16, color: '#0B3D3A', margin: 0 }}>
             {title}
           </p>
           <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 400, fontSize: 13, color: '#666666', margin: 0 }}>
@@ -61,10 +61,10 @@ export default function BasicsPage() {
   const noteCount = masteredNotes.length
 
   return (
-    <div style={{ background: '#FAF4EE', minHeight: '100%' }}>
+    <div style={{ background: '#FAFAF8', minHeight: '100%' }}>
       {/* Header */}
       <div style={{ padding: '20px 16px 12px' }}>
-        <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 24, color: '#000180', margin: 0 }}>
+        <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 24, color: '#0B3D3A', margin: 0 }}>
           Basics
         </p>
         <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 500, fontSize: 14, color: '#666666', margin: '2px 0 0' }}>
@@ -92,16 +92,16 @@ export default function BasicsPage() {
         />
         <Card
           to="/read-music"
-          borderColor="#4CAF50"
-          iconBg="#E8F5E9"
+          borderColor="#26CCC2"
+          iconBg="rgba(106,236,225,0.12)"
           emoji="🎼"
           title="Read Music"
           subtitle="Note names on the staff (EGBDF, FACE)"
         />
         <Card
           to="/fingering-library"
-          borderColor="#42A5F5"
-          iconBg="#E3F2FD"
+          borderColor="#26CCC2"
+          iconBg="rgba(106,236,225,0.12)"
           emoji="👋"
           title="Fingering Library"
           subtitle="All your learned fingerings"

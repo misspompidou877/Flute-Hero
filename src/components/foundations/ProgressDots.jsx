@@ -16,8 +16,8 @@ export default function ProgressDots({ total, current, onDotClick }) {
         const isCurrent = i === current
 
         let bg = '#EEEEEE'
-        if (isComplete) bg = '#4CAF50'
-        if (isCurrent) bg = '#006EE9'
+        if (isComplete) bg = '#26CCC2'
+        if (isCurrent) bg = '#26CCC2'
 
         const handleClick = isComplete && onDotClick ? () => onDotClick(i) : undefined
 

@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { STORAGE_KEY, defaultProgress } from './progressDefaults'
 import { FREE_MAX_LEVEL } from '../data/freemium'
+import { hasFullAccess } from '../utils/trial'
 
 const ProgressContext = createContext(null)
 
@@ -25,10 +26,11 @@ export function ProgressProvider({ children }) {
   const [progress, setProgress] = useState(safeLoadProgress)
 
   const value = useMemo(() => {
-    // Free users are capped at Level 1; premium unlocks every level.
+    // Free users are capped at Level 1; premium unlocks every level, and so
+    // does an active free trial (see src/utils/trial.js).
     // NOTE: when strict note-progression is re-enabled for premium users,
     // replace `99` with `computeLevel(progress.masteredNotes)`.
-    const currentLevel = progress.isPremium ? 99 : FREE_MAX_LEVEL
+    const currentLevel = hasFullAccess(progress.isPremium) ? 99 : FREE_MAX_LEVEL
     const enrichedProgress = { ...progress, currentLevel }
 
     const save = (next) => {

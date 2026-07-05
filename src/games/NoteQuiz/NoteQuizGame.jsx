@@ -178,7 +178,7 @@ function IdleCharacter() {
         boxShadow: '0 3px 14px rgba(0,0,0,0.18)',
         fontSize: 14,
         fontWeight: 700,
-        color: '#000180',
+        color: '#0B3D3A',
         fontFamily: "'Nunito', sans-serif",
         whiteSpace: 'nowrap',
         position: 'relative',
@@ -195,22 +195,22 @@ function IdleCharacter() {
       {/* Character SVG */}
       <svg viewBox="0 0 80 180" width="80" height="180" aria-hidden="true">
         <ellipse cx="40" cy="174" rx="22" ry="5" fill="rgba(0,0,0,0.15)" />
-        <rect x="28" y="50" width="24" height="122" rx="12" fill="#83E7FF" />
+        <rect x="28" y="50" width="24" height="122" rx="12" fill="#6AECE1" />
         <rect x="31" y="54" width="7" height="114" rx="3.5" fill="rgba(255,255,255,0.28)" />
-        <circle cx="40" cy="95"  r="5" fill="#006EE9" />
-        <circle cx="40" cy="112" r="5" fill="#006EE9" />
-        <circle cx="40" cy="129" r="5" fill="#006EE9" />
-        <circle cx="40" cy="146" r="5" fill="#006EE9" />
-        <circle cx="40" cy="34" r="26" fill="#83E7FF" />
+        <circle cx="40" cy="95"  r="5" fill="#26CCC2" />
+        <circle cx="40" cy="112" r="5" fill="#26CCC2" />
+        <circle cx="40" cy="129" r="5" fill="#26CCC2" />
+        <circle cx="40" cy="146" r="5" fill="#26CCC2" />
+        <circle cx="40" cy="34" r="26" fill="#6AECE1" />
         <circle cx="32" cy="26" r="7" fill="rgba(255,255,255,0.20)" />
         <circle cx="31" cy="30" r="6.5" fill="white" />
-        <circle cx="31.5" cy="30.5" r="3" fill="#1A1A2E" />
+        <circle cx="31.5" cy="30.5" r="3" fill="#0B3D3A" />
         <circle cx="29.5" cy="28.5" r="1.5" fill="white" />
         <circle cx="49" cy="30" r="6.5" fill="white" />
-        <circle cx="49.5" cy="30.5" r="3" fill="#1A1A2E" />
+        <circle cx="49.5" cy="30.5" r="3" fill="#0B3D3A" />
         <circle cx="47.5" cy="28.5" r="1.5" fill="white" />
-        <path d="M 31 40 Q 40 49 49 40" fill="none" stroke="#1A1A2E" strokeWidth="2.2" strokeLinecap="round" />
-        <text x="64" y="30" fontSize="16" fill="#006EE9" fontWeight="bold">♪</text>
+        <path d="M 31 40 Q 40 49 49 40" fill="none" stroke="#0B3D3A" strokeWidth="2.2" strokeLinecap="round" />
+        <text x="64" y="30" fontSize="16" fill="#26CCC2" fontWeight="bold">♪</text>
       </svg>
     </div>
   )
@@ -477,7 +477,7 @@ export default function NoteQuizGame({ onBack }) {
   useEffect(() => () => stopTimer(), [])
 
   // ── Timer bar color ───────────────────────────────────────────────────────────
-  const timerColor = timeLeft > 3 ? '#006EE9' : timeLeft > 1 ? '#83E7FF' : '#FF6B6B'
+  const timerColor = timeLeft > 3 ? '#26CCC2' : timeLeft > 1 ? '#FFB76C' : '#FFF57E'
 
   // ════════════════════════════════════════════════════════════════════════════
   //  RENDER: IDLE SCREEN
@@ -487,7 +487,7 @@ export default function NoteQuizGame({ onBack }) {
     const prevBest = safeLoadBestScore()
     return (
       <div style={{
-        background: '#000180',
+        background: '#0B3D3A',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -528,7 +528,7 @@ export default function NoteQuizGame({ onBack }) {
           margin: 0,
           textAlign: 'center',
         }}>
-          Note Quiz
+          Catch the Falling Notes
         </h1>
 
         {/* Character */}
@@ -537,14 +537,14 @@ export default function NoteQuizGame({ onBack }) {
         {/* Best score pill */}
         {prevBest > 0 && (
           <div style={{
-            background: 'rgba(208,255,163,0.15)',
-            border: '1px solid #D0FFA3',
+            background: 'rgba(255,245,126,0.15)',
+            border: '1px solid #FFF57E',
             borderRadius: 999,
             padding: '6px 18px',
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 700,
             fontSize: 14,
-            color: '#D0FFA3',
+            color: '#FFF57E',
           }}>
             🏆 Best: {prevBest} pts
           </div>
@@ -569,9 +569,9 @@ export default function NoteQuizGame({ onBack }) {
                 style={{
                   padding: '8px 20px',
                   borderRadius: 999,
-                  border: totalRounds === n ? '2px solid #83E7FF' : '2px solid rgba(131,231,255,0.25)',
-                  background: totalRounds === n ? 'rgba(131,231,255,0.2)' : 'transparent',
-                  color: totalRounds === n ? '#83E7FF' : 'rgba(255,255,255,0.5)',
+                  border: totalRounds === n ? '2px solid #6AECE1' : '2px solid rgba(106,236,225,0.25)',
+                  background: totalRounds === n ? 'rgba(106,236,225,0.2)' : 'transparent',
+                  color: totalRounds === n ? '#6AECE1' : 'rgba(255,255,255,0.5)',
                   fontFamily: "'Nunito', sans-serif",
                   fontWeight: 700,
                   fontSize: 16,
@@ -609,9 +609,9 @@ export default function NoteQuizGame({ onBack }) {
                 style={{
                   padding: '8px 16px',
                   borderRadius: 999,
-                  border: speedMode === value ? '2px solid #83E7FF' : '2px solid rgba(131,231,255,0.25)',
-                  background: speedMode === value ? 'rgba(131,231,255,0.2)' : 'transparent',
-                  color: speedMode === value ? '#83E7FF' : 'rgba(255,255,255,0.5)',
+                  border: speedMode === value ? '2px solid #6AECE1' : '2px solid rgba(106,236,225,0.25)',
+                  background: speedMode === value ? 'rgba(106,236,225,0.2)' : 'transparent',
+                  color: speedMode === value ? '#6AECE1' : 'rgba(255,255,255,0.5)',
                   fontFamily: "'Nunito', sans-serif",
                   fontWeight: 700,
                   fontSize: 14,
@@ -635,9 +635,9 @@ export default function NoteQuizGame({ onBack }) {
             padding: '16px 48px',
             borderRadius: 16,
             border: 'none',
-            background: 'linear-gradient(to right, #006EE9, #0056C7)',
-            boxShadow: '0 4px 20px rgba(0,110,233,0.5)',
-            color: 'white',
+            background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            boxShadow: '0 4px 20px rgba(38,204,194,0.5)',
+            color: '#0B3D3A',
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 800,
             fontSize: 18,
@@ -664,7 +664,7 @@ export default function NoteQuizGame({ onBack }) {
 
     return (
       <div style={{
-        background: '#000180',
+        background: '#0B3D3A',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -678,13 +678,13 @@ export default function NoteQuizGame({ onBack }) {
         {/* Score card */}
         <div style={{
           background: 'rgba(255,255,255,0.08)',
-          border: isPerfect ? '2px solid #D0FFA3' : '1.5px solid rgba(131,231,255,0.2)',
+          border: isPerfect ? '2px solid #FFF57E' : '1.5px solid rgba(106,236,225,0.2)',
           borderRadius: 24,
           padding: '32px 28px',
           textAlign: 'center',
           width: '100%',
           maxWidth: 360,
-          boxShadow: isPerfect ? '0 0 32px rgba(208,255,163,0.2)' : 'none',
+          boxShadow: isPerfect ? '0 0 32px rgba(255,245,126,0.3)' : 'none',
         }}>
           <div style={{ fontSize: 48, marginBottom: 8 }}>
             {isPerfect ? '🌟' : isGreat ? '🎵' : '🎸'}
@@ -702,7 +702,7 @@ export default function NoteQuizGame({ onBack }) {
           <p style={{
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 800, fontSize: 52,
-            color: isPerfect ? '#D0FFA3' : '#FFFFFF',
+            color: isPerfect ? '#FFF57E' : '#FFFFFF',
             margin: '8px 0',
             lineHeight: 1.1,
           }}>
@@ -723,7 +723,7 @@ export default function NoteQuizGame({ onBack }) {
           <p style={{
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 700, fontSize: 14,
-            color: '#D0FFA3', margin: '0 0 12px',
+            color: '#FFF57E', margin: '0 0 12px',
           }}>
             🔥 Best streak: {bestStreak}
           </p>
@@ -742,13 +742,13 @@ export default function NoteQuizGame({ onBack }) {
         {/* New best banner */}
         {isNewBest && (
           <div style={{
-            background: '#D0FFA3',
-            border: '2px solid #B8E600',
+            background: '#FFF57E',
+            border: '2px solid #F0D64E',
             borderRadius: 12,
             padding: '10px 24px',
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 800, fontSize: 15,
-            color: '#000180',
+            color: '#0B3D3A',
             animation: 'nqg-pop 350ms ease',
           }}>
             🏆 New best score!
@@ -759,7 +759,7 @@ export default function NoteQuizGame({ onBack }) {
         {isPerfect && (
           <div style={{
             background: 'rgba(255,255,255,0.08)',
-            border: '2px solid #006EE9',
+            border: '2px solid #26CCC2',
             borderRadius: 12,
             padding: '12px 20px',
             display: 'flex', alignItems: 'center', gap: 12,
@@ -791,9 +791,9 @@ export default function NoteQuizGame({ onBack }) {
             width: '100%', maxWidth: 360,
             padding: '16px 0',
             borderRadius: 16, border: 'none',
-            background: 'linear-gradient(to right, #006EE9, #0056C7)',
-            boxShadow: '0 4px 16px rgba(0,110,233,0.4)',
-            color: 'white',
+            background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            boxShadow: '0 4px 16px rgba(38,204,194,0.4)',
+            color: '#0B3D3A',
             fontFamily: "'Nunito', sans-serif", fontWeight: 800,
             fontSize: 17, cursor: 'pointer', minHeight: 56,
           }}
@@ -829,7 +829,7 @@ export default function NoteQuizGame({ onBack }) {
 
   return (
     <div style={{
-      background: '#000180',
+      background: '#0B3D3A',
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -865,7 +865,7 @@ export default function NoteQuizGame({ onBack }) {
           <div style={{
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 700, fontSize: 14,
-            color: '#D0FFA3',
+            color: '#FFF57E',
             animation: 'nqg-pop 200ms ease',
             textAlign: 'center',
           }}>
@@ -924,7 +924,7 @@ export default function NoteQuizGame({ onBack }) {
           <p style={{
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 700, fontSize: 15,
-            color: '#000180',
+            color: '#0B3D3A',
             textAlign: 'center',
             margin: '4px 0 8px',
           }}>
@@ -954,23 +954,23 @@ export default function NoteQuizGame({ onBack }) {
                   minHeight: 56,
                   borderRadius: 14,
                   border: showCorrect
-                    ? '2px solid #B8E600'
+                    ? '2px solid #F0D64E'
                     : showWrong
-                      ? '2px solid rgba(255,100,100,0.5)'
+                      ? '2px solid #FFB76C'
                       : '2px solid rgba(255,255,255,0.15)',
                   background: showCorrect
-                    ? '#D0FFA3'
+                    ? '#FFF57E'
                     : showWrong
-                      ? 'rgba(255,100,100,0.25)'
+                      ? 'rgba(255,183,108,0.3)'
                       : 'rgba(255,255,255,0.95)',
-                  color: showCorrect ? '#000180' : showWrong ? 'white' : '#000180',
+                  color: '#0B3D3A',
                   fontFamily: "'Nunito', sans-serif",
                   fontWeight: 900,
                   fontSize: 22,
                   cursor: isLocked ? 'default' : 'pointer',
                   opacity: isDisabled ? 0.45 : 1,
                   transition: 'background 120ms ease, opacity 120ms ease',
-                  boxShadow: showCorrect ? '0 0 12px rgba(208,255,163,0.6)' : '0 2px 8px rgba(0,0,0,0.2)',
+                  boxShadow: showCorrect ? '0 0 12px rgba(255,245,126,0.6)' : '0 2px 8px rgba(0,0,0,0.2)',
                   transform: showCorrect ? 'scale(1.04)' : 'scale(1)',
                   animation: showWrong ? 'nqg-wrong-shake 350ms ease' : 'none',
                 }}

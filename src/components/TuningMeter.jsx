@@ -26,7 +26,7 @@ export default function TuningMeter() {
     if (!isActive || cents === null) return '#EEEEEE'
     const absCents = Math.abs(cents)
     if (absCents <= 20) return '#E8F5E9'
-    if (absCents <= 40) return '#FFF8EE'
+    if (absCents <= 40) return '#FAFAF8'
     return '#FFF3E0'
   }
 

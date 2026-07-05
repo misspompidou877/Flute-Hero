@@ -48,7 +48,7 @@ function FingeringLibraryPage() {
      * Sticky header stays visible; columns flow to their natural height.
      * paddingBottom leaves room for the fixed bottom nav.
      */
-    <div style={{ background: '#FAF4EE', minHeight: 'calc(100dvh - 5rem)', paddingBottom: 'calc(96px + env(safe-area-inset-bottom))' }}>
+    <div style={{ background: '#FAFAF8', minHeight: 'calc(100dvh - 5rem)', paddingBottom: 'calc(96px + env(safe-area-inset-bottom))' }}>
 
       {/* ── Sticky header ────────────────────────────────────────────────── */}
       <div
@@ -62,7 +62,7 @@ function FingeringLibraryPage() {
           justifyContent: 'space-between',
           padding: '0 16px',
           borderBottom: '1px solid #EEEEEE',
-          background: '#FAF4EE',
+          background: '#FAFAF8',
         }}
       >
         <h1
@@ -70,14 +70,14 @@ function FingeringLibraryPage() {
             fontFamily: "'Nunito', sans-serif",
             fontWeight: 800,
             fontSize: 18,
-            color: '#2D2D2D',
+            color: '#0B3D3A',
             margin: 0,
           }}
         >
           Fingering Library
         </h1>
         {masteredCount > 0 && (
-          <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: 13, color: '#4CAF50' }}>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: 13, color: '#26CCC2' }}>
             ⭐ {masteredCount} mastered
           </span>
         )}
@@ -131,7 +131,7 @@ function FingeringLibraryPage() {
                       marginTop: 4,
                       height: 2,
                       width: levelUnlocked ? 48 : 28,
-                      background: levelUnlocked ? '#F5A623' : '#E0E0E0',
+                      background: levelUnlocked ? '#26CCC2' : '#E0E0E0',
                       borderRadius: 1,
                     }}
                   />
@@ -150,7 +150,7 @@ function FingeringLibraryPage() {
 
                     let bg     = 'white'
                     let border = '1.5px solid #E0E0E0'
-                    let color  = '#2D2D2D'
+                    let color  = '#0B3D3A'
                     let cursor = 'pointer'
                     let shadow = 'none'
 
@@ -158,10 +158,10 @@ function FingeringLibraryPage() {
                       bg = '#F7F7F7'; border = '1.5px solid #E8E8E8'
                       color = '#CCCCCC'; cursor = 'not-allowed'
                     } else if (isActive) {
-                      bg = '#F5A623'; border = '1.5px solid #F5A623'; color = 'white'
+                      bg = '#26CCC2'; border = '1.5px solid #26CCC2'; color = '#0B3D3A'
                     } else if (mastered) {
-                      bg = '#E8F5E9'; border = '1.5px solid #4CAF50'; color = '#2E7D32'
-                      shadow = '0 0 8px rgba(76,175,80,0.2)'
+                      bg = '#FFF57E'; border = '1.5px solid #F0D64E'; color = '#0B3D3A'
+                      shadow = '0 0 8px rgba(255,245,126,0.6)'
                     }
 
                     return (
@@ -216,8 +216,8 @@ function FingeringLibraryPage() {
                 minHeight: 44,
                 padding: '10px 14px',
                 borderRadius: 12,
-                border: '1.5px solid #F5A623',
-                background: '#FDF7EF',
+                border: '1.5px solid #FFB76C',
+                background: '#FAFAF8',
                 cursor: 'pointer',
                 textAlign: 'left',
                 fontFamily: "'Nunito', sans-serif",
@@ -225,14 +225,14 @@ function FingeringLibraryPage() {
             >
               <span style={{ fontSize: 20, lineHeight: 1 }}>🔓</span>
               <span style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ display: 'block', fontSize: 13, fontWeight: 800, color: '#000180' }}>
+                <span style={{ display: 'block', fontSize: 13, fontWeight: 800, color: '#0B3D3A' }}>
                   Unlock all notes
                 </span>
                 <span style={{ display: 'block', fontSize: 11, fontWeight: 500, color: '#8A6D3B' }}>
                   Get Levels 2–8 with Trill Premium
                 </span>
               </span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFB76C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9,18 15,12 9,6" />
               </svg>
             </button>
@@ -303,9 +303,9 @@ function FingeringLibraryPage() {
                 {/* Colour key */}
                 <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {[
-                    { bg: '#EFF6FF', dot: '#2563eb', textColor: '#1d4ed8', label: 'Left hand' },
+                    { bg: 'rgba(106,236,225,0.12)', dot: '#26CCC2', textColor: '#1AA89F', label: 'Left hand' },
                     { bg: '#F0FBF0', dot: '#16a34a', textColor: '#15803d', label: 'Right hand' },
-                    { bg: '#dbeeff', dot: '#37A0FE', textColor: '#37A0FE', label: 'Thumb (T / ♭)' },
+                    { bg: 'rgba(106,236,225,0.12)', dot: '#26CCC2', textColor: '#1AA89F', label: 'Thumb (T / ♭)' },
                   ].map(({ bg, dot, textColor, label }) => (
                     <span
                       key={label}
@@ -358,15 +358,15 @@ function FingeringLibraryPage() {
                     marginTop: 12,
                     borderRadius: 12,
                     padding: '10px 16px',
-                    background: '#F0FBF0',
-                    border: '1.5px solid #4CAF50',
+                    background: 'rgba(255,245,126,0.10)',
+                    border: '1.5px solid #F0D64E',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: 8,
                     fontFamily: "'Nunito', sans-serif",
                     fontWeight: 700,
                     fontSize: 14,
-                    color: '#2E7D32',
+                    color: '#0B3D3A',
                   }}
                 >
                   ✓ You've mastered this note!

@@ -21,7 +21,7 @@ function FoundationsHub() {
   return (
     <div
       style={{
-        background: '#FAF4EE',
+        background: '#FAFAF8',
         minHeight: '100dvh',
         padding: '24px 16px',
         paddingBottom: 'calc(96px + env(safe-area-inset-bottom))',
@@ -38,7 +38,7 @@ function FoundationsHub() {
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 800,
             fontSize: '36px',
-            color: '#2D2D2D',
+            color: '#0B3D3A',
             marginBottom: '8px',
             marginTop: 0,
           }}
@@ -78,7 +78,7 @@ function FoundationsHub() {
                     height: '48px',
                     minWidth: '48px',
                     borderRadius: '50%',
-                    background: '#FFF8EE',
+                    background: '#FAFAF8',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -95,7 +95,7 @@ function FoundationsHub() {
                       fontFamily: 'Nunito, sans-serif',
                       fontWeight: 700,
                       fontSize: '18px',
-                      color: '#2D2D2D',
+                      color: '#0B3D3A',
                       marginBottom: '2px',
                     }}
                   >
@@ -128,8 +128,8 @@ function FoundationsHub() {
                   {complete ? (
                     <span
                       style={{
-                        background: '#4CAF50',
-                        color: '#FFFFFF',
+                        background: '#26CCC2',
+                        color: '#0B3D3A',
                         fontFamily: 'Nunito, sans-serif',
                         fontSize: '12px',
                         fontWeight: 600,
@@ -144,7 +144,7 @@ function FoundationsHub() {
                     <span
                       style={{
                         fontSize: '22px',
-                        color: '#006EE9',
+                        color: '#26CCC2',
                         fontWeight: 700,
                       }}
                     >
@@ -183,7 +183,7 @@ function FoundationsHub() {
           >
             <Link
               to="/"
-              className="inline-flex items-center justify-center py-4 px-5 rounded-lg text-sm font-semibold text-[#006EE9] bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-colors"
+              className="inline-flex items-center justify-center py-4 px-5 rounded-lg text-sm font-semibold text-[#26CCC2] bg-teal-50 hover:bg-teal-100 active:bg-teal-200 transition-colors"
               style={{ fontFamily: 'Nunito, sans-serif', minHeight: 56 }}
             >
               Skip to Level 1 →

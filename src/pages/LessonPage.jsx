@@ -27,7 +27,7 @@ const NOTE_SUBTITLES = {
 
 function BackIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="15,18 9,12 15,6" />
     </svg>
   )
@@ -35,7 +35,7 @@ function BackIcon() {
 
 function StarIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
     </svg>
   )
@@ -43,7 +43,7 @@ function StarIcon() {
 
 function SpeakerIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
@@ -60,7 +60,7 @@ function TuningBar({ cents, isActive }) {
     ? Math.max(5, Math.min(95, 50 + cents))
     : 50
 
-  const indicatorColor = inTune ? '#006EE9' : close ? '#006EE9' : off ? '#006EE9' : '#D3D1C7'
+  const indicatorColor = inTune ? '#26CCC2' : close ? '#26CCC2' : off ? '#26CCC2' : '#D3D1C7'
 
   const statusText = !isActive
     ? 'Listening...'
@@ -76,7 +76,7 @@ function TuningBar({ cents, isActive }) {
     <div>
       {/* Header row */}
       <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
-        <p style={{ fontSize: 11, fontWeight: 600, color: '#000180', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+        <p style={{ fontSize: 11, fontWeight: 600, color: '#0B3D3A', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
           Your Turn
         </p>
         <p style={{ fontSize: 11, fontWeight: 500, color: '#666666' }}>{statusText}</p>
@@ -100,7 +100,7 @@ function TuningBar({ cents, isActive }) {
             bottom: 3,
             left: '35%',
             right: '35%',
-            background: '#D0FFA3',
+            background: '#FFF57E',
             borderRadius: 8,
           }}
         />
@@ -112,7 +112,7 @@ function TuningBar({ cents, isActive }) {
             bottom: 0,
             left: '50%',
             width: 1,
-            background: 'rgba(0,1,128,0.3)',
+            background: 'rgba(11,61,58,0.3)',
           }}
         />
         {/* Indicator pill */}
@@ -127,7 +127,7 @@ function TuningBar({ cents, isActive }) {
             background: indicatorColor,
             border: '2.5px solid white',
             borderRadius: 10,
-            boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
+            boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
             transition: 'left 0.1s ease',
           }}
         />
@@ -135,9 +135,9 @@ function TuningBar({ cents, isActive }) {
 
       {/* Labels */}
       <div className="flex justify-between" style={{ marginTop: 4 }}>
-        <span style={{ fontSize: 13, fontWeight: 500, color: '#000180' }}>Flat</span>
-        <span style={{ fontSize: 13, fontWeight: 500, color: '#000180' }}>In tune</span>
-        <span style={{ fontSize: 13, fontWeight: 500, color: '#000180' }}>Sharp</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#0B3D3A' }}>Flat</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#0B3D3A' }}>In tune</span>
+        <span style={{ fontSize: 13, fontWeight: 500, color: '#0B3D3A' }}>Sharp</span>
       </div>
 
       {/* Pitch correction hint */}
@@ -240,10 +240,10 @@ export default function LessonPage() {
         </button>
 
         <div className="text-center">
-          <p style={{ fontSize: 10, fontWeight: 600, color: '#000180', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+          <p style={{ fontSize: 10, fontWeight: 600, color: '#0B3D3A', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
             Learning Note
           </p>
-          <p style={{ fontSize: 14, fontWeight: 700, color: '#000180', lineHeight: 1.1 }}>
+          <p style={{ fontSize: 14, fontWeight: 700, color: '#0B3D3A', lineHeight: 1.1 }}>
             Note {noteIndex + 1} of {totalNotes}
           </p>
         </div>
@@ -253,8 +253,8 @@ export default function LessonPage() {
           style={{
             width: 44,
             height: 44,
-            background: 'linear-gradient(to right, #83E7FF, #00C5E5)',
-            boxShadow: '0 2px 8px rgba(131, 231, 255, 0.25)',
+            background: 'linear-gradient(to right, #6AECE1, #34D6C9)',
+            boxShadow: '0 2px 8px rgba(106, 236, 225, 0.25)',
             border: 'none',
             cursor: 'pointer',
             flexShrink: 0,
@@ -268,17 +268,17 @@ export default function LessonPage() {
       {/* Big note name */}
       <div className="flex flex-col items-center" style={{ margin: '4px 0 10px' }}>
         <div className="flex items-start">
-          <span style={{ fontSize: 64, fontWeight: 800, color: '#006EE9', lineHeight: 1 }}>
+          <span style={{ fontSize: 64, fontWeight: 800, color: '#26CCC2', lineHeight: 1 }}>
             {noteLabel}
           </span>
           {noteOctave && (
-            <span style={{ fontSize: 32, fontWeight: 800, color: '#000180', verticalAlign: 'super', lineHeight: 1, marginTop: 4 }}>
+            <span style={{ fontSize: 32, fontWeight: 800, color: '#0B3D3A', verticalAlign: 'super', lineHeight: 1, marginTop: 4 }}>
               {noteOctave}
             </span>
           )}
         </div>
         {subtitle && (
-          <p style={{ fontSize: 12, fontWeight: 500, color: '#000180', marginTop: 2 }}>{subtitle}</p>
+          <p style={{ fontSize: 12, fontWeight: 500, color: '#0B3D3A', marginTop: 2 }}>{subtitle}</p>
         )}
       </div>
 
@@ -293,13 +293,13 @@ export default function LessonPage() {
           onClick={handleHearNote}
           className="w-full flex items-center gap-3 rounded-xl active:scale-95 transition-transform"
           style={{
-            background: 'linear-gradient(to right, #83E7FF, #00C5E5)',
-            boxShadow: '0 2px 8px rgba(131, 231, 255, 0.25)',
+            background: 'linear-gradient(to right, #6AECE1, #34D6C9)',
+            boxShadow: '0 2px 8px rgba(106, 236, 225, 0.25)',
             padding: '12px 14px',
             minHeight: 44,
             border: 'none',
             cursor: 'pointer',
-            color: '#000180',
+            color: '#0B3D3A',
           }}
         >
           <SpeakerIcon />
@@ -320,8 +320,8 @@ export default function LessonPage() {
           style={{
             marginTop: 12,
             minHeight: 44,
-            background: isActive ? '#F1EFE8' : 'linear-gradient(to right, #006EE9, #0056C7)',
-            color: isActive ? '#000180' : 'white',
+            background: isActive ? '#F1EFE8' : 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            color: '#0B3D3A',
             border: 'none',
             cursor: 'pointer',
             fontSize: 13,
@@ -341,10 +341,10 @@ export default function LessonPage() {
           margin: '0 14px 10px',
           borderRadius: 12,
           padding: '10px 14px',
-          background: 'rgba(208, 255, 163, 0.25)',
+          background: 'rgba(255, 245, 126, 0.25)',
         }}
       >
-        <p style={{ fontSize: 11, fontWeight: 600, color: '#000180', marginBottom: 8 }}>
+        <p style={{ fontSize: 11, fontWeight: 600, color: '#0B3D3A', marginBottom: 8 }}>
           Hold steady — 3 in a row for mastery
         </p>
         <div className="flex gap-2">
@@ -355,8 +355,8 @@ export default function LessonPage() {
                 width: 14,
                 height: 14,
                 borderRadius: '50%',
-                background: i < masteryDots ? '#D0FFA3' : 'white',
-                border: `2px solid ${i < masteryDots ? '#006EE9' : '#D3D1C7'}`,
+                background: i < masteryDots ? '#FFF57E' : 'white',
+                border: `2px solid ${i < masteryDots ? '#26CCC2' : '#D3D1C7'}`,
                 transition: 'background 0.2s ease, border-color 0.2s ease',
               }}
             />

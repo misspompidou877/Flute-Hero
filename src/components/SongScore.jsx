@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Renderer, Stave, StaveNote, Voice, Formatter, Beam, Barline, Accidental, Dot } from 'vexflow'
 
-const MEASURES_PER_ROW = 2
+const DEFAULT_MEASURES_PER_ROW = 2
 const STAVE_X = 10
 const STAVE_Y = 20
 const ROW_HEIGHT = 110
@@ -15,8 +15,12 @@ const DURATION_BEATS = {
   '16': 0.25,
 }
 
-const STYLE_DONE    = { fillStyle: '#86efac', strokeStyle: '#86efac' }
-const STYLE_CURRENT = { fillStyle: '#6366f1', strokeStyle: '#6366f1' }
+// v2.0 TEAL palette. Played notes read Deep Teal at full strength, the active
+// note is Teal, and upcoming notes fade to Deep Teal @ 50% so the eye focuses
+// on the active region (per redesign spec).
+const STYLE_DONE     = { fillStyle: '#0B3D3A', strokeStyle: '#0B3D3A' }
+const STYLE_CURRENT  = { fillStyle: '#26CCC2', strokeStyle: '#26CCC2' }
+const STYLE_UPCOMING = { fillStyle: 'rgba(11,61,58,0.5)', strokeStyle: 'rgba(11,61,58,0.5)' }
 
 function getAccidental(key) {
   const notePart = key.split('/')[0]
@@ -42,7 +46,7 @@ export function groupIntoMeasures(notes, beatsPerMeasure = 4) {
   return measures
 }
 
-function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature, startMeasure, endMeasure) {
+function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature, startMeasure, endMeasure, measuresPerRow) {
   el.innerHTML = ''
   if (!notes?.length) return
 
@@ -58,12 +62,13 @@ function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature
   let noteOffset = 0
   for (let i = 0; i < startMeasure; i++) noteOffset += allMeasures[i].length
 
+  const perRow = measuresPerRow || DEFAULT_MEASURES_PER_ROW
   const totalWidth = Math.max(el.clientWidth || MIN_WIDTH, MIN_WIDTH)
-  const staveWidth = Math.floor((totalWidth - STAVE_X * 2) / MEASURES_PER_ROW)
+  const staveWidth = Math.floor((totalWidth - STAVE_X * 2) / perRow)
 
   const rows = []
-  for (let i = 0; i < measures.length; i += MEASURES_PER_ROW) {
-    rows.push(measures.slice(i, i + MEASURES_PER_ROW))
+  for (let i = 0; i < measures.length; i += perRow) {
+    rows.push(measures.slice(i, i + perRow))
   }
 
   const totalHeight = rows.length * ROW_HEIGHT + 40
@@ -100,6 +105,7 @@ function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature
         if (currentNoteIndex >= 0) {
           if (globalNoteIndex < currentNoteIndex)        sn.setStyle(STYLE_DONE)
           else if (globalNoteIndex === currentNoteIndex) sn.setStyle(STYLE_CURRENT)
+          else                                           sn.setStyle(STYLE_UPCOMING)
         }
         globalNoteIndex++
         return sn
@@ -134,7 +140,7 @@ function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature
   }
 }
 
-export default function SongScore({ notes, title, currentNoteIndex = -1, beatsPerMeasure = 4, startMeasure = 0, measuresPerPage }) {
+export default function SongScore({ notes, title, currentNoteIndex = -1, beatsPerMeasure = 4, startMeasure = 0, measuresPerPage, measuresPerRow = DEFAULT_MEASURES_PER_ROW }) {
   const containerRef = useRef(null)
   const observerRef = useRef(null)
   const timeSignature = `${beatsPerMeasure}/4`
@@ -148,19 +154,19 @@ export default function SongScore({ notes, title, currentNoteIndex = -1, beatsPe
     const el = containerRef.current
     if (!el) return
 
-    renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature, startMeasure, endMeasure)
+    renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature, startMeasure, endMeasure, measuresPerRow)
 
     observerRef.current = new ResizeObserver(() => {
-      renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature, startMeasure, endMeasure)
+      renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature, startMeasure, endMeasure, measuresPerRow)
     })
     observerRef.current.observe(el)
 
     return () => observerRef.current?.disconnect()
-  }, [notes, currentNoteIndex, beatsPerMeasure, startMeasure, endMeasure])
+  }, [notes, currentNoteIndex, beatsPerMeasure, startMeasure, endMeasure, measuresPerRow])
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {title && <h3 className="mb-2 font-semibold text-slate-700">{title}</h3>}
+      {title && <h3 className="mb-2 font-semibold text-[#0B3D3A]">{title}</h3>}
       <div ref={containerRef} style={{ width: '100%', flex: 1, minHeight: 0 }} />
     </div>
   )

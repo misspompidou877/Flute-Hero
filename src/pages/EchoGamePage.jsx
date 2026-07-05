@@ -46,12 +46,12 @@ function Sparkle({ color, size, style }) {
 // ── Dark arcade hub (idle game-picker screen) ─────────────────────────────────
 function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
   return (
-    <div style={{ background: '#000180', minHeight: '100dvh', paddingBottom: 'calc(96px + env(safe-area-inset-bottom))', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ background: '#0B3D3A', minHeight: '100dvh', paddingBottom: 'calc(96px + env(safe-area-inset-bottom))', position: 'relative', overflow: 'hidden' }}>
       {/* Sparkles */}
-      <Sparkle color="#83E7FF" size={14} style={{ top: 60, left: 40, opacity: 0.5 }} />
-      <Sparkle color="#D0FFA3" size={10} style={{ top: 120, right: 60, opacity: 0.4 }} />
-      <Sparkle color="#D0FFA3" size={12} style={{ bottom: 120, left: 60, opacity: 0.4 }} />
-      <Sparkle color="#83E7FF" size={16} style={{ bottom: 80, right: 40, opacity: 0.5 }} />
+      <Sparkle color="#6AECE1" size={14} style={{ top: 60, left: 40, opacity: 0.5 }} />
+      <Sparkle color="#FFF57E" size={10} style={{ top: 120, right: 60, opacity: 0.4 }} />
+      <Sparkle color="#FFF57E" size={12} style={{ bottom: 120, left: 60, opacity: 0.4 }} />
+      <Sparkle color="#6AECE1" size={16} style={{ bottom: 80, right: 40, opacity: 0.5 }} />
 
       {/* Centred content column */}
       <div style={{ maxWidth: 700, margin: '0 auto', padding: '40px max(16px, env(safe-area-inset-right)) 40px max(16px, env(safe-area-inset-left))', position: 'relative' }}>
@@ -59,7 +59,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
         {/* "GAMES" badge pill */}
         <div style={{
           display: 'block', width: 'fit-content', margin: '0 auto 16px',
-          background: '#D0FFA3', color: '#000180',
+          background: '#FFF57E', color: '#0B3D3A',
           fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: 12,
           textTransform: 'uppercase', letterSpacing: '0.1em',
           borderRadius: 999, padding: '6px 16px',
@@ -72,7 +72,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
           fontFamily: "'Nunito', sans-serif", fontWeight: 800,
           fontSize: 'clamp(32px, 6vw, 42px)',
           color: '#FFFFFF',
-          textShadow: '0 3px 0 rgba(0,1,128,0.5)',
+          textShadow: '0 3px 0 rgba(11,61,58,0.5)',
           textAlign: 'center', marginBottom: 32,
         }}>
           Pick a Game
@@ -87,7 +87,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
             style={{
               flex: '1 1 200px',
               background: 'rgba(255,255,255,0.07)',
-              border: '1.5px solid rgba(131,231,255,0.2)',
+              border: '1.5px solid rgba(106,236,225,0.2)',
               borderRadius: 24, padding: '28px 24px',
               boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)',
               display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -97,26 +97,26 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
             {/* Icon circle */}
             <div style={{
               width: 72, height: 72, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #83E7FF, #00C5E5)',
-              boxShadow: '0 4px 20px rgba(131,231,255,0.45)',
+              background: 'linear-gradient(135deg, #6AECE1, #34D6C9)',
+              boxShadow: '0 4px 20px rgba(106,236,225,0.45)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
-                <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" stroke="white" strokeWidth="1.5" fill="none" />
-                <path d="M9 5l12-2" stroke="white" strokeWidth="1.5" />
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="#0B3D3A">
+                <path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" stroke="#0B3D3A" strokeWidth="1.5" fill="none" />
+                <path d="M9 5l12-2" stroke="#0B3D3A" strokeWidth="1.5" />
               </svg>
             </div>
 
             {/* Title */}
             <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: 20, color: '#FFFFFF', marginTop: 16, marginBottom: 0 }}>
-              Echo Game
+              Piper Says
             </p>
 
             {/* Category badge */}
             <span style={{
               display: 'inline-block', margin: '8px auto',
-              background: 'rgba(131,231,255,0.12)', border: '1px solid #83E7FF',
-              color: '#83E7FF', fontFamily: "'Nunito', sans-serif",
+              background: 'rgba(106,236,225,0.12)', border: '1px solid #6AECE1',
+              color: '#6AECE1', fontFamily: "'Nunito', sans-serif",
               fontWeight: 600, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em',
               borderRadius: 999, padding: '4px 12px',
             }}>
@@ -138,9 +138,9 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
               className="active:scale-95 transition-transform"
               style={{
                 width: '100%', marginTop: 'auto',
-                background: 'linear-gradient(to right, #83E7FF, #00C5E5)',
-                boxShadow: '0 4px 16px rgba(131,231,255,0.35)',
-                color: '#000180',
+                background: 'linear-gradient(to right, #6AECE1, #34D6C9)',
+                boxShadow: '0 4px 16px rgba(106,236,225,0.35)',
+                color: '#0B3D3A',
                 fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: 15,
                 textTransform: 'uppercase', letterSpacing: '0.05em',
                 border: 'none', borderRadius: 12, padding: '14px 0',
@@ -157,7 +157,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
             style={{
               flex: '1 1 200px',
               background: 'rgba(255,255,255,0.07)',
-              border: '1.5px solid rgba(131,231,255,0.2)',
+              border: '1.5px solid rgba(38,204,194,0.25)',
               borderRadius: 24, padding: '28px 24px',
               boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)',
               display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -167,30 +167,30 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
             {/* Icon circle */}
             <div style={{
               width: 72, height: 72, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #006EE9, #0056C7)',
-              boxShadow: '0 4px 20px rgba(0,110,233,0.45)',
+              background: 'linear-gradient(135deg, #26CCC2, #1AA89F)',
+              boxShadow: '0 4px 20px rgba(38,204,194,0.45)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="1.8" strokeLinecap="round">
                 <line x1="3" y1="7" x2="21" y2="7" />
                 <line x1="3" y1="11" x2="21" y2="11" />
                 <line x1="3" y1="15" x2="21" y2="15" />
                 <line x1="3" y1="19" x2="21" y2="19" />
-                <circle cx="8" cy="19" r="2.5" fill="white" stroke="none" />
-                <line x1="10.5" y1="19" x2="10.5" y2="9" stroke="white" strokeWidth="1.8" />
+                <circle cx="8" cy="19" r="2.5" fill="#0B3D3A" stroke="none" />
+                <line x1="10.5" y1="19" x2="10.5" y2="9" stroke="#0B3D3A" strokeWidth="1.8" />
               </svg>
             </div>
 
             {/* Title */}
             <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: 20, color: '#FFFFFF', marginTop: 16, marginBottom: 0 }}>
-              Note Quiz
+              Catch the Falling Notes
             </p>
 
             {/* Category badge */}
             <span style={{
               display: 'inline-block', margin: '8px auto',
-              background: 'rgba(0,110,233,0.15)', border: '1px solid #006EE9',
-              color: '#83E7FF', fontFamily: "'Nunito', sans-serif",
+              background: 'rgba(38,204,194,0.15)', border: '1px solid #26CCC2',
+              color: '#26CCC2', fontFamily: "'Nunito', sans-serif",
               fontWeight: 600, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em',
               borderRadius: 999, padding: '4px 12px',
             }}>
@@ -212,9 +212,9 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
               className="active:scale-95 transition-transform"
               style={{
                 width: '100%', marginTop: 'auto',
-                background: 'linear-gradient(to right, #006EE9, #0056C7)',
-                boxShadow: '0 4px 16px rgba(0,110,233,0.35)',
-                color: '#FFFFFF',
+                background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+                boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
+                color: '#0B3D3A',
                 fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: 15,
                 textTransform: 'uppercase', letterSpacing: '0.05em',
                 border: 'none', borderRadius: 12, padding: '14px 0',
@@ -236,7 +236,7 @@ function GamesHub({ onStartEcho, onStartQuiz, toastBadge, clearToast }) {
 function GamePage({ children, centred = false }) {
   return (
     <div
-      style={{ background: '#FAF4EE', minHeight: '100dvh', paddingBottom: 'calc(96px + env(safe-area-inset-bottom))' }}
+      style={{ background: '#FAFAF8', minHeight: '100dvh', paddingBottom: 'calc(96px + env(safe-area-inset-bottom))' }}
       className="pb-24"
     >
       <div
@@ -257,14 +257,14 @@ function AmberButton({ onClick, children, fullWidth = true, small = false }) {
       style={{
         height: small ? 52 : 64,
         borderRadius: small ? 26 : 32,
-        background: 'linear-gradient(to right, #006EE9, #0056C7)',
+        background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
         border: 'none',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 20px',
-        boxShadow: '0 4px 16px rgba(245,166,35,0.35)',
+        boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
       }}
     >
       <div
@@ -272,21 +272,21 @@ function AmberButton({ onClick, children, fullWidth = true, small = false }) {
           width: small ? 32 : 40,
           height: small ? 32 : 40,
           borderRadius: '50%',
-          background: 'rgba(0,0,0,0.15)',
+          background: 'rgba(11,61,58,0.15)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
         }}
       >
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#0B3D3A">
           <polygon points="5,3 19,12 5,21" />
         </svg>
       </div>
-      <span style={{ color: 'white', fontWeight: 700, fontSize: small ? 17 : 22, fontFamily: "'Nunito', sans-serif" }}>
+      <span style={{ color: '#0B3D3A', fontWeight: 700, fontSize: small ? 17 : 22, fontFamily: "'Nunito', sans-serif" }}>
         {children}
       </span>
-      <span style={{ color: 'white', fontSize: 24, fontWeight: 300, lineHeight: 1 }}>›</span>
+      <span style={{ color: '#0B3D3A', fontSize: 24, fontWeight: 300, lineHeight: 1 }}>›</span>
     </button>
   )
 }
@@ -300,7 +300,7 @@ function OutlineButton({ onClick, children }) {
         height: 52,
         borderRadius: 26,
         background: 'white',
-        border: '2px solid #E0E0E0',
+        border: '2px solid #D3D1C7',
         cursor: 'pointer',
         fontWeight: 600,
         fontSize: 15,
@@ -493,15 +493,15 @@ function EchoGame({ onStartQuiz }) {
                 key={i}
                 className="h-3 w-3 rounded-full transition-all"
                 style={{
-                  background: i <= memorizeIndex ? '#006EE9' : '#CCCCCC',
-                  boxShadow: i === memorizeIndex ? '0 0 8px rgba(0,110,233,0.6)' : 'none',
+                  background: i <= memorizeIndex ? '#26CCC2' : '#D3D1C7',
+                  boxShadow: i === memorizeIndex ? '0 0 8px rgba(38,204,194,0.6)' : 'none',
                 }}
               />
             ))}
           </div>
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: 22, fontWeight: 800, color: '#2D2D2D', marginBottom: 24, fontFamily: "'Nunito', sans-serif" }}>
+        <p style={{ textAlign: 'center', fontSize: 22, fontWeight: 800, color: '#0B3D3A', marginBottom: 24, fontFamily: "'Nunito', sans-serif" }}>
           {memorizeIndex < sequence.length ? 'Watch carefully...' : 'Get ready!'}
         </p>
 
@@ -536,13 +536,13 @@ function EchoGame({ onStartQuiz }) {
           <p style={{ fontSize: 14, fontWeight: 700, color: '#999999', fontFamily: "'Nunito', sans-serif" }}>
             Round {roundNumber} of {TOTAL_ROUNDS}
           </p>
-          <div className="flex items-center gap-1.5" style={{ fontSize: 12, fontWeight: 600, color: isActive ? '#4CAF50' : '#AAAAAA' }}>
-            <span className="h-2 w-2 rounded-full" style={{ background: isActive ? '#4CAF50' : '#DDD', animation: isActive ? 'pulse 2s infinite' : 'none' }} />
+          <div className="flex items-center gap-1.5" style={{ fontSize: 12, fontWeight: 600, color: isActive ? '#26CCC2' : '#999999' }}>
+            <span className="h-2 w-2 rounded-full" style={{ background: isActive ? '#26CCC2' : '#D3D1C7', animation: isActive ? 'pulse 2s infinite' : 'none' }} />
             {isActive ? 'Mic on' : 'No mic'}
           </div>
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: 24, fontWeight: 800, color: '#1A1A2E', marginBottom: 20, fontFamily: "'Nunito', sans-serif" }}>
+        <p style={{ textAlign: 'center', fontSize: 24, fontWeight: 800, color: '#0B3D3A', marginBottom: 20, fontFamily: "'Nunito', sans-serif" }}>
           Your turn! 🎵
         </p>
 
@@ -570,17 +570,17 @@ function EchoGame({ onStartQuiz }) {
             <FingeringDiagramForNote noteId={expectedNoteId} />
           ) : (
             <div style={{ height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <p style={{ fontSize: 32, fontWeight: 900, color: '#DDDDDD' }}>?</p>
+              <p style={{ fontSize: 32, fontWeight: 900, color: '#D3D1C7' }}>?</p>
             </div>
           )}
           <button
             onClick={() => setShowHint(h => !h)}
             style={{
               marginTop: 12, width: '100%', borderRadius: 12,
-              border: '1.5px solid #006EE9', padding: '8px 0', minHeight: 44,
+              border: '1.5px solid #26CCC2', padding: '8px 0', minHeight: 44,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 14, fontWeight: 700, color: '#0056C7',
-              background: showHint ? 'transparent' : '#FFF3E0', cursor: 'pointer',
+              fontSize: 14, fontWeight: 700, color: '#0B3D3A',
+              background: showHint ? 'transparent' : 'rgba(106,236,225,0.15)', cursor: 'pointer',
               fontFamily: "'Nunito', sans-serif",
             }}
           >
@@ -590,8 +590,8 @@ function EchoGame({ onStartQuiz }) {
 
         {/* Detected note display */}
         <div style={{ background: 'white', borderRadius: 16, padding: 12, textAlign: 'center', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: '#AAAAAA', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4, fontFamily: "'Nunito', sans-serif" }}>Hearing</p>
-          <p style={{ fontSize: 28, fontWeight: 900, color: '#2D2D2D', fontFamily: "'Nunito', sans-serif" }}>{note ?? '—'}</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: '#999999', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4, fontFamily: "'Nunito', sans-serif" }}>Hearing</p>
+          <p style={{ fontSize: 28, fontWeight: 900, color: '#0B3D3A', fontFamily: "'Nunito', sans-serif" }}>{note ?? '—'}</p>
         </div>
 
         <FluteCharacter mood={characterMood} animKey={charAnimKey} />
@@ -609,19 +609,19 @@ function EchoGame({ onStartQuiz }) {
       <GamePage centred>
         <div style={{
           background: roundPerfect
-            ? 'linear-gradient(135deg, rgba(245,166,35,0.08) 0%, rgba(76,175,80,0.08) 100%)'
+            ? 'linear-gradient(135deg, rgba(255,245,126,0.14) 0%, rgba(106,236,225,0.14) 100%)'
             : 'white',
-          border: roundPerfect ? '2px solid #4CAF50' : '2px solid #EEEEEE',
+          border: roundPerfect ? '2px solid #F0D64E' : '2px solid #D3D1C7',
           borderRadius: 24, padding: 32,
           boxShadow: roundPerfect
-            ? '0 4px 24px rgba(76,175,80,0.2)'
+            ? '0 4px 24px rgba(255,245,126,0.35)'
             : '0 4px 24px rgba(0,0,0,0.06)',
           width: '100%', maxWidth: 420,
         }}>
-          <p style={{ textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#AAAAAA', marginBottom: 6, fontFamily: "'Nunito', sans-serif" }}>
+          <p style={{ textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#999999', marginBottom: 6, fontFamily: "'Nunito', sans-serif" }}>
             Round {roundNumber} of {TOTAL_ROUNDS}
           </p>
-          <p style={{ textAlign: 'center', fontSize: 22, fontWeight: 800, color: '#2D2D2D', marginBottom: 24, fontFamily: "'Nunito', sans-serif" }}>
+          <p style={{ textAlign: 'center', fontSize: 22, fontWeight: 800, color: '#0B3D3A', marginBottom: 24, fontFamily: "'Nunito', sans-serif" }}>
             {roundPerfect ? 'Amazing! You nailed it! 🌟' : 'So close! 💪'}
           </p>
 
@@ -659,17 +659,17 @@ function EchoGame({ onStartQuiz }) {
       <GamePage centred>
         <div style={{
           background: perfectGame
-            ? 'linear-gradient(135deg, #FFF3E0 0%, #FFF8EE 100%)'
+            ? 'linear-gradient(135deg, rgba(255,245,126,0.25) 0%, rgba(106,236,225,0.18) 100%)'
             : 'white',
-          border: perfectGame ? 'none' : '2px solid #EEEEEE',
+          border: perfectGame ? 'none' : '2px solid #D3D1C7',
           borderRadius: 24, padding: 32,
           boxShadow: perfectGame
-            ? '0 8px 32px rgba(131,231,255,0.25)'
+            ? '0 8px 32px rgba(255,245,126,0.35)'
             : '0 4px 24px rgba(0,0,0,0.06)',
           width: '100%', maxWidth: 420, textAlign: 'center',
         }}>
           <p style={{ fontSize: 56, margin: '0 0 12px' }}>{perfectGame ? '🥁' : '🎵'}</p>
-          <p style={{ fontSize: 26, fontWeight: 800, color: '#2D2D2D', marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
+          <p style={{ fontSize: 26, fontWeight: 800, color: '#0B3D3A', marginBottom: 8, fontFamily: "'Nunito', sans-serif" }}>
             {perfectGame ? 'PERFECT GAME! 🌟' : 'Great practice!'}
           </p>
           <p style={{ fontSize: 15, color: '#666666', marginBottom: 24, fontFamily: "'Nunito', sans-serif" }}>
@@ -679,16 +679,16 @@ function EchoGame({ onStartQuiz }) {
           </p>
 
           {/* Perfect rounds stat */}
-          <div style={{ background: perfectGame ? 'rgba(255,255,255,0.45)' : '#FAF4EE', borderRadius: 16, padding: '16px 0', marginBottom: 20 }}>
+          <div style={{ background: perfectGame ? 'rgba(255,255,255,0.45)' : '#FAFAF8', borderRadius: 16, padding: '16px 0', marginBottom: 20 }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: '#666666', fontFamily: "'Nunito', sans-serif" }}>Perfect rounds</p>
-            <p style={{ fontSize: 36, fontWeight: 900, color: '#006EE9', fontFamily: "'Nunito', sans-serif" }}>
+            <p style={{ fontSize: 36, fontWeight: 900, color: '#26CCC2', fontFamily: "'Nunito', sans-serif" }}>
               {perfectRounds} / {TOTAL_ROUNDS}
             </p>
           </div>
 
           {perfectGame && (
-            <div style={{ background: 'rgba(255,255,255,0.5)', border: '1.5px solid rgba(0,110,233,0.4)', borderRadius: 14, padding: '12px 16px', marginBottom: 20 }}>
-              <p style={{ fontSize: 14, fontWeight: 700, color: '#0056C7', fontFamily: "'Nunito', sans-serif" }}>
+            <div style={{ background: 'rgba(255,255,255,0.5)', border: '1.5px solid rgba(38,204,194,0.4)', borderRadius: 14, padding: '12px 16px', marginBottom: 20 }}>
+              <p style={{ fontSize: 14, fontWeight: 700, color: '#0B3D3A', fontFamily: "'Nunito', sans-serif" }}>
                 🥁 Rhythm Master badge unlocked!
               </p>
             </div>

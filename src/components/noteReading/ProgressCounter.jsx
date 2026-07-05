@@ -9,8 +9,8 @@ export default function ProgressCounter({ learned, total }) {
         gap: '8px',
         padding: '8px 18px',
         borderRadius: '999px',
-        background: allDone ? '#D0FFA3' : '#FFFFFF',
-        border: `2px solid ${allDone ? '#A8D47F' : '#E0E0E0'}`,
+        background: allDone ? '#FFF57E' : '#FFFFFF',
+        border: `2px solid ${allDone ? '#F0D64E' : '#E0E0E0'}`,
         boxShadow: '0 2px 6px rgba(0,0,0,0.07)',
         transition: 'background 0.3s ease, border-color 0.3s ease',
       }}
@@ -20,7 +20,7 @@ export default function ProgressCounter({ learned, total }) {
           fontFamily: 'Nunito, sans-serif',
           fontWeight: 700,
           fontSize: '16px',
-          color: allDone ? '#000180' : '#006EE9',
+          color: allDone ? '#0B3D3A' : '#26CCC2',
           transition: 'color 0.3s ease',
         }}
       >

@@ -14,7 +14,7 @@ const NOTE_VEX_KEYS = { B4: 'b/4', A4: 'a/4', G4: 'g/4' }
 
 function BackIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="15,18 9,12 15,6" />
     </svg>
   )
@@ -22,7 +22,7 @@ function BackIcon() {
 
 function SpeakerIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000180" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0B3D3A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
@@ -103,7 +103,7 @@ function TuningBar({ note, cents, isActive }) {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-        <p style={{ fontSize: 11, fontWeight: 600, color: '#000180', textTransform: 'uppercase', letterSpacing: '0.3px', margin: 0, fontFamily: 'Nunito, sans-serif' }}>
+        <p style={{ fontSize: 11, fontWeight: 600, color: '#0B3D3A', textTransform: 'uppercase', letterSpacing: '0.3px', margin: 0, fontFamily: 'Nunito, sans-serif' }}>
           Tuning
         </p>
         <p style={{ fontSize: 11, fontWeight: 500, color: '#666666', margin: 0, fontFamily: 'Nunito, sans-serif' }}>{statusText}</p>
@@ -113,12 +113,12 @@ function TuningBar({ note, cents, isActive }) {
         <div style={{
           position: 'absolute', top: 3, bottom: 3,
           left: '35%', right: '35%',
-          background: '#D0FFA3', borderRadius: 8,
+          background: '#FFF57E', borderRadius: 8,
         }} />
         <div style={{
           position: 'absolute', top: 0, bottom: 0,
           left: '50%', width: 1,
-          background: 'rgba(0,1,128,0.3)',
+          background: 'rgba(11,61,58,0.3)',
         }} />
         <div style={{
           position: 'absolute',
@@ -135,9 +135,9 @@ function TuningBar({ note, cents, isActive }) {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180', fontFamily: 'Nunito, sans-serif' }}>Flat</span>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180', fontFamily: 'Nunito, sans-serif' }}>In tune</span>
-        <span style={{ fontSize: 9, fontWeight: 500, color: '#000180', fontFamily: 'Nunito, sans-serif' }}>Sharp</span>
+        <span style={{ fontSize: 9, fontWeight: 500, color: '#0B3D3A', fontFamily: 'Nunito, sans-serif' }}>Flat</span>
+        <span style={{ fontSize: 9, fontWeight: 500, color: '#0B3D3A', fontFamily: 'Nunito, sans-serif' }}>In tune</span>
+        <span style={{ fontSize: 9, fontWeight: 500, color: '#0B3D3A', fontFamily: 'Nunito, sans-serif' }}>Sharp</span>
       </div>
     </div>
   )
@@ -230,7 +230,7 @@ export default function FirstNotesModule() {
   const exercise = FIRST_NOTES_EXERCISES[currentStep]
 
   return (
-    <div style={{ background: '#FAF4EE', minHeight: '100%', paddingBottom: 32 }}>
+    <div style={{ background: '#FAFAF8', minHeight: '100%', paddingBottom: 32 }}>
 
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px 12px' }}>
@@ -247,7 +247,7 @@ export default function FirstNotesModule() {
           <BackIcon />
         </button>
         <div>
-          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 20, color: '#2D2D2D', margin: 0 }}>
+          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 20, color: '#0B3D3A', margin: 0 }}>
             Play Your First Notes
           </p>
           <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 400, fontSize: 13, color: '#666666', margin: 0 }}>
@@ -270,11 +270,11 @@ export default function FirstNotesModule() {
                 onClick={() => handleSelectNote(noteId)}
                 style={{
                   flex: 1, minHeight: 56, borderRadius: 14,
-                  border: active ? '2.5px solid #006EE9' : '2px solid #E5E0D8',
-                  background: active ? '#EBF4FF' : 'white',
+                  border: active ? '2.5px solid #26CCC2' : '2px solid #E5E0D8',
+                  background: active ? 'rgba(106,236,225,0.12)' : 'white',
                   cursor: 'pointer',
                   fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 28,
-                  color: active ? '#006EE9' : '#888888',
+                  color: active ? '#26CCC2' : '#888888',
                   transition: 'all 0.15s ease',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}
@@ -300,8 +300,8 @@ export default function FirstNotesModule() {
                 onClick={() => setCurrentStep(i)}
                 style={{
                   flex: 1, minHeight: 56, borderRadius: 12,
-                  border: active ? '2.5px solid #006EE9' : '2px solid #E5E0D8',
-                  background: active ? '#EBF4FF' : 'white',
+                  border: active ? '2.5px solid #26CCC2' : '2px solid #E5E0D8',
+                  background: active ? 'rgba(106,236,225,0.12)' : 'white',
                   cursor: 'pointer',
                   display: 'flex', flexDirection: 'column',
                   alignItems: 'center', justifyContent: 'center', gap: 2,
@@ -310,13 +310,13 @@ export default function FirstNotesModule() {
               >
                 <span style={{
                   fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: 16,
-                  color: active ? '#006EE9' : '#2D2D2D',
+                  color: active ? '#26CCC2' : '#0B3D3A',
                 }}>
                   {ex.stepCount}
                 </span>
                 <span style={{
                   fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: 11,
-                  color: active ? '#006EE9' : '#666666',
+                  color: active ? '#26CCC2' : '#666666',
                   textAlign: 'center', lineHeight: 1.2,
                 }}>
                   {ex.stepLabel}
@@ -331,7 +331,7 @@ export default function FirstNotesModule() {
       <div style={{ margin: '0 16px 12px', background: 'white', borderRadius: 16, padding: '16px 16px 14px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
         <MiniStaff noteId={selectedNote} step={currentStep} />
         <div style={{ marginTop: 10, textAlign: 'center' }}>
-          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 15, color: '#2D2D2D', margin: 0 }}>
+          <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 15, color: '#0B3D3A', margin: 0 }}>
             {exercise.label}
           </p>
           <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 400, fontSize: 13, color: '#666666', margin: '4px 0 0', lineHeight: 1.5 }}>
@@ -352,10 +352,10 @@ export default function FirstNotesModule() {
           style={{
             width: '100%', minHeight: 48, borderRadius: 12, border: 'none',
             cursor: 'pointer',
-            background: 'linear-gradient(to right, #83E7FF, #00C5E5)',
-            boxShadow: '0 2px 8px rgba(131, 231, 255, 0.25)',
+            background: 'linear-gradient(to right, #6AECE1, #34D6C9)',
+            boxShadow: '0 2px 8px rgba(106, 236, 225, 0.25)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-            fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 14, color: '#000180',
+            fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 14, color: '#0B3D3A',
           }}
         >
           <SpeakerIcon />
@@ -368,7 +368,7 @@ export default function FirstNotesModule() {
 
         {/* Advice banner */}
         <div style={{
-          background: '#FFF8EE',
+          background: '#FAFAF8',
           border: '1.5px solid #F5D99E',
           borderRadius: 12,
           padding: '12px 14px',
@@ -394,8 +394,8 @@ export default function FirstNotesModule() {
             borderRadius: 12, border: 'none', cursor: 'pointer',
             background: isActive
               ? '#F1EFE8'
-              : 'linear-gradient(to right, #006EE9, #0056C7)',
-            color: isActive ? '#000180' : 'white',
+              : 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            color: '#0B3D3A',
             fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 15,
           }}
           aria-label={isActive ? 'Stop microphone' : 'Start microphone'}

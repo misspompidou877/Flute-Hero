@@ -16,11 +16,11 @@ const TIP_THRESHOLD   = 12      // onsets before showing the persistence tip
 // ── Shared text styles (Foundations scale — matches EmbouchureModule) ─────
 const H = {
   fontFamily: 'Nunito, sans-serif', fontWeight: 800, fontSize: '36px',
-  color: '#2D2D2D', marginBottom: '16px', marginTop: 0, lineHeight: 1.2,
+  color: '#0B3D3A', marginBottom: '16px', marginTop: 0, lineHeight: 1.2,
 }
 const BODY = {
   fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: '20px',
-  color: '#2D2D2D', margin: '0 0 12px', lineHeight: 1.5,
+  color: '#0B3D3A', margin: '0 0 12px', lineHeight: 1.5,
 }
 const BODY2 = {
   fontFamily: 'Nunito, sans-serif', fontWeight: 600, fontSize: '20px',
@@ -31,10 +31,10 @@ const BODY2 = {
 function TipCard({ children }) {
   return (
     <div style={{
-      background: '#FFF8EE', borderLeft: '3px solid #006EE9',
+      background: '#FAFAF8', borderLeft: '3px solid #26CCC2',
       borderRadius: '12px', padding: '16px 20px', marginBottom: '16px',
       fontFamily: 'Nunito, sans-serif', fontWeight: 500,
-      fontSize: '18px', color: '#2D2D2D', lineHeight: 1.5,
+      fontSize: '18px', color: '#0B3D3A', lineHeight: 1.5,
     }}>
       {children}
     </div>
@@ -44,7 +44,7 @@ function TipCard({ children }) {
 function SuccessCard({ children }) {
   return (
     <div style={{
-      background: '#F0FBF0', borderLeft: '3px solid #4CAF50',
+      background: '#F0FBF0', borderLeft: '3px solid #26CCC2',
       borderRadius: '12px', padding: '16px 20px', marginBottom: '16px',
       fontFamily: 'Nunito, sans-serif', fontWeight: 600,
       fontSize: '18px', color: '#2E7D32', lineHeight: 1.5,
@@ -83,10 +83,10 @@ function TongueDiagram() {
           fill="#FAFAFA" stroke="#E0E0E0" strokeWidth="1.5" />
       ))}
       {/* gum line */}
-      <rect x="32" y="24" width="194" height="12" rx="6" fill="#F48FB1" />
+      <rect x="32" y="24" width="194" height="12" rx="6" fill="#FFB76C" />
 
       {/* ── Mouth floor / lower lip ── */}
-      <path d="M28,110 Q130,138 232,110" fill="#F8BBD9" stroke="#F48FB1" strokeWidth="2" />
+      <path d="M28,110 Q130,138 232,110" fill="#F8BBD9" stroke="#FFB76C" strokeWidth="2" />
 
       {/* ── Animated tongue group ── */}
       <g className="tongue-g">
@@ -95,15 +95,15 @@ function TongueDiagram() {
         {/* Tongue tip */}
         <ellipse cx="130" cy="108" rx="26" ry="14" fill="#E91E8C" />
         {/* "here!" label with arrow */}
-        <path d="M168,70 Q180,60 190,68" stroke="#006EE9" strokeWidth="2"
+        <path d="M168,70 Q180,60 190,68" stroke="#26CCC2" strokeWidth="2"
           fill="none" strokeLinecap="round" markerEnd="url(#tuh-arr)" />
         <text x="172" y="62" fontFamily="Nunito, sans-serif" fontSize="13"
-          fontWeight="800" fill="#006EE9">here!</text>
+          fontWeight="800" fill="#26CCC2">here!</text>
       </g>
 
       <defs>
         <marker id="tuh-arr" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
-          <polygon points="0 0, 7 3, 0 6" fill="#006EE9" />
+          <polygon points="0 0, 7 3, 0 6" fill="#26CCC2" />
         </marker>
       </defs>
 
@@ -149,7 +149,7 @@ function Pendulum() {
             fill="#CCCCCC" stroke="#AAAAAA" strokeWidth="1.5" />
           {/* Bob */}
           <circle cx="70" cy="132" r="16"
-            fill="#006EE9" stroke="#0056C7" strokeWidth="2.5" />
+            fill="#26CCC2" stroke="#1AA89F" strokeWidth="2.5" />
         </g>
 
         {/* Beat count label */}
@@ -175,11 +175,11 @@ function ComparePanel({ wrongLabel, wrongDesc, wrongSvg, rightLabel, rightDesc, 
         <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: '#666666', margin: 0, lineHeight: 1.3 }}>{wrongDesc}</p>
       </div>
       <div style={{
-        flex: 1, background: '#F0FBF0', borderLeft: '3px solid #4CAF50',
+        flex: 1, background: '#F0FBF0', borderLeft: '3px solid #26CCC2',
         borderRadius: '12px', padding: '14px', textAlign: 'center',
       }}>
         {rightSvg}
-        <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: '15px', color: '#4CAF50', margin: '0 0 4px' }}>{rightLabel}</p>
+        <p style={{ fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: '15px', color: '#26CCC2', margin: '0 0 4px' }}>{rightLabel}</p>
         <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: '#666666', margin: 0, lineHeight: 1.3 }}>{rightDesc}</p>
       </div>
     </div>
@@ -195,10 +195,10 @@ const WaveContinuous = (
 )
 const WaveClean = (
   <svg viewBox="0 0 100 36" style={{ width: '100%', marginBottom: 8 }} aria-hidden="true">
-    <line x1="4" y1="18" x2="26" y2="18" stroke="#4CAF50" strokeWidth="2"
+    <line x1="4" y1="18" x2="26" y2="18" stroke="#26CCC2" strokeWidth="2"
       strokeDasharray="2 4" strokeLinecap="round" />
-    <line x1="30" y1="6" x2="30" y2="30" stroke="#4CAF50" strokeWidth="3" strokeLinecap="round" />
-    <line x1="30" y1="18" x2="96" y2="18" stroke="#4CAF50" strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="30" y1="6" x2="30" y2="30" stroke="#26CCC2" strokeWidth="3" strokeLinecap="round" />
+    <line x1="30" y1="18" x2="96" y2="18" stroke="#26CCC2" strokeWidth="2.5" strokeLinecap="round" />
   </svg>
 )
 const WaveHard = (
@@ -209,8 +209,8 @@ const WaveHard = (
 )
 const WaveGentleTap = (
   <svg viewBox="0 0 100 36" style={{ width: '100%', marginBottom: 8 }} aria-hidden="true">
-    <line x1="30" y1="10" x2="30" y2="26" stroke="#4CAF50" strokeWidth="3" strokeLinecap="round" />
-    <line x1="30" y1="18" x2="96" y2="18" stroke="#4CAF50" strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="30" y1="10" x2="30" y2="26" stroke="#26CCC2" strokeWidth="3" strokeLinecap="round" />
+    <line x1="30" y1="18" x2="96" y2="18" stroke="#26CCC2" strokeWidth="2.5" strokeLinecap="round" />
   </svg>
 )
 const WaveBlurred = (
@@ -225,8 +225,8 @@ const WaveSeparate = (
   <svg viewBox="0 0 100 36" style={{ width: '100%', marginBottom: 8 }} aria-hidden="true">
     {[8, 38, 68].map((x) => (
       <g key={x}>
-        <line x1={x} y1="12" x2={x} y2="24" stroke="#4CAF50" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1={x} y1="18" x2={x + 20} y2="18" stroke="#4CAF50" strokeWidth="2" strokeLinecap="round" />
+        <line x1={x} y1="12" x2={x} y2="24" stroke="#26CCC2" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1={x} y1="18" x2={x + 20} y2="18" stroke="#26CCC2" strokeWidth="2" strokeLinecap="round" />
       </g>
     ))}
   </svg>
@@ -373,8 +373,8 @@ export default function TonguingModule() {
                   width: 64, height: 64,
                   borderRadius: '50%',
                   border: done ? 'none' : '3px solid #EEEEEE',
-                  background: done ? '#4CAF50' : '#FFFFFF',
-                  color: done ? '#FFFFFF' : '#AAAAAA',
+                  background: done ? '#26CCC2' : '#FFFFFF',
+                  color: done ? '#0B3D3A' : '#AAAAAA',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   cursor: done ? 'default' : 'pointer',
                   fontSize: done ? '22px' : '20px',
@@ -382,7 +382,7 @@ export default function TonguingModule() {
                   fontWeight: 800,
                   transform: done ? 'scale(1.08)' : 'scale(1)',
                   transition: 'all 0.18s ease',
-                  boxShadow: done ? '0 4px 12px rgba(76,175,80,0.3)' : '0 2px 6px rgba(0,0,0,0.07)',
+                  boxShadow: done ? '0 4px 12px rgba(38,204,194,0.3)' : '0 2px 6px rgba(0,0,0,0.07)',
                 }}
               >
                 {done ? '✓' : i + 1}
@@ -436,8 +436,8 @@ export default function TonguingModule() {
               onClick={() => setHandResponse('yes')}
               style={{
                 flex: 1, height: 56, padding: '0 24px', borderRadius: 28, border: 'none',
-                background: 'linear-gradient(to right, #006EE9, #0056C7)',
-                color: '#FFFFFF', fontFamily: 'Nunito, sans-serif',
+                background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+                color: '#0B3D3A', fontFamily: 'Nunito, sans-serif',
                 fontWeight: 700, fontSize: '18px', cursor: 'pointer',
               }}
             >
@@ -516,14 +516,14 @@ export default function TonguingModule() {
 
           {/* B4 fingering reminder */}
           <div style={{
-            background: '#FFF8EE', borderRadius: 12, padding: '12px 16px',
+            background: '#FAFAF8', borderRadius: 12, padding: '12px 16px',
             marginBottom: 16, display: 'flex', alignItems: 'center', gap: 12,
           }}>
             <span style={{ fontSize: 28, flexShrink: 0 }}>🎶</span>
             <div>
               <p style={{
                 fontFamily: 'Nunito, sans-serif', fontWeight: 700,
-                fontSize: 16, color: '#2D2D2D', margin: 0,
+                fontSize: 16, color: '#0B3D3A', margin: 0,
               }}>
                 Finger B — your first note!
               </p>
@@ -539,7 +539,7 @@ export default function TonguingModule() {
           <p style={BODY}>Put your whole flute together and tongue once per beat:</p>
           <p style={{
             fontFamily: 'Nunito, sans-serif', fontWeight: 800,
-            fontSize: '22px', color: '#2D2D2D', textAlign: 'center',
+            fontSize: '22px', color: '#0B3D3A', textAlign: 'center',
             letterSpacing: 6, margin: '0 0 4px',
           }}>
             tuh — tuh — tuh — tuh
@@ -555,10 +555,10 @@ export default function TonguingModule() {
                 style={{
                   width: 52, height: 52, borderRadius: '50%',
                   border: i < consecutiveTicks ? 'none' : '2.5px solid #EEEEEE',
-                  background: i < consecutiveTicks ? '#4CAF50' : '#FFFFFF',
+                  background: i < consecutiveTicks ? '#26CCC2' : '#FFFFFF',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 22, color: '#FFFFFF',
-                  boxShadow: i < consecutiveTicks ? '0 3px 10px rgba(76,175,80,0.3)' : 'none',
+                  fontSize: 22, color: i < consecutiveTicks ? '#0B3D3A' : '#FFFFFF',
+                  boxShadow: i < consecutiveTicks ? '0 3px 10px rgba(38,204,194,0.3)' : 'none',
                   transition: 'all 0.2s ease',
                 }}
               >
@@ -571,13 +571,13 @@ export default function TonguingModule() {
 
           {showTip && !badgeVisible && (
             <div style={{
-              marginTop: 20, background: '#FFF8EE',
+              marginTop: 20, background: '#FAFAF8',
               borderRadius: 16, padding: '20px 20px',
               animation: 'f-slide-in 280ms ease-out',
             }}>
               <p style={{
                 fontFamily: 'Nunito, sans-serif', fontWeight: 700,
-                fontSize: 18, color: '#2D2D2D', margin: '0 0 8px', lineHeight: 1.5,
+                fontSize: 18, color: '#0B3D3A', margin: '0 0 8px', lineHeight: 1.5,
               }}>
                 Tip: don't stop your breath between tuhs 💨
               </p>
@@ -701,7 +701,7 @@ export default function TonguingModule() {
         }}>
           <p style={{
             fontFamily: 'Nunito, sans-serif', fontWeight: 800,
-            fontSize: '20px', color: '#2D2D2D', margin: '0 0 14px',
+            fontSize: '20px', color: '#0B3D3A', margin: '0 0 14px',
           }}>
             {card.title}
           </p>

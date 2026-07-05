@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-const CONFETTI_COLORS = ['#D0FFA3', '#83E7FF', '#006EE9', '#E7A0FE', '#000180']
+const CONFETTI_COLORS = ['#FFF57E', '#6AECE1', '#26CCC2', '#FFB76C', '#0B3D3A']
 
 export default function BadgePopup({
   badgeKey,
@@ -100,7 +100,7 @@ export default function BadgePopup({
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 800,
             fontSize: '28px',
-            color: '#2D2D2D',
+            color: '#0B3D3A',
             marginBottom: '8px',
           }}
         >
@@ -126,8 +126,8 @@ export default function BadgePopup({
           }}
           style={{
             width: '100%',
-            background: 'linear-gradient(to right, #006EE9, #0056C7)',
-            color: '#FFFFFF',
+            background: 'linear-gradient(to right, #26CCC2, #1AA89F)',
+            color: '#0B3D3A',
             fontFamily: 'Nunito, sans-serif',
             fontWeight: 700,
             fontSize: '20px',
