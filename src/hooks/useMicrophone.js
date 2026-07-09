@@ -4,6 +4,14 @@ import { useBadges } from './useBadges'
 
 const FIRST_NOTE_SET = new Set(['B4', 'A4', 'G4'])
 
+// A real flute note is sustained; a tap, a bump, or a spoken syllable is not.
+// Only report a pitch once the SAME note has held for this long — transients
+// never stay on one semitone long enough to qualify.
+const SUSTAIN_MS = 120
+// Volume floor (RMS of the time-domain buffer). Below this we treat the frame
+// as silence so faint background noise can't trip the detector.
+const RMS_GATE = 0.012
+
 export function useMicrophone() {
   const [isActive, setIsActive] = useState(false)
   const [note, setNote] = useState(null)
@@ -51,6 +59,12 @@ export function useMicrophone() {
 
       setIsActive(true)
 
+      // Candidate tracking for the sustain gate. `candidateNote` is the note we
+      // have most recently started seeing; `candidateSince` is when it first
+      // appeared. A note is only reported once it has held for SUSTAIN_MS.
+      let candidateNote = null
+      let candidateSince = 0
+
       const loop = () => {
         // Audio may have been torn down (stopListening / unmount) while this
         // frame was already queued — bail without rescheduling so we never
@@ -61,6 +75,12 @@ export function useMicrophone() {
         const buf = new Float32Array(2048)
         audio.analyser.getFloatTimeDomainData(buf)
 
+        // RMS = loudness of this frame. Reject quiet frames outright so faint
+        // room noise never reaches the pitch detector.
+        let sumSquares = 0
+        for (let i = 0; i < buf.length; i++) sumSquares += buf[i] * buf[i]
+        const rms = Math.sqrt(sumSquares / buf.length)
+
         const [pitch, clarity] =
           audio.detector.findPitch(
             buf,
@@ -69,7 +89,7 @@ export function useMicrophone() {
 
         // 0.7 clarity gate: a beginner child's tone is breathy and rarely hits
         // the 0.9+ clarity of a pure sine, so 0.8 rejected too many real notes.
-        if (clarity > 0.7 && pitch > 60 && pitch < 1500) {
+        if (rms >= RMS_GATE && clarity > 0.7 && pitch > 60 && pitch < 1500) {
           const noteNames = [
             'C','C#','D','D#','E','F',
             'F#','G','G#','A','A#','B'
@@ -84,15 +104,29 @@ export function useMicrophone() {
           )
 
           const detectedNote = `${noteName}${octave}`
-          setNote(detectedNote)
-          setFrequency(Math.round(pitch))
-          setCents(centsOff)
 
-          if (FIRST_NOTE_SET.has(detectedNote)) {
-            earnBadge('first_notes')
+          // Sustain gate: a transient noise jumps around the pitch scale, so the
+          // note it maps to keeps changing and the timer keeps resetting. Only a
+          // steadily-held tone stays on one note long enough to be reported.
+          const now = performance.now()
+          if (detectedNote !== candidateNote) {
+            candidateNote = detectedNote
+            candidateSince = now
+          }
+
+          if (now - candidateSince >= SUSTAIN_MS) {
+            setNote(detectedNote)
+            setFrequency(Math.round(pitch))
+            setCents(centsOff)
+
+            if (FIRST_NOTE_SET.has(detectedNote)) {
+              earnBadge('first_notes')
+            }
           }
         } else {
-          // No clear pitch — reset so stale values don't mislead consumers
+          // No clear pitch — reset the candidate and clear stale values so a
+          // released note stops registering immediately.
+          candidateNote = null
           setNote(null)
           setFrequency(null)
           setCents(null)
