@@ -14,8 +14,20 @@ export function useMicrophone() {
 
   const startListening = async () => {
     try {
+      // Disable the browser's voice-oriented processing. noiseSuppression in
+      // particular treats a sustained flute tone as "noise" and gates it to
+      // near-silence, which is the classic reason pitch detection reads nothing.
+      // autoGainControl and echoCancellation also distort a steady instrument
+      // tone, so we turn all three off and ask for a raw mic signal.
       const stream = await navigator.mediaDevices
-        .getUserMedia({ audio: true, video: false })
+        .getUserMedia({
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false,
+          },
+          video: false,
+        })
 
       const ctx = new AudioContext()
       await ctx.resume()
@@ -53,7 +65,9 @@ export function useMicrophone() {
             audio.ctx.sampleRate
           )
 
-        if (clarity > 0.8 && pitch > 60 && pitch < 1500) {
+        // 0.7 clarity gate: a beginner child's tone is breathy and rarely hits
+        // the 0.9+ clarity of a pure sine, so 0.8 rejected too many real notes.
+        if (clarity > 0.7 && pitch > 60 && pitch < 1500) {
           const noteNames = [
             'C','C#','D','D#','E','F',
             'F#','G','G#','A','A#','B'
