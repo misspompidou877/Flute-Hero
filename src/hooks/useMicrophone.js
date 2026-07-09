@@ -29,20 +29,22 @@ export function useMicrophone() {
           video: false,
         })
 
-      const ctx = new AudioContext()
-      await ctx.resume()
+      const context = new AudioContext()
+      await context.resume()
 
-      const analyser = ctx.createAnalyser()
+      const analyser = context.createAnalyser()
       analyser.fftSize = 2048
       analyser.minDecibels = -100
       analyser.maxDecibels = -10
       analyser.smoothingTimeConstant = 0.85
 
-      const source = ctx.createMediaStreamSource(stream)
+      const source = context.createMediaStreamSource(stream)
       source.connect(analyser)
 
-      // Keep on window to prevent garbage collection
-      window._fluteAudio = { ctx, analyser, source, stream }
+      // Keep on window to prevent garbage collection. Use the `context` key
+      // (not `ctx`) so playTone.js — which reuses window._fluteAudio.context —
+      // shares this live AudioContext instead of silently creating its own.
+      window._fluteAudio = { context, analyser, source, stream }
 
       const detector = PitchDetector.forFloat32Array(2048)
       window._fluteAudio.detector = detector
@@ -62,7 +64,7 @@ export function useMicrophone() {
         const [pitch, clarity] =
           audio.detector.findPitch(
             buf,
-            audio.ctx.sampleRate
+            audio.context.sampleRate
           )
 
         // 0.7 clarity gate: a beginner child's tone is breathy and rarely hits
@@ -113,7 +115,7 @@ export function useMicrophone() {
     }
     if (window._fluteAudio) {
       try { window._fluteAudio.stream?.getTracks().forEach(t => t.stop()) } catch (_) {}
-      try { window._fluteAudio.ctx?.close() } catch (_) {}
+      try { window._fluteAudio.context?.close() } catch (_) {}
       window._fluteAudio = null
     }
     setIsActive(false)
