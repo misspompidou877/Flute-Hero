@@ -25,7 +25,7 @@ const HOLES = [
   { id: 'l1', cx: 320, cy: 120, role: 'left', label: '1' },
   { id: 'l2', cx: 390, cy: 120, role: 'left', label: '2' },
   { id: 'l3', cx: 430, cy: 120, role: 'left', label: '3' },
-  { id: 'lp', cx: 430, cy: 162, r: 12, role: 'left', label: '♯' },  // left-pinky G# key
+  { id: 'lp', cx: 430, cy: 78, r: 12, role: 'left', label: '♯' },  // left-pinky G# key — sits above LH3
   { id: 'r1', cx: 540, cy: 120, role: 'right', label: '1' },
   { id: 'r2', cx: 588, cy: 120, role: 'right', label: '2' },
   { id: 'r3', cx: 634, cy: 120, role: 'right', label: '3' },
@@ -77,7 +77,7 @@ function playReferenceTone(audioRef, frequency) {
   oscillator.stop(now + 0.95)
 }
 
-function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostKeys = false }) {
+function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostKeys = false, compact = false }) {
   const audioRef = useRef(null)
   const freq = NOTES[noteName]?.freq
   const displayName = NOTES[noteName]?.label ?? noteName
@@ -87,6 +87,101 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
   const scaleR = showGhostKeys
     ? (r) => Math.max(5, Math.round(r * 14 / 18))
     : (r) => r
+
+  // The bare flute diagram, shared by the full lesson article and the compact
+  // practice view. In compact mode it scales to fit its container (preserving
+  // aspect via the default xMidYMid meet) so the whole chart is always visible
+  // on short landscape phones.
+  const diagramSvg = (
+    <svg
+      className={compact ? undefined : 'h-auto w-full'}
+      style={compact ? { width: '100%', height: '100%', display: 'block' } : undefined}
+      viewBox={showGhostKeys ? '0 0 800 210' : '0 0 740 210'}
+      role="img"
+      aria-label={`${noteName} flute fingering`}
+    >
+      <title>{`${noteName} flute fingering diagram`}</title>
+      {/* Flute body tube — extended when ghost keys are shown */}
+      <rect x="28" y="92" width={showGhostKeys ? 748 : 690} height="56" rx="28" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2.5" />
+      <ellipse cx="72" cy="120" rx="21" ry="16" fill="#ffffff" stroke="#94a3b8" strokeWidth="2.5" />
+      <text x="72" y="168" textAnchor="middle" fontSize="18" fill="#334155" fontWeight="700">
+        Head joint
+      </text>
+
+      <text x="375" y="54" textAnchor="middle" fontSize="26" fill="#1d4ed8" fontWeight="800">
+        Left Hand
+      </text>
+      <text x="587" y="54" textAnchor="middle" fontSize="26" fill="#15803d" fontWeight="800">
+        Right Hand
+      </text>
+      <text x="307" y="190" textAnchor="middle" fontSize="18" fill="#37A0FE" fontWeight="700">
+        Thumb
+      </text>
+
+      {/* Joint separation lines — head joint | body | foot joint */}
+      {showGhostKeys && <>
+        <line x1="278" y1="89" x2="278" y2="150" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="4 3" />
+        <line x1="660" y1="89" x2="660" y2="150" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="4 3" />
+      </>}
+
+      {/* Ghost holes — G# key (left hand), trill keys, and foot joint keys */}
+      {showGhostKeys && GHOST_HOLES.map(hole => (
+        <circle
+          key={hole.id}
+          cx={hole.cx}
+          cy={hole.cy}
+          r={scaleR(hole.r)}
+          fill="#F1F5F9"
+          stroke="#CBD5E1"
+          strokeWidth="2"
+        />
+      ))}
+
+      {/* Active finger holes */}
+      {HOLES.map((hole) => {
+        const isClosed = closedHoles.includes(hole.id)
+        const fill = isClosed ? HAND_COLORS[hole.role] : '#ffffff'
+        const stroke = HAND_COLORS[hole.role]
+        const r = scaleR(hole.r ?? 18)
+        return (
+          <g key={hole.id}>
+            <circle
+              cx={hole.cx}
+              cy={hole.cy}
+              r={r}
+              fill={fill}
+              stroke={stroke}
+              strokeWidth="3"
+            />
+            <text
+              x={hole.cx}
+              y={hole.cy + (r < 14 ? 4 : 6)}
+              textAnchor="middle"
+              fontSize={r < 14 ? 10 : 13}
+              fill={isClosed ? '#ffffff' : stroke}
+              fontWeight="700"
+            >
+              {hole.label}
+            </text>
+          </g>
+        )
+      })}
+    </svg>
+  )
+
+  // Compact practice view — just the diagram, sized to fill its cell. The
+  // surrounding practice card already supplies the note label and heading, so
+  // the title/tip/legend/"Hear It" chrome is intentionally dropped here.
+  if (compact) {
+    return (
+      <div
+        className="fingering-transition"
+        style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        {diagramSvg}
+      </div>
+    )
+  }
 
   return (
     <article className="fingering-transition rounded-2xl bg-white p-6 shadow-md">
@@ -110,79 +205,7 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
 
       {/* Fingering diagram SVG — DO NOT restyle the SVG itself */}
       <div className="rounded-xl bg-[#FAF4EE] p-3">
-        <svg
-          className="h-auto w-full"
-          viewBox={showGhostKeys ? "0 0 800 210" : "0 0 740 210"}
-          role="img"
-          aria-label={`${noteName} flute fingering`}
-        >
-          <title>{`${noteName} flute fingering diagram`}</title>
-          {/* Flute body tube — extended when ghost keys are shown */}
-          <rect x="28" y="92" width={showGhostKeys ? 748 : 690} height="56" rx="28" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2.5" />
-          <ellipse cx="72" cy="120" rx="21" ry="16" fill="#ffffff" stroke="#94a3b8" strokeWidth="2.5" />
-          <text x="72" y="168" textAnchor="middle" fontSize="18" fill="#334155" fontWeight="700">
-            Head joint
-          </text>
-
-          <text x="375" y="54" textAnchor="middle" fontSize="26" fill="#1d4ed8" fontWeight="800">
-            Left Hand
-          </text>
-          <text x="587" y="54" textAnchor="middle" fontSize="26" fill="#15803d" fontWeight="800">
-            Right Hand
-          </text>
-          <text x="307" y="190" textAnchor="middle" fontSize="18" fill="#37A0FE" fontWeight="700">
-            Thumb
-          </text>
-
-          {/* Joint separation lines — head joint | body | foot joint */}
-          {showGhostKeys && <>
-            <line x1="278" y1="89" x2="278" y2="150" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="4 3" />
-            <line x1="660" y1="89" x2="660" y2="150" stroke="#94A3B8" strokeWidth="1.5" strokeDasharray="4 3" />
-          </>}
-
-          {/* Ghost holes — G# key (left hand), trill keys, and foot joint keys */}
-          {showGhostKeys && GHOST_HOLES.map(hole => (
-            <circle
-              key={hole.id}
-              cx={hole.cx}
-              cy={hole.cy}
-              r={scaleR(hole.r)}
-              fill="#F1F5F9"
-              stroke="#CBD5E1"
-              strokeWidth="2"
-            />
-          ))}
-
-          {/* Active finger holes */}
-          {HOLES.map((hole) => {
-            const isClosed = closedHoles.includes(hole.id)
-            const fill = isClosed ? HAND_COLORS[hole.role] : '#ffffff'
-            const stroke = HAND_COLORS[hole.role]
-            const r = scaleR(hole.r ?? 18)
-            return (
-              <g key={hole.id}>
-                <circle
-                  cx={hole.cx}
-                  cy={hole.cy}
-                  r={r}
-                  fill={fill}
-                  stroke={stroke}
-                  strokeWidth="3"
-                />
-                <text
-                  x={hole.cx}
-                  y={hole.cy + (r < 14 ? 4 : 6)}
-                  textAnchor="middle"
-                  fontSize={r < 14 ? 10 : 13}
-                  fill={isClosed ? '#ffffff' : stroke}
-                  fontWeight="700"
-                >
-                  {hole.label}
-                </text>
-              </g>
-            )
-          })}
-        </svg>
+        {diagramSvg}
       </div>
 
       {/* Beginner tip — grey italic, below diagram */}
@@ -227,7 +250,7 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
   )
 }
 
-export function FingeringDiagramForNote({ noteId }) {
+export function FingeringDiagramForNote({ noteId, compact = false }) {
   const noteData = NOTES[noteId]
   if (!noteData) return null
   return (
@@ -237,6 +260,7 @@ export function FingeringDiagramForNote({ noteId }) {
       closedHoles={getClosedHoles(noteId)}
       variantLabel={noteData.variantLabel}
       showGhostKeys={true}
+      compact={compact}
     />
   )
 }

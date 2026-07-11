@@ -20,19 +20,28 @@ const MEASURES_PER_ROW = 4
 // example says an iPad in portrait should pass, so the threshold sits below 768.)
 const PRACTICE_MIN_WIDTH = 700
 
+// Below this viewport height the vertical staff-over-fingering stack can't fit,
+// so we switch to a side-by-side layout (music left, fingering + tuning right).
+// This is what a landscape phone (iPhone ~375–430px tall) always hits.
+const COMPACT_MAX_HEIGHT = 500
+
 // ── Orientation hook ─────────────────────────────────────────
+// Returns { mode, compact }:
+//   mode    — 'ok' to render practice, 'rotate' to prompt turning the phone
+//   compact — true on short landscape phones, where the layout goes two-column
 function usePracticeLayoutMode() {
   const compute = () => {
-    if (typeof window === 'undefined') return 'ok'
+    if (typeof window === 'undefined') return { mode: 'ok', compact: false }
     const w = window.innerWidth
     const h = window.innerHeight
-    if (w >= PRACTICE_MIN_WIDTH) return 'ok'
-    if (w > h) return 'ok'
-    return 'rotate'
+    const landscape = w > h
+    if (w >= PRACTICE_MIN_WIDTH) return { mode: 'ok', compact: landscape && h < COMPACT_MAX_HEIGHT }
+    if (landscape) return { mode: 'ok', compact: h < COMPACT_MAX_HEIGHT }
+    return { mode: 'rotate', compact: false }
   }
-  const [mode, setMode] = useState(compute)
+  const [state, setState] = useState(compute)
   useEffect(() => {
-    const handler = () => setMode(compute())
+    const handler = () => setState(compute())
     window.addEventListener('resize', handler)
     window.addEventListener('orientationchange', handler)
     return () => {
@@ -40,7 +49,7 @@ function usePracticeLayoutMode() {
       window.removeEventListener('orientationchange', handler)
     }
   }, [])
-  return mode
+  return state
 }
 
 // ── Note conversion helpers ──────────────────────────────────
@@ -151,7 +160,7 @@ export default function PracticePage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { progress: { currentLevel, isPremium } } = useProgress()
-  const mode = usePracticeLayoutMode()
+  const { mode, compact } = usePracticeLayoutMode()
 
   const [selectedSongId, setSelectedSongId] = useState(() => searchParams.get('song') ?? null)
   const [currentPage, setCurrentPage] = useState(0)
@@ -461,11 +470,18 @@ export default function PracticePage() {
         </div>
       </div>
 
-      {/* ── Main grid: staff (1fr) over fingering+tuning bottom row (auto) ── */}
+      {/* ── Main grid ──────────────────────────────────────────────
+          Roomy (tablet / tall): staff on top (1fr), fingering + tuning below.
+          Compact (landscape phone): two columns — music left at full height,
+          fingering + tuning stacked in a right rail. There is no bottom nav on
+          the /practice route, so no space is reserved for one. */}
       <div
         style={{
-          flex: 1, display: 'grid', gridTemplateRows: 'minmax(0, 1fr) auto', gap: 10, minHeight: 0,
-          padding: '0 calc(14px + env(safe-area-inset-right)) calc(12px + 70px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))',
+          flex: 1, display: 'grid', gap: 10, minHeight: 0,
+          ...(compact
+            ? { gridTemplateColumns: 'minmax(0, 1.6fr) minmax(0, 1fr)', gridTemplateRows: 'minmax(0, 1fr)' }
+            : { gridTemplateRows: 'minmax(0, 1fr) auto' }),
+          padding: '0 calc(14px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))',
         }}
       >
 
@@ -527,13 +543,22 @@ export default function PracticePage() {
           </div>
         </div>
 
-        {/* ── Bottom row: fingering (1.7fr) + tuning (1fr) ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 10, minHeight: 0 }}>
+        {/* ── Fingering + tuning ──────────────────────────────────
+            Roomy: side by side under the staff. Compact: stacked in the
+            right rail (fingering fills, tuning sits below). */}
+        <div
+          style={{
+            display: 'grid', gap: 10, minHeight: 0,
+            ...(compact
+              ? { gridTemplateRows: 'minmax(0, 1fr) auto' }
+              : { gridTemplateColumns: '1.7fr 1fr' }),
+          }}
+        >
 
           {/* Fingering card */}
           <div
             className="bg-white flex flex-col"
-            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: 'var(--shadow-card)', minHeight: 0, maxHeight: '38vh' }}
+            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: 'var(--shadow-card)', minHeight: 0, maxHeight: compact ? 'none' : '38vh' }}
           >
             <div className="flex items-baseline justify-between" style={{ marginBottom: 8 }}>
               <div className="flex items-baseline gap-2">
@@ -549,7 +574,7 @@ export default function PracticePage() {
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 0, overflow: 'auto' }}>
               {expectedNoteId ? (
-                <FingeringDiagramForNote noteId={expectedNoteId} />
+                <FingeringDiagramForNote noteId={expectedNoteId} compact />
               ) : (
                 <p style={{ fontSize: 12, color: '#D3D1C7', fontWeight: 600 }}>No note</p>
               )}
@@ -559,7 +584,7 @@ export default function PracticePage() {
           {/* Tuning meter card */}
           <div
             className="bg-white flex flex-col justify-center"
-            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: 'var(--shadow-card)', maxHeight: '38vh' }}
+            style={{ borderRadius: 14, padding: '12px 14px', boxShadow: 'var(--shadow-card)', maxHeight: compact ? 'none' : '38vh' }}
           >
             <TuningMeterInline />
           </div>
