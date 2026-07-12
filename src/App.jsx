@@ -11,6 +11,7 @@ import FoundationsPage from './pages/FoundationsPage'
 import ReadMusicPage from './pages/ReadMusicPage'
 import BasicsPage from './pages/BasicsPage'
 import UnlockPage from './pages/UnlockPage'
+import UnlockFreePage from './pages/UnlockFreePage'
 import ParentZonePage from './pages/ParentZonePage'
 import OnboardingPage from './pages/OnboardingPage'
 
@@ -67,6 +68,7 @@ function App() {
           <Route path="/read-music" element={<ReadMusicPage />} />
           <Route path="/basics" element={<BasicsPage />} />
           <Route path="/unlock" element={<UnlockPage />} />
+          <Route path="/unlock-free" element={<UnlockFreePage />} />
           <Route path="/parent" element={<ParentZonePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

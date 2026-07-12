@@ -8,15 +8,17 @@
  * and the final hand-off into the real Practice screen.
  *
  * Targets (orchestration §3): first flute SOUND within ~90s, first SONG within
- * ~5 min, ZERO signup/email/paywall before the first success. The 10-day trial
- * starts silently at completion via startTrialIfNeeded().
+ * ~5 min, ZERO signup/email/paywall before the first success. The final step
+ * offers an OPTIONAL email that unlocks the free-song tier (2 songs at every
+ * level) — skipping it is fine (soft gate).
  *
  * Intended route: /onboarding
  * First-run gate (wired by the orchestrator in App.jsx, NOT here): redirect to
  * /onboarding whenever localStorage['onboarding.complete'] !== 'true'.
  *
- * Completion writes localStorage 'onboarding.complete' = 'true', starts the
- * trial, then navigates to /practice?song=hot-cross-buns (the first song).
+ * Completion writes localStorage 'onboarding.complete' = 'true', unlocks the
+ * free songs if an email was given, then navigates to
+ * /practice?song=hot-cross-buns (the first song).
  */
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +37,7 @@ import SaveStep from '../components/onboarding/SaveStep';
 
 import FluteCharacter from '../components/FluteCharacter';
 import { logEvent, markTiming } from '../utils/analytics';
-import { startTrialIfNeeded } from '../utils/trial';
+import { useProgress } from '../context/ProgressContext';
 
 // Step order + the default Piper state shown when each step is viewed.
 // (A step may override Piper mid-step via the setPiper prop, e.g. FirstSound.)
@@ -64,6 +66,7 @@ function rawSet(key, value) {
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
+  const { unlockFreeSongs } = useProgress();
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState({});
   const [piper, setPiperState] = useState(STEPS[0].piper);
@@ -108,20 +111,23 @@ export default function OnboardingPage() {
     setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   }, [stepIndex]);
 
-  // Final step: persist optional email, mark complete, start the silent trial,
-  // then hand off into the real Practice screen with the first song loaded.
+  // Final step: mark complete, and — if a grown-up added an email — unlock the
+  // free-song tier (2 songs at every level). No email is fine (soft gate): the
+  // guest can still play the first "taste" song we hand off into below.
   const finish = useCallback((payload = {}) => {
     const step = STEPS[stepIndex];
 
-    if (payload.email) rawSet('profile.saveEmail', String(payload.email));
+    if (payload.email) {
+      logEvent('email_captured');
+      unlockFreeSongs(String(payload.email)); // stores profile.saveEmail + flips entitlement
+    }
     if (step) logEvent('onboarding_step_completed', { step: step.id });
 
     rawSet('onboarding.complete', 'true');
-    startTrialIfNeeded();
     logEvent('onboarding_completed');
 
     navigate('/practice?song=hot-cross-buns');
-  }, [stepIndex, navigate]);
+  }, [stepIndex, navigate, unlockFreeSongs]);
 
   const step = STEPS[stepIndex] ?? STEPS[0];
   const StepComp = step.Comp;

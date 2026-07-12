@@ -5,7 +5,6 @@ import { BADGES } from '../data/badges'
 import { SONGS } from '../data/songs'
 import { NOTES } from '../notes'
 import FluteCharacter from '../components/FluteCharacter'
-import { isTrialActive, getTrialDay } from '../utils/trial'
 
 const LEVEL_NAMES = {
   1: 'First Breath',
@@ -89,26 +88,9 @@ export default function HomePage() {
   const currentNoteLabel = NOTES[currentNote]?.label ?? currentNote
   const currentSong      = SONGS.find(s => s.level <= displayLevel)?.title ?? 'Hot Cross Buns'
 
-  // Trial: positive "journey" framing while active; renders NOTHING when expired.
-  const trialActive = isTrialActive()
-  const trialDay    = trialActive ? getTrialDay() : 0
-
-  // Piper choreography — mascot mood/speech follow the trial day (see gtm/workflows/in-app-nudge-map.md).
-  // Never mentions price or purchase wording — kid-facing only.
-  let piperMood    = 'wave'
-  let piperSpeech  = greetingSpeech
-  if (trialActive) {
-    if (trialDay === 4) {
-      piperMood   = 'wave'
-      piperSpeech = 'Show a grown-up what you can play! 🎶'
-    } else if (trialDay === 8 || trialDay === 9) {
-      piperMood   = 'sleepy'
-      piperSpeech = 'Our 10-day adventure is nearly done 🌙'
-    } else if (trialDay >= 10) {
-      piperMood   = 'dance'
-      piperSpeech = 'You did it! Show a grown-up 🎉'
-    }
-  }
+  // Piper greeting — kid-facing only, never mentions price or purchase.
+  const piperMood   = 'wave'
+  const piperSpeech = greetingSpeech
 
   return (
     <div className="flex flex-col" style={{ background: '#FAFAF8', minHeight: '100%' }}>
@@ -144,45 +126,6 @@ export default function HomePage() {
           </button>
         </div>
       </div>
-
-      {/* Trial-day indicator — positive journey framing, only while trial is active */}
-      {trialActive && (
-        <div style={{ margin: '2px 16px 8px' }}>
-          {trialDay >= 10 ? (
-            <button
-              onClick={() => navigate('/parent')}
-              className="inline-flex items-center active:scale-95 transition-transform"
-              style={{
-                background: 'rgba(106,236,225,0.22)',
-                color: '#0B3D3A',
-                fontSize: 11,
-                fontWeight: 700,
-                borderRadius: 9999,
-                padding: '5px 12px',
-                minHeight: 44,
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              Your 10-day adventure is complete — ask a grown-up! 🎉
-            </button>
-          ) : (
-            <span
-              className="inline-flex items-center"
-              style={{
-                background: 'rgba(106,236,225,0.22)',
-                color: '#0B3D3A',
-                fontSize: 11,
-                fontWeight: 700,
-                borderRadius: 9999,
-                padding: '5px 12px',
-              }}
-            >
-              Day {trialDay} of your 10-day adventure 🌟
-            </span>
-          )}
-        </div>
-      )}
 
       {/* Streak hero card */}
       <div style={{ margin: '8px 14px 12px', background: '#FFF57E', borderRadius: 18, padding: '14px 16px' }}>
@@ -322,7 +265,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Piper — friendly greeting, choreographed by trial day (renders fixed bottom-right by design) */}
+      {/* Piper — friendly greeting (renders fixed bottom-right by design) */}
       <FluteCharacter mood={piperMood} speech={piperSpeech} />
 
     </div>

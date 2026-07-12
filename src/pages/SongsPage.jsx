@@ -3,16 +3,20 @@ import { useNavigate } from 'react-router-dom'
 import { SONGS } from '../data/songs'
 import { NOTES, NOTES_BY_LEVEL } from '../notes'
 import { useProgress } from '../context/ProgressContext'
-import PaywallCard from '../components/paywall/PaywallCard'
-import { FREE_MAX_LEVEL, PAYWALL } from '../data/freemium'
+import { isSongUnlocked } from '../utils/entitlements'
+import { EMAIL_GATE, FREE_SONGS_PER_LEVEL } from '../data/freemium'
 import Landmark, { Gem, LANDMARK_NAMES } from '../components/SkyMap/Landmark'
 
 /*
  * Songs — "Songkeeper's Sky" (redesign brief §2).
  * A vertical, scrollable sky map: each curriculum level is a landmark section.
- * Song data, gating (isPremium / PaywallCard), and Practice navigation are all
- * unchanged — this is a teal (STYLE_GUIDE v2.0) re-skin plus a mastery-driven
- * note-gem read of existing state.
+ *
+ * Gating is now PER SONG, not per level (see src/utils/entitlements.js):
+ *   • every level is browsable, so kids see the free song at each landmark;
+ *   • the 2 `free` songs per level unlock once a grown-up adds an email;
+ *   • the rest need the one-time unlock (routed via the Parent Zone);
+ *   • premium opens everything.
+ * A guest (no email yet) sees a top email-gate banner + a "taste" song.
  */
 
 // v2.0 TEAL palette
@@ -93,13 +97,13 @@ function LevelGems({ noteIds, masteredSet }) {
 
 export default function SongsPage() {
   const navigate = useNavigate()
-  const { progress: { currentLevel, isPremium, masteredNotes } } = useProgress()
+  const { progress: { isPremium, emailUnlocked, masteredNotes } } = useProgress()
 
-  // Cap display level at 8; treat 99 (premium override) as all unlocked.
-  const unlockedUpTo = Math.min(currentLevel, 8)
+  const ent = { isPremium, emailUnlocked }
+  const showEmailBanner = !isPremium && !emailUnlocked
 
-  // Accordion: one landmark open at a time. Defaults to the first unlocked level.
-  const [openLevel, setOpenLevel] = useState(() => Math.min(unlockedUpTo, 1) || 1)
+  // Accordion: one landmark open at a time. Defaults to the first level.
+  const [openLevel, setOpenLevel] = useState(1)
 
   const songsByLevel = useMemo(() => {
     const map = {}
@@ -125,6 +129,41 @@ export default function SongsPage() {
         </p>
       </div>
 
+      {/* Guest email gate — unlocks the free song at every level */}
+      {showEmailBanner && (
+        <button
+          onClick={() => navigate('/unlock-free')}
+          className="active:scale-[0.99] transition-transform"
+          style={{
+            width: '100%', textAlign: 'left', cursor: 'pointer', border: '2px solid #6AECE1',
+            background: 'linear-gradient(120deg, rgba(106,236,225,0.16), rgba(255,245,126,0.12))',
+            borderRadius: 16, padding: '14px 16px', marginBottom: 14,
+            display: 'flex', alignItems: 'center', gap: 12,
+          }}
+          aria-label={EMAIL_GATE.headline}
+        >
+          <span style={{ fontSize: 30, lineHeight: 1, flexShrink: 0 }} aria-hidden="true">🔓</span>
+          <span className="flex-1 min-w-0">
+            <span style={{ display: 'block', fontSize: 14, fontWeight: 800, color: DEEP_TEAL, lineHeight: 1.2 }}>
+              {FREE_SONGS_PER_LEVEL} free songs at every level
+            </span>
+            <span style={{ display: 'block', fontSize: 12, fontWeight: 500, color: HINT, marginTop: 2, lineHeight: 1.3 }}>
+              {EMAIL_GATE.subhead}
+            </span>
+          </span>
+          <span
+            className="flex-shrink-0"
+            style={{
+              fontSize: 12, fontWeight: 800, color: DEEP_TEAL, background: TEAL_GRAD,
+              borderRadius: 999, padding: '8px 14px', minHeight: 40,
+              display: 'inline-flex', alignItems: 'center', boxShadow: '0 2px 8px rgba(38,204,194,0.30)',
+            }}
+          >
+            {EMAIL_GATE.button}
+          </span>
+        </button>
+      )}
+
       {/* Vertical sky map — one landmark section per level */}
       <div className="flex flex-col" style={{ gap: 12 }}>
         {[1, 2, 3, 4, 5, 6, 7, 8].map(lvl => {
@@ -132,8 +171,8 @@ export default function SongsPage() {
           const landmark = LANDMARK_NAMES[lvl]
           const songs = songsByLevel[lvl] ?? []
           const levelNotes = NOTES_BY_LEVEL[lvl] ?? []
-          const locked = lvl > unlockedUpTo
           const open = openLevel === lvl
+          const freeCount = songs.filter(s => s.free).length
 
           return (
             <section
@@ -162,9 +201,9 @@ export default function SongsPage() {
                   transition: 'background 0.2s ease',
                 }}
                 aria-expanded={open}
-                aria-label={`Level ${lvl}, ${landmark}${locked ? ', locked' : ''}`}
+                aria-label={`Level ${lvl}, ${landmark}`}
               >
-                <Landmark level={lvl} size={44} muted={locked} />
+                <Landmark level={lvl} size={44} />
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center" style={{ gap: 6 }}>
@@ -175,7 +214,6 @@ export default function SongsPage() {
                     }}>
                       L{lvl}
                     </span>
-                    {locked && <LockIcon color={MUTED} />}
                   </div>
                   <p style={{ fontSize: 15, fontWeight: 800, color: DEEP_TEAL, marginTop: 3, lineHeight: 1.15 }}>
                     {landmark}
@@ -187,13 +225,13 @@ export default function SongsPage() {
                 </div>
 
                 <div className="flex flex-col items-end flex-shrink-0" style={{ gap: 6 }}>
-                  {!isPremium && (
+                  {!isPremium && freeCount > 0 && (
                     <span style={{
                       fontSize: 9, fontWeight: 800, letterSpacing: '0.3px', textTransform: 'uppercase',
                       padding: '2px 7px', borderRadius: 999, lineHeight: 1.4, color: DEEP_TEAL,
-                      background: lvl <= FREE_MAX_LEVEL ? 'rgba(106,236,225,0.25)' : 'rgba(255,183,108,0.28)',
+                      background: 'rgba(106,236,225,0.25)',
                     }}>
-                      {lvl <= FREE_MAX_LEVEL ? PAYWALL.freeTag : PAYWALL.proTag}
+                      {freeCount} free
                     </span>
                   )}
                   <ChevronIcon open={open} />
@@ -208,36 +246,7 @@ export default function SongsPage() {
                     New notes: {info.notes}
                   </p>
 
-                  {locked && !isPremium ? (
-                    <PaywallCard
-                      levelName={`Level ${lvl} — ${info.curriculum}`}
-                      onUnlock={() => navigate('/unlock')}
-                    />
-                  ) : locked ? (
-                    <div
-                      className="flex flex-col items-center justify-center"
-                      style={{ borderRadius: 16, padding: 28, background: 'rgba(241,239,232,0.6)', textAlign: 'center' }}
-                    >
-                      <Landmark level={lvl} size={52} muted />
-                      <p style={{ fontSize: 15, fontWeight: 800, color: DEEP_TEAL, marginTop: 12 }}>
-                        {landmark} is still in the clouds
-                      </p>
-                      <p style={{ fontSize: 13, fontWeight: 500, color: HINT, marginTop: 6, lineHeight: 1.5 }}>
-                        Keep mastering your current notes to reach this landmark.
-                      </p>
-                      <button
-                        onClick={() => navigate('/practice')}
-                        className="active:scale-95 transition-transform"
-                        style={{
-                          marginTop: 16, minHeight: 44, padding: '10px 24px', borderRadius: 999, border: 'none',
-                          background: TEAL_GRAD, boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
-                          color: DEEP_TEAL, fontSize: 13, fontWeight: 800, cursor: 'pointer',
-                        }}
-                      >
-                        Go to Practice →
-                      </button>
-                    </div>
-                  ) : songs.length === 0 ? (
+                  {songs.length === 0 ? (
                     <div
                       className="flex flex-col items-center justify-center"
                       style={{ borderRadius: 16, padding: 28, background: 'rgba(255,245,126,0.10)', textAlign: 'center' }}
@@ -250,7 +259,7 @@ export default function SongsPage() {
                         Practise these notes in the Fingering Library while we add songs for this landmark.
                       </p>
                       <button
-                        onClick={() => navigate('/fingering')}
+                        onClick={() => navigate('/fingering-library')}
                         className="active:scale-95 transition-transform"
                         style={{
                           marginTop: 16, minHeight: 44, padding: '10px 24px', borderRadius: 999, border: 'none',
@@ -263,9 +272,14 @@ export default function SongsPage() {
                     </div>
                   ) : (
                     <div className="flex flex-col" style={{ gap: 10 }}>
-                      {songs.map((song, i) => {
+                      {songs.map((song) => {
                         const ids = songNoteIds(song)
                         const recovered = ids.length > 0 && ids.every(id => masteredSet.has(id))
+                        const unlocked = isSongUnlocked(song, ent)
+                        // A locked FREE song only needs an email; a locked
+                        // non-free song needs the one-time purchase.
+                        const needsEmail = !unlocked && song.free
+
                         return (
                           <div
                             key={song.id}
@@ -275,15 +289,20 @@ export default function SongsPage() {
                               padding: '12px 14px',
                               background: recovered ? 'rgba(255,245,126,0.14)' : '#FAFAF8',
                               border: recovered ? '1.5px solid rgba(255,245,126,0.9)' : '1.5px solid #F1EFE8',
+                              opacity: unlocked ? 1 : 0.85,
                             }}
                           >
                             {/* Song gem — Sunshine when every note is mastered */}
                             <div className="flex items-center justify-center flex-shrink-0" style={{ width: 34 }}>
-                              <Gem
-                                earned={recovered}
-                                size={26}
-                                title={recovered ? `${song.title} recovered` : `${song.title} not yet recovered`}
-                              />
+                              {unlocked ? (
+                                <Gem
+                                  earned={recovered}
+                                  size={26}
+                                  title={recovered ? `${song.title} recovered` : `${song.title} not yet recovered`}
+                                />
+                              ) : (
+                                <LockIcon color={needsEmail ? '#26CCC2' : '#FFB76C'} />
+                              )}
                             </div>
 
                             {/* Text */}
@@ -313,20 +332,36 @@ export default function SongsPage() {
                               )}
                             </div>
 
-                            {/* Practice button */}
-                            <button
-                              onClick={() => navigate(`/practice?song=${song.id}`)}
-                              className="flex items-center justify-center gap-1.5 flex-shrink-0 active:scale-95 transition-transform"
-                              style={{
-                                minWidth: 44, minHeight: 44, padding: '0 14px', borderRadius: 12, border: 'none',
-                                background: TEAL_GRAD, color: DEEP_TEAL, fontSize: 12, fontWeight: 800, cursor: 'pointer',
-                                boxShadow: '0 2px 8px rgba(38,204,194,0.30)',
-                              }}
-                              aria-label={`Practice ${song.title}`}
-                            >
-                              <PlayIcon />
-                              Practice
-                            </button>
+                            {/* Action — Practice when unlocked, else the right unlock path */}
+                            {unlocked ? (
+                              <button
+                                onClick={() => navigate(`/practice?song=${song.id}`)}
+                                className="flex items-center justify-center gap-1.5 flex-shrink-0 active:scale-95 transition-transform"
+                                style={{
+                                  minWidth: 44, minHeight: 44, padding: '0 14px', borderRadius: 12, border: 'none',
+                                  background: TEAL_GRAD, color: DEEP_TEAL, fontSize: 12, fontWeight: 800, cursor: 'pointer',
+                                  boxShadow: '0 2px 8px rgba(38,204,194,0.30)',
+                                }}
+                                aria-label={`Practice ${song.title}`}
+                              >
+                                <PlayIcon />
+                                Practice
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => navigate(needsEmail ? '/unlock-free' : '/parent')}
+                                className="flex items-center justify-center gap-1.5 flex-shrink-0 active:scale-95 transition-transform"
+                                style={{
+                                  minWidth: 44, minHeight: 44, padding: '0 14px', borderRadius: 12,
+                                  border: `2px solid ${needsEmail ? '#26CCC2' : '#FFB76C'}`,
+                                  background: 'white', color: DEEP_TEAL, fontSize: 12, fontWeight: 800, cursor: 'pointer',
+                                }}
+                                aria-label={needsEmail ? `Unlock ${song.title} — free with a grown-up's email` : `Unlock ${song.title}`}
+                              >
+                                <LockIcon color={needsEmail ? '#26CCC2' : '#FFB76C'} />
+                                {needsEmail ? EMAIL_GATE.lockedCta : 'Unlock'}
+                              </button>
+                            )}
                           </div>
                         )
                       })}

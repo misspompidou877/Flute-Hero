@@ -4,6 +4,7 @@ import { useMicrophone } from '../hooks/useMicrophone'
 import { useStreak } from '../hooks/useStreak'
 import { useProgress } from '../context/ProgressContext'
 import { SONGS } from '../data/songs'
+import { isSongUnlocked } from '../utils/entitlements'
 import SongScore, { groupIntoMeasures } from '../components/SongScore'
 import { FingeringDiagramForNote } from '../components/FingeringDiagrams'
 import BadgeToast from '../components/BadgeToast'
@@ -159,7 +160,7 @@ function RotatePrompt() {
 export default function PracticePage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { progress: { currentLevel, isPremium } } = useProgress()
+  const { progress: { isPremium, emailUnlocked } } = useProgress()
   const { mode, compact } = usePracticeLayoutMode()
 
   const [selectedSongId, setSelectedSongId] = useState(() => searchParams.get('song') ?? null)
@@ -169,7 +170,11 @@ export default function PracticePage() {
   const inTuneStartRef = useRef(null)
   const masteryRef = useRef(0)
 
-  const playableSongs = useMemo(() => SONGS.filter(s => s.notes?.length && s.level <= currentLevel), [currentLevel])
+  const ent = { isPremium, emailUnlocked }
+  const playableSongs = useMemo(
+    () => SONGS.filter(s => s.notes?.length && isSongUnlocked(s, ent)),
+    [isPremium, emailUnlocked]
+  )
 
   const resolvedSongId = selectedSongId && playableSongs.find(s => s.id === selectedSongId)
     ? selectedSongId
@@ -274,10 +279,40 @@ export default function PracticePage() {
 
   if (mode === 'rotate') return <RotatePrompt />
 
-  // Premium-gated deep link — e.g. ?song=<a Level 2+ song> opened by a free user.
-  // The song picker already filters by level, so this only catches direct links.
+  // Gated deep link — e.g. ?song=<locked song> opened directly. The song
+  // picker already filters, so this only catches direct/stale links. A locked
+  // FREE song just needs a grown-up's email; anything else needs the purchase.
   const requestedSong = selectedSongId ? SONGS.find(s => s.id === selectedSongId) : null
-  if (requestedSong && !isPremium && requestedSong.level > currentLevel) {
+  if (requestedSong && !isSongUnlocked(requestedSong, ent)) {
+    if (requestedSong.free) {
+      return (
+        <div className="flex items-center justify-center" style={{ minHeight: 'calc(100dvh - 7rem)', padding: 16 }}>
+          <div
+            className="bg-white"
+            style={{ width: '100%', maxWidth: 420, borderRadius: 16, padding: 24, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: '2px solid #6AECE1', textAlign: 'center', fontFamily: "'Nunito', sans-serif" }}
+          >
+            <span style={{ fontSize: 40, lineHeight: 1 }}>🔓</span>
+            <p style={{ fontSize: 17, fontWeight: 800, color: '#0B3D3A', marginTop: 10 }}>
+              “{requestedSong.title}” is a free song
+            </p>
+            <p style={{ fontSize: 13, fontWeight: 500, color: '#666666', marginTop: 6, lineHeight: 1.5 }}>
+              Ask a grown-up to add an email and it opens right up — along with a free song at every level.
+            </p>
+            <button
+              onClick={() => navigate('/unlock-free')}
+              className="active:scale-95 transition-transform"
+              style={{
+                display: 'block', width: '100%', marginTop: 20, padding: '12px 24px', borderRadius: 999, border: 'none',
+                background: 'linear-gradient(to right, #26CCC2, #1AA89F)', boxShadow: '0 4px 16px rgba(38,204,194,0.35)',
+                color: '#0B3D3A', fontSize: 14, fontWeight: 800, cursor: 'pointer', minHeight: 44,
+              }}
+            >
+              Unlock free songs →
+            </button>
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="flex items-center justify-center" style={{ minHeight: 'calc(100dvh - 7rem)', padding: 16 }}>
         <div style={{ width: '100%', maxWidth: 420 }}>

@@ -16,6 +16,7 @@ export const SONGS = [
     id: 'hot-cross-buns',
     title: 'Hot Cross Buns',
     level: 1,
+    free: true,
     description: 'Your very first song — just three notes!',
     notes: [
       q('b/4'), q('a/4'), h('g/4'),
@@ -29,6 +30,7 @@ export const SONGS = [
     id: 'mary-had-a-little-lamb',
     title: 'Mary Had a Little Lamb',
     level: 1,
+    free: true,
     description: 'A classic tune with steps up and down.',
     notes: [
       q('b/4'), q('a/4'), q('g/4'), q('a/4'), q('b/4'), q('b/4'), h('b/4'),
@@ -238,6 +240,7 @@ export const SONGS = [
     id: 'ode-to-joy',
     title: 'Ode to Joy',
     level: 2,
+    free: true,
     description: 'Beethoven\'s famous theme — great for practising C and D.',
     notes: [
       q('b/4'), q('b/4'), q('c/5'), q('d/5'), q('d/5'), q('c/5'), q('b/4'), q('a/4'),
@@ -251,6 +254,7 @@ export const SONGS = [
     id: 'lightly-row',
     title: 'Lightly Row',
     level: 2,
+    free: true,
     description: 'A gentle classic that uses all five notes — B, A, G, C and D.',
     notes: [
       // Measure 1: Light-ly row (sol mi mi)
@@ -411,6 +415,7 @@ export const SONGS = [
     id: 'twinkle-twinkle',
     title: 'Twinkle Twinkle Little Star',
     level: 3,
+    free: true,
     description: 'A favourite that stretches up to your new high E.',
     notes: [
       q('g/4'), q('g/4'), q('d/5'), q('d/5'), q('e/5'), q('e/5'), h('d/5'),
@@ -426,6 +431,7 @@ export const SONGS = [
     id: 'greensleeves',
     title: 'Greensleeves',
     level: 3,
+    free: true,
     beatsPerMeasure: 3,
     description: 'A haunting English folk song in waltz time.',
     notes: [
@@ -674,6 +680,7 @@ export const SONGS = [
     id: 'scarborough-fair',
     title: 'Scarborough Fair',
     level: 4,
+    free: true,
     beatsPerMeasure: 3,
     description: 'A timeless English ballad in waltz time.',
     notes: [
@@ -692,6 +699,7 @@ export const SONGS = [
     id: 'simple-gifts',
     title: 'Simple Gifts',
     level: 4,
+    free: true,
     description: 'A Shaker hymn — pure, flowing and joyful.',
     notes: [
       q('d/5'), q('d/5'), q('g/5'), q('g/5'), q('a/5'), q('g/5'),
@@ -1150,6 +1158,7 @@ export const SONGS = [
     id: 'low-note-ladder',
     title: 'Low Note Ladder',
     level: 5,
+    free: true,
     description: 'A warm-up that climbs through your three new low notes — E, F and F#.',
     notes: [
       // Measure 1: chromatic climb E F F# G
@@ -1175,6 +1184,7 @@ export const SONGS = [
     id: 'camptown-races',
     title: 'Camptown Races',
     level: 5,
+    free: true,
     description: 'A bouncy American tune — every "doo-dah" lands on low E.',
     notes: [
       // Measure 1: Camp-town la-dies
@@ -1288,6 +1298,7 @@ export const SONGS = [
     id: 'happy-birthday',
     title: 'Happy Birthday',
     level: 6,
+    free: true,
     beatsPerMeasure: 3,
     description: 'The world\'s most-sung tune, in D major — each "to you" lands on the new C♯.',
     notes: [
@@ -1310,6 +1321,7 @@ export const SONGS = [
     id: 'when-the-saints',
     title: 'When the Saints Go Marching In',
     level: 6,
+    free: true,
     description: 'A joyful gospel march in B♭ major — built around the new E♭.',
     notes: [
       // "Oh when the saints go marching in"
@@ -1393,6 +1405,7 @@ export const SONGS = [
     id: 'my-country-tis-of-thee',
     title: "My Country 'Tis of Thee",
     level: 7,
+    free: true,
     beatsPerMeasure: 3,
     description: 'Also known as "God Save the Queen" — in A major, the new G♯ is the note that pulls home.',
     notes: [
@@ -1415,6 +1428,7 @@ export const SONGS = [
     id: 'joy-to-the-world',
     title: 'Joy to the World',
     level: 7,
+    free: true,
     description: 'A descending A-major scale — the new G♯ sits right below the top note.',
     notes: [
       // "Joy to the world" — G# is the 2nd note
@@ -1496,6 +1510,7 @@ export const SONGS = [
     id: 'joy-to-the-world-high',
     title: 'Joy to the World — Top Octave',
     level: 8,
+    free: true,
     description: 'The same joyful scale you learned in Level 7, lifted to the very top — high C♯ and D.',
     notes: [
       // "Joy to the world" — starts on high D, then C#
@@ -1517,6 +1532,7 @@ export const SONGS = [
     id: 'sky-high-ladder',
     title: 'Sky-High Ladder',
     level: 8,
+    free: true,
     description: 'A top-of-the-range warm-up that drills the two highest notes — C♯ and D.',
     notes: [
       // Climb to high D

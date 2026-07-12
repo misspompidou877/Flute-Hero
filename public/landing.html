@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Flute Hero — The flute tutor that listens</title>
+  <meta name="description" content="Your child plays a real flute into any tablet — Flute Hero hears every note and shows them when they're in tune. On-device, one-time price, no account." />
+
+  <!-- Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepteal: '#0B3D3A',
+            teal: '#26CCC2',
+            tealdark: '#1AA89F',
+            mint: '#6AECE1',
+            mintdark: '#34D6C9',
+            sunshine: '#FFF57E',
+            mango: '#FFB76C',
+            page: '#FAFAF8',
+            card: '#FFFFFF',
+            track: '#F1EFE8',
+            inactive: '#D3D1C7',
+            hint: '#666666',
+            intune: '#4CAF50',
+            close: '#FFC107',
+            off: '#F5A623'
+          },
+          fontFamily: {
+            sans: ['Nunito', 'ui-sans-serif', 'system-ui', 'sans-serif']
+          },
+          borderRadius: {
+            card: '16px'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root { color-scheme: light; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: #FAFAF8; color: #0B3D3A; -webkit-font-smoothing: antialiased; }
+
+    /* Gradients */
+    .btn-primary {
+      background: linear-gradient(to right, #26CCC2, #1AA89F);
+      color: #0B3D3A;
+      box-shadow: 0 4px 16px rgba(38,204,194,0.35);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(38,204,194,0.45); }
+    .btn-secondary {
+      background: linear-gradient(to right, #6AECE1, #34D6C9);
+      color: #0B3D3A;
+      transition: transform .18s ease, box-shadow .18s ease;
+      box-shadow: 0 4px 14px rgba(106,236,225,0.3);
+    }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(106,236,225,0.42); }
+
+    .soft-shadow { box-shadow: 0 6px 24px rgba(11,61,58,0.08); }
+    .soft-shadow-lg { box-shadow: 0 14px 40px rgba(11,61,58,0.12); }
+
+    .hero-bg {
+      background:
+        radial-gradient(1100px 480px at 82% -6%, rgba(106,236,225,0.28), transparent 62%),
+        radial-gradient(760px 420px at 8% 8%, rgba(255,183,108,0.16), transparent 60%),
+        #FAFAF8;
+    }
+
+    /* Focus visibility */
+    a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+      outline: 3px solid #0B3D3A;
+      outline-offset: 2px;
+      border-radius: 10px;
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* Nav shadow when scrolled */
+    #site-nav { transition: box-shadow .25s ease, background-color .25s ease; }
+    #site-nav.scrolled { box-shadow: 0 4px 20px rgba(11,61,58,0.10); background: rgba(250,250,248,0.92); backdrop-filter: blur(8px); }
+
+    /* Tuning meter needle animation */
+    @keyframes needleSettle {
+      0%   { transform: rotate(-34deg); }
+      35%  { transform: rotate(14deg); }
+      60%  { transform: rotate(-6deg); }
+      80%  { transform: rotate(3deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .needle { transform-origin: 100px 96px; animation: needleSettle 2.6s cubic-bezier(.4,.7,.3,1) both; }
+
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    .floaty { animation: floaty 4.5s ease-in-out infinite; }
+
+    @keyframes blink { 0%,92%,100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
+    .piper-eyes { animation: blink 5s ease-in-out infinite; transform-origin: center; }
+
+    /* FAQ accordion */
+    details.faq { transition: background-color .2s ease; }
+    details.faq > summary { list-style: none; cursor: pointer; }
+    details.faq > summary::-webkit-details-marker { display: none; }
+    details.faq .chev { transition: transform .25s ease; }
+    details.faq[open] .chev { transform: rotate(180deg); }
+    details.faq .faq-body {
+      display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s ease;
+    }
+    details.faq[open] .faq-body { grid-template-rows: 1fr; }
+    details.faq .faq-body > div { overflow: hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .needle, .floaty, .piper-eyes { animation: none !important; }
+      .btn-primary:hover, .btn-secondary:hover { transform: none; }
+      details.faq .faq-body { transition: none; }
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- ============ 1. STICKY NAV ============ -->
+  <header>
+    <nav id="site-nav" class="fixed top-0 inset-x-0 z-50" aria-label="Primary" style="padding-top: env(safe-area-inset-top);">
+      <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+        <a href="#top" class="flex items-center gap-2 font-extrabold text-lg sm:text-xl text-deepteal" aria-label="Flute Hero home">
+          <span aria-hidden="true" class="inline-flex h-9 w-9 items-center justify-center rounded-full" style="background:linear-gradient(135deg,#6AECE1,#26CCC2);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="10" width="20" height="4" rx="2" fill="#0B3D3A"/>
+              <circle cx="7" cy="12" r="1.1" fill="#FAFAF8"/>
+              <circle cx="11" cy="12" r="1.1" fill="#FAFAF8"/>
+              <circle cx="15" cy="12" r="1.1" fill="#FAFAF8"/>
+            </svg>
+          </span>
+          <span>Flute&nbsp;Hero</span>
+        </a>
+        <a href="/app" data-cta="play-level-1" class="btn-primary font-extrabold text-sm sm:text-base px-4 sm:px-5 py-2.5 rounded-xl inline-flex items-center min-h-[44px]">
+          Play Level 1 free
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ 2. HERO ============ -->
+    <section class="hero-bg pt-28 sm:pt-32 pb-16 sm:pb-24 px-5 sm:px-8" style="padding-left:max(1.25rem,env(safe-area-inset-left));padding-right:max(1.25rem,env(safe-area-inset-right));">
+      <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
+        <div class="reveal">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white soft-shadow px-3.5 py-1.5 text-sm font-bold text-deepteal mb-5">
+            <span aria-hidden="true" class="h-2.5 w-2.5 rounded-full" style="background:#4CAF50;"></span>
+            Real flute · Ages 7–12
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] text-deepteal">
+            The flute tutor<br class="hidden sm:block" /> that listens
+          </h1>
+          <p class="mt-5 text-lg sm:text-xl text-deepteal/80 max-w-xl leading-relaxed font-semibold">
+            Your child plays a real flute into any tablet — Flute Hero hears every note and shows them the moment they're in tune. Private, no account, one fair price.
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+            <a href="/app" data-cta="play-level-1" class="btn-primary font-extrabold text-base sm:text-lg px-7 py-4 rounded-2xl inline-flex items-center justify-center min-h-[44px]">
+              Play Level 1 free
+            </a>
+            <a href="#how" class="font-extrabold text-base text-deepteal underline decoration-teal decoration-2 underline-offset-4 hover:text-tealdark inline-flex items-center min-h-[44px]">
+              See how it works
+            </a>
+          </div>
+          <p class="mt-4 text-sm font-bold text-hint">
+            Level 1 free · no account · nothing leaves your device
+          </p>
+        </div>
+
+        <!-- Hero graphic: tuning meter + Piper -->
+        <div class="reveal relative">
+          <div class="bg-card rounded-card soft-shadow-lg p-6 sm:p-8 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-sm font-extrabold text-hint uppercase tracking-wide">Now playing</p>
+              <p class="text-sm font-extrabold text-intune">In tune</p>
+            </div>
+            <p class="text-3xl font-extrabold text-deepteal mb-4">A4 <span class="text-hint text-lg font-bold">· 440 Hz</span></p>
+
+            <!-- Tuning meter SVG -->
+            <svg viewBox="0 0 200 120" class="w-full" role="img" aria-label="Tuning meter with the needle resting in the green in-tune zone">
+              <defs>
+                <linearGradient id="dial" x1="0" x2="1">
+                  <stop offset="0" stop-color="#F5A623"/>
+                  <stop offset="0.28" stop-color="#FFC107"/>
+                  <stop offset="0.5" stop-color="#4CAF50"/>
+                  <stop offset="0.72" stop-color="#FFC107"/>
+                  <stop offset="1" stop-color="#F5A623"/>
+                </linearGradient>
+              </defs>
+              <!-- arc zones -->
+              <path d="M14 100 A86 86 0 0 1 186 100" fill="none" stroke="#F1EFE8" stroke-width="18" stroke-linecap="round"/>
+              <!-- amber left -->
+              <path d="M14 100 A86 86 0 0 1 44 43" fill="none" stroke="#F5A623" stroke-width="14" stroke-linecap="round"/>
+              <!-- yellow left -->
+              <path d="M44 43 A86 86 0 0 1 78 21" fill="none" stroke="#FFC107" stroke-width="14"/>
+              <!-- green center -->
+              <path d="M78 21 A86 86 0 0 1 122 21" fill="none" stroke="#4CAF50" stroke-width="14"/>
+              <!-- yellow right -->
+              <path d="M122 21 A86 86 0 0 1 156 43" fill="none" stroke="#FFC107" stroke-width="14"/>
+              <!-- amber right -->
+              <path d="M156 43 A86 86 0 0 1 186 100" fill="none" stroke="#F5A623" stroke-width="14" stroke-linecap="round"/>
+
+              <!-- needle -->
+              <g class="needle">
+                <line x1="100" y1="96" x2="100" y2="30" stroke="#0B3D3A" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="100" cy="96" r="7" fill="#0B3D3A"/>
+                <circle cx="100" cy="96" r="3" fill="#6AECE1"/>
+              </g>
+              <text x="18" y="116" font-size="9" font-weight="800" fill="#666666">-50</text>
+              <text x="94" y="116" font-size="9" font-weight="800" fill="#4CAF50">0</text>
+              <text x="170" y="116" font-size="9" font-weight="800" fill="#666666">+50</text>
+            </svg>
+
+            <div class="mt-3 h-2.5 rounded-full bg-track overflow-hidden" aria-hidden="true">
+              <div class="h-full rounded-full" style="width:64%;background:linear-gradient(to right,#6AECE1,#26CCC2);"></div>
+            </div>
+          </div>
+
+          <!-- Piper character -->
+          <div class="floaty absolute -bottom-10 right-1 scale-90 origin-bottom-right sm:scale-100 sm:-bottom-8 sm:-left-8 sm:right-auto">
+            <svg width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Piper, the friendly Flute Hero mascot">
+              <ellipse cx="60" cy="108" rx="30" ry="6" fill="#0B3D3A" opacity="0.08"/>
+              <!-- body -->
+              <rect x="18" y="42" width="84" height="34" rx="17" fill="#26CCC2" stroke="#0B3D3A" stroke-width="3"/>
+              <!-- keys -->
+              <circle cx="40" cy="59" r="4" fill="#0B3D3A"/>
+              <circle cx="58" cy="59" r="4" fill="#0B3D3A"/>
+              <circle cx="76" cy="59" r="4" fill="#0B3D3A"/>
+              <!-- embouchure -->
+              <circle cx="28" cy="59" r="3.4" fill="#0B3D3A"/>
+              <!-- face bubble -->
+              <circle cx="60" cy="34" r="24" fill="#6AECE1" stroke="#0B3D3A" stroke-width="3"/>
+              <!-- cheeks -->
+              <circle cx="47" cy="40" r="4.5" fill="#FFF57E"/>
+              <circle cx="73" cy="40" r="4.5" fill="#FFF57E"/>
+              <!-- eyes -->
+              <g class="piper-eyes">
+                <circle cx="52" cy="31" r="5.5" fill="#fff" stroke="#0B3D3A" stroke-width="2"/>
+                <circle cx="68" cy="31" r="5.5" fill="#fff" stroke="#0B3D3A" stroke-width="2"/>
+                <circle cx="53" cy="32" r="2.4" fill="#0B3D3A"/>
+                <circle cx="69" cy="32" r="2.4" fill="#0B3D3A"/>
+              </g>
+              <!-- smile -->
+              <path d="M52 42 Q60 49 68 42" fill="none" stroke="#0B3D3A" stroke-width="2.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. PAIN ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-20">
+      <div class="max-w-3xl mx-auto text-center reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-deepteal leading-tight">
+          You can't always tell if they're playing it right
+        </h2>
+        <p class="mt-5 text-lg text-deepteal/75 leading-relaxed font-normal">
+          Maybe you're not musical yourself — and even if you are, you can't sit beside them for every practice. A wrong note sounds a lot like a right one to an untrained ear, and the days get busy fast. Flute Hero listens so you don't have to, and gently guides your child toward every note being truly in tune.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 4. HOW IT WORKS ============ -->
+    <section id="how" class="px-5 sm:px-8 py-16 sm:py-20 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto reveal">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-deepteal">How it works</h2>
+          <p class="mt-4 text-lg text-deepteal/70 font-semibold">Three simple steps, about 10 minutes a day — no grown-up needed once they're set up.</p>
+        </div>
+
+        <div class="mt-12 grid md:grid-cols-3 gap-6">
+          <!-- Step 1 -->
+          <div class="reveal bg-page rounded-card p-7 soft-shadow">
+            <div class="h-14 w-14 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#FFF57E,#FFB76C);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="4" y="3" width="16" height="18" rx="3" stroke="#0B3D3A" stroke-width="2"/>
+                <line x1="4" y1="17" x2="20" y2="17" stroke="#0B3D3A" stroke-width="2"/>
+                <circle cx="12" cy="19" r="1" fill="#0B3D3A"/>
+              </svg>
+            </div>
+            <p class="text-sm font-extrabold text-teal mb-1">Step 1</p>
+            <h3 class="text-xl font-extrabold text-deepteal mb-2">Prop up any tablet</h3>
+            <p class="text-deepteal/70 font-normal leading-relaxed">Stand an iPad or phone on the music stand. Open Flute Hero in the browser — nothing to install.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="reveal bg-page rounded-card p-7 soft-shadow">
+            <div class="h-14 w-14 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#6AECE1,#26CCC2);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="10" width="20" height="4" rx="2" stroke="#0B3D3A" stroke-width="2"/>
+                <circle cx="8" cy="12" r="1" fill="#0B3D3A"/>
+                <circle cx="12" cy="12" r="1" fill="#0B3D3A"/>
+                <circle cx="16" cy="12" r="1" fill="#0B3D3A"/>
+                <path d="M12 4 v3 M9 6 l3 -2 3 2" stroke="#0B3D3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="text-sm font-extrabold text-teal mb-1">Step 2</p>
+            <h3 class="text-xl font-extrabold text-deepteal mb-2">Your child plays</h3>
+            <p class="text-deepteal/70 font-normal leading-relaxed">They play a real flute. The built-in mic hears each note live — no extra gear, no recording saved.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="reveal bg-page rounded-card p-7 soft-shadow">
+            <div class="h-14 w-14 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#26CCC2,#1AA89F);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 13 a9 9 0 0 1 18 0" stroke="#0B3D3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <line x1="12" y1="13" x2="12" y2="6" stroke="#4CAF50" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="12" cy="13" r="2" fill="#0B3D3A"/>
+              </svg>
+            </div>
+            <p class="text-sm font-extrabold text-teal mb-1">Step 3</p>
+            <h3 class="text-xl font-extrabold text-deepteal mb-2">Piper shows in-tune</h3>
+            <p class="text-deepteal/70 font-normal leading-relaxed">The meter glows green when they nail it. Instant, friendly feedback keeps them going — no grown-up needed.</p>
+          </div>
+        </div>
+
+        <div class="reveal mt-8 rounded-card p-6 sm:p-7 soft-shadow flex flex-col sm:flex-row items-start sm:items-center gap-4" style="background:linear-gradient(120deg,#EFFCFA,#FFFDF0);">
+          <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style="background:#4CAF50;" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4 10-10" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <p class="font-normal text-deepteal/80"><span class="font-extrabold text-deepteal">Not just "close enough."</span> A note only counts as learned when it's played within 20 cents of perfect pitch, three times in a row — the same standard a teacher listens for.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. TWO PROMISES ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-20">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
+        <!-- Kid -->
+        <div class="reveal rounded-card p-8 soft-shadow" style="background:linear-gradient(160deg,#FFFDF0,#FFFFFF);">
+          <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-extrabold text-deepteal mb-4" style="background:#FFF57E;">For your child</span>
+          <h3 class="text-2xl font-extrabold text-deepteal mb-4">Fun that feels like a game</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-3 items-start font-normal text-deepteal/80"><span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full flex items-center justify-center" style="background:#FFB76C;">✓</span> Streaks, badges and levels that make them want to come back tomorrow.</li>
+            <li class="flex gap-3 items-start font-normal text-deepteal/80"><span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full flex items-center justify-center" style="background:#FFB76C;">✓</span> Piper cheers them on and celebrates every in-tune note.</li>
+            <li class="flex gap-3 items-start font-normal text-deepteal/80"><span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full flex items-center justify-center" style="background:#FFB76C;">✓</span> Play-along songs they'll actually recognise and love.</li>
+          </ul>
+        </div>
+
+        <!-- Parent -->
+        <div class="reveal rounded-card p-8 soft-shadow" style="background:linear-gradient(160deg,#EFFCFA,#FFFFFF);">
+          <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-extrabold text-deepteal mb-4" style="background:#6AECE1;">For you</span>
+          <h3 class="text-2xl font-extrabold text-deepteal mb-4">Practice you can trust</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-3 items-start font-normal text-deepteal/80"><span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full flex items-center justify-center" style="background:#26CCC2;">✓</span> Real pitch detection means your child practises <em>correctly</em>, not just often.</li>
+            <li class="flex gap-3 items-start font-normal text-deepteal/80"><span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full flex items-center justify-center" style="background:#26CCC2;">✓</span> A structured 8-level path built by a real flute teacher.</li>
+            <li class="flex gap-3 items-start font-normal text-deepteal/80"><span aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 rounded-full flex items-center justify-center" style="background:#26CCC2;">✓</span> Their first real song, in tune, is right there in the free first level.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. TRUST & PRIVACY BAND (Deep Teal full-bleed) ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-20" style="background:#0B3D3A;">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto reveal">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Built to earn a parent's trust</h2>
+          <p class="mt-4 text-lg text-mint font-semibold">The way children's software should be — private, honest and fair.</p>
+        </div>
+        <div class="mt-12 grid md:grid-cols-3 gap-6">
+          <div class="reveal rounded-card p-7" style="background:rgba(255,255,255,0.06);border:1px solid rgba(106,236,225,0.25);">
+            <div class="h-12 w-12 rounded-xl flex items-center justify-center mb-4" style="background:#6AECE1;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z" stroke="#0B3D3A" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="text-xl font-extrabold text-white mb-2">On-device privacy</h3>
+            <p class="text-mint/90 font-semibold leading-relaxed">Audio is analysed live in the browser and never leaves the tablet. Nothing is uploaded, ever.</p>
+          </div>
+          <div class="reveal rounded-card p-7" style="background:rgba(255,255,255,0.06);border:1px solid rgba(106,236,225,0.25);">
+            <div class="h-12 w-12 rounded-xl flex items-center justify-center mb-4" style="background:#6AECE1;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="#0B3D3A" stroke-width="2"/><path d="M4 20c0-3.5 3.6-6 8-6s8 2.5 8 6" stroke="#0B3D3A" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="text-xl font-extrabold text-white mb-2">No account, ever</h3>
+            <p class="text-mint/90 font-semibold leading-relaxed">No sign-up, no email required to play, no password for a child to forget. Just open it and go.</p>
+          </div>
+          <div class="reveal rounded-card p-7" style="background:rgba(255,255,255,0.06);border:1px solid rgba(106,236,225,0.25);">
+            <div class="h-12 w-12 rounded-xl flex items-center justify-center mb-4" style="background:#FFF57E;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0B3D3A" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="text-xl font-extrabold text-white mb-2">One-time $24.99</h3>
+            <p class="text-mint/90 font-semibold leading-relaxed">Pay once, unlock everything, forever. No subscription draining your account month after month.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid-page CTA -->
+    <section class="px-5 sm:px-8 pt-14 pb-4 text-center">
+      <p class="reveal text-lg font-semibold text-deepteal/80 mb-4">Seen enough? Level 1 is free — no card, no account.</p>
+      <a href="/app" data-cta="play-level-1" class="reveal btn-primary font-extrabold text-base sm:text-lg px-7 py-4 rounded-2xl inline-flex items-center justify-center min-h-[44px]">Play Level 1 free</a>
+    </section>
+
+    <!-- ============ 7. CURRICULUM ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-20 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto reveal">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-deepteal">A real curriculum, one level at a time</h2>
+          <p class="mt-4 text-lg text-deepteal/70 font-semibold">Eight carefully-built levels take your child from their very first note to confident, in-tune playing. Their first song — Hot Cross Buns, in tune — is right there in free Level 1.</p>
+        </div>
+
+        <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Level cards -->
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold text-white rounded-full px-2.5 py-1 mb-3" style="background:#26CCC2;color:#0B3D3A;">Level 1</span>
+            <h3 class="text-lg font-extrabold text-deepteal">First Breath</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">Their very first notes and songs.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#6AECE1;color:#0B3D3A;">Level 2</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Finding My Voice</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">New notes, first real tunes.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#6AECE1;color:#0B3D3A;">Level 3</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Middle Path</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">Sharps, flats and classics.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#6AECE1;color:#0B3D3A;">Level 4</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Reaching Higher</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">Into the upper register.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#FFB76C;color:#0B3D3A;">Level 5</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Taking Flight</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">Low notes and longer pieces.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#FFB76C;color:#0B3D3A;">Level 6</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Sharps &amp; Flats</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">The chromatic extensions.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#FFB76C;color:#0B3D3A;">Level 7</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Filling the Gaps</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">Rounding out the scale.</p>
+          </div>
+          <div class="reveal bg-page rounded-card p-6 soft-shadow">
+            <span class="inline-block text-xs font-extrabold rounded-full px-2.5 py-1 mb-3" style="background:#FFF57E;color:#0B3D3A;">Level 8</span>
+            <h3 class="text-lg font-extrabold text-deepteal">Sky High</h3>
+            <p class="mt-1 text-sm text-deepteal/65 font-normal">The confident top notes.</p>
+          </div>
+        </div>
+
+        <div class="reveal mt-8 rounded-card p-6 soft-shadow flex flex-col sm:flex-row items-start sm:items-center gap-4" style="background:linear-gradient(120deg,#EFFCFA,#FFFDF0);">
+          <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style="background:#6AECE1;" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.5 7.1 18.2 8 12.7l-4-3.9L9.5 8 12 3Z" stroke="#0B3D3A" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </span>
+          <p class="font-normal text-deepteal/80"><span class="font-extrabold text-deepteal">Brand new?</span> Start in <strong>Foundations</strong> — a gentle pre-Level 1 warm-up covering note reading, embouchure and tonguing, so even a total beginner knows exactly where to begin.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8. TESTIMONIALS + FOUNDER ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto reveal">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-deepteal">From our first families and teachers</h2>
+          <p class="mt-4 text-lg text-deepteal/70 font-semibold">[Over 500 families] joined our early beta. Here's what a few of them told us.</p>
+        </div>
+        <div class="mt-12 grid md:grid-cols-3 gap-6">
+          <figure class="reveal bg-card rounded-card p-7 soft-shadow">
+<blockquote class="text-deepteal/80 font-semibold leading-relaxed">"She used to practise for four minutes and give up. Now I have to tell her to stop. I still can't read music — but I can see she's getting better."</blockquote>
+            <figcaption class="mt-4 text-sm font-extrabold text-hint">[Sarah T., parent of a 9-year-old]</figcaption>
+          </figure>
+          <figure class="reveal bg-card rounded-card p-7 soft-shadow" style="border-top:3px solid #26CCC2;">
+<blockquote class="text-deepteal/80 font-semibold leading-relaxed">"I recommend it to my beginner band families. It reinforces exactly what we work on in class, on the days I'm not there."</blockquote>
+            <figcaption class="mt-4 text-sm font-extrabold text-hint">[Ms. R. Alvarez, school band director]</figcaption>
+          </figure>
+          <figure class="reveal bg-card rounded-card p-7 soft-shadow">
+<blockquote class="text-deepteal/80 font-semibold leading-relaxed">"One payment, no login, nothing sent anywhere. As the privacy-paranoid parent, I finally relaxed."</blockquote>
+            <figcaption class="mt-4 text-sm font-extrabold text-hint">[James P., dad of two · part of the beta]</figcaption>
+          </figure>
+        </div>
+
+        <!-- Founder story -->
+        <div class="reveal mt-10 rounded-card p-8 sm:p-10 soft-shadow" style="background:linear-gradient(150deg,#0B3D3A,#12514C);">
+          <div class="flex flex-col sm:flex-row gap-6 items-start">
+            <div class="floaty shrink-0">
+              <svg width="84" height="84" viewBox="0 0 120 120" role="img" aria-label="Piper the mascot">
+                <circle cx="60" cy="60" r="40" fill="#6AECE1" stroke="#FAFAF8" stroke-width="3"/>
+                <circle cx="47" cy="66" r="6" fill="#FFF57E"/><circle cx="73" cy="66" r="6" fill="#FFF57E"/>
+                <circle cx="50" cy="54" r="7" fill="#fff" stroke="#0B3D3A" stroke-width="2.5"/>
+                <circle cx="70" cy="54" r="7" fill="#fff" stroke="#0B3D3A" stroke-width="2.5"/>
+                <circle cx="51" cy="55" r="3" fill="#0B3D3A"/><circle cx="71" cy="55" r="3" fill="#0B3D3A"/>
+                <path d="M50 68 Q60 76 70 68" fill="none" stroke="#0B3D3A" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-extrabold text-white mb-3">A note from the founder</h3>
+              <p class="text-mint/90 font-normal leading-relaxed text-lg">
+                Flute Hero was built by [Jenny C.] — a flute teacher with [over 20 years'] experience [and an ABRSM Grade 8] — and a mum juggling four kids' extracurricular schedules. Improvement is built one small daily habit at a time. It's the patient practice partner I always wished my students had at home: listening carefully, never scolding, and quietly celebrating every bit of progress.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9. PRICING ============ -->
+    <section id="pricing" class="px-5 sm:px-8 py-16 sm:py-20 bg-white">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto reveal">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-deepteal">Simple, honest pricing</h2>
+          <p class="mt-4 text-lg text-deepteal/70 font-semibold">Try the whole first level free. Unlock everything once, and it's yours for good.</p>
+        </div>
+
+        <div class="mt-12 grid md:grid-cols-2 gap-6 items-start">
+          <!-- Free -->
+          <div class="reveal bg-page rounded-card p-8 soft-shadow">
+            <h3 class="text-xl font-extrabold text-deepteal">Free forever</h3>
+            <p class="mt-2 text-4xl font-extrabold text-deepteal">Free <span class="text-lg text-hint font-bold">· Level 1</span></p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> The full "First Breath" level</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> Live pitch detection &amp; tuning meter</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> First songs, streaks and badges</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> Plus a 10-day full-access trial of all 8 levels</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> No account, no card needed</li>
+            </ul>
+            <a href="/app" data-cta="play-level-1" class="btn-secondary mt-8 w-full font-extrabold px-6 py-3.5 rounded-xl inline-flex items-center justify-center min-h-[44px]">Play Level 1 free</a>
+          </div>
+
+          <!-- Paid -->
+          <div class="reveal rounded-card p-8 soft-shadow-lg relative overflow-hidden" style="background:linear-gradient(160deg,#EFFCFA,#FFFFFF);border:2px solid #26CCC2;">
+            <span class="absolute top-5 right-5 text-xs font-extrabold rounded-full px-3 py-1" style="background:#FFF57E;color:#0B3D3A;">Best value</span>
+            <h3 class="text-xl font-extrabold text-deepteal">Unlock everything</h3>
+            <p class="mt-2 text-4xl font-extrabold text-deepteal">$24.99 <span class="text-lg text-hint font-bold">once</span></p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> All 8 levels + Foundations</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> Every song and play-along</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> Full fingering library &amp; trophies</li>
+              <li class="flex gap-3 font-normal text-deepteal/80"><span aria-hidden="true" style="color:#26CCC2;font-weight:800;">✓</span> Every future update included</li>
+            </ul>
+            <a href="/app?intent=unlock" data-cta="unlock-everything" class="btn-primary mt-8 w-full font-extrabold px-6 py-3.5 rounded-xl inline-flex items-center justify-center min-h-[44px]">Unlock everything, forever</a>
+            <p class="mt-3 text-xs text-hint font-normal text-center">Start free — unlock anytime inside the app · [30-day money-back guarantee]</p>
+          </div>
+        </div>
+
+        <div class="reveal mt-8 grid sm:grid-cols-3 gap-4 text-center">
+          <p class="font-extrabold text-deepteal/80 flex items-center justify-center gap-2"><span aria-hidden="true" style="color:#4CAF50;">●</span> No subscription, ever</p>
+          <p class="font-extrabold text-deepteal/80 flex items-center justify-center gap-2"><span aria-hidden="true" style="color:#4CAF50;">●</span> Level 1 free forever</p>
+          <p class="font-extrabold text-deepteal/80 flex items-center justify-center gap-2"><span aria-hidden="true" style="color:#4CAF50;">●</span> [30-day money-back guarantee]</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10. FAQ ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-20">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center reveal">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-deepteal">Questions parents ask</h2>
+        </div>
+
+        <div class="mt-10 space-y-3" id="faq-list">
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              Does my child need their own flute?
+              <span class="chev shrink-0" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Yes — Flute Hero teaches a real acoustic flute. Any standard student flute works. The app listens to the actual instrument; there's no plastic recorder or on-screen keyboard substitute.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              What device and internet do we need?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Any modern iPad, iPhone or Android tablet with a browser and a microphone. You need internet to load it the first time, but the pitch analysis itself runs entirely on the device.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              How much time does it take?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Short, daily practice is the whole idea — about 10 minutes a day is plenty. Once you've set it up the first time, your child can open it and practise on their own; no parent needs to sit in.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              Does it work in a noisy house?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">It listens for the clear, sustained tone of the flute, so it copes well with normal household hum. Loud TV or a sibling right beside the tablet can throw it off — a quiet-ish corner gives the cleanest feedback, just like it would for a teacher in the room.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              Is my child recorded?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">No. The microphone is used only to detect pitch in real time. Audio is never saved, never uploaded and never sent anywhere. Nothing leaves the tablet.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              What if they want to quit?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Level 1 is free forever, so you can see if it clicks before paying anything. If you do unlock everything, it's a one-time price — there's no subscription quietly billing you after they've moved on. And because it's built like a game — streaks, levels and an instant green light when they nail a note — most kids actually want to come back.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              What's the right age?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Flute Hero is designed for children roughly 7–12, sized for small hands on a tablet propped on a music stand. Slightly older beginners enjoy it too.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              Does it replace a teacher?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">It's a brilliant between-lessons practice partner, not a replacement for a great teacher. It makes daily practice count by catching tuning slips a busy parent can't — which teachers love.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              Not another subscription?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Correct — no subscription. Level 1 is free, and unlocking the rest is a single $24.99 payment that includes every future update. That's it.</div></div>
+          </details>
+
+          <details class="faq reveal bg-card rounded-card soft-shadow px-5">
+            <summary class="flex items-center justify-between gap-4 py-5 font-extrabold text-lg text-deepteal min-h-[44px]">
+              What happens when the 10-day trial ends?
+              <span class="chev shrink-0" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#26CCC2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </summary>
+            <div class="faq-body"><div class="pb-5 text-deepteal/75 font-normal leading-relaxed">Nothing bad. No card is taken to start the trial, so nothing is ever charged. The app simply returns to the free Level 1 — your child keeps everything they reached there — and you can unlock the rest whenever you're ready.</div></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 11. FINAL CTA ============ -->
+    <section class="px-5 sm:px-8 py-16 sm:py-24" style="background:linear-gradient(160deg,#EFFCFA,#FAFAF8);">
+      <div class="max-w-3xl mx-auto text-center reveal">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-deepteal leading-tight">Start their first note today</h2>
+        <p class="mt-4 text-lg text-deepteal/75 font-semibold">Level 1 is completely free. Prop up the tablet and let them play — Piper's already listening.</p>
+
+        <div class="mt-8">
+          <a href="/app" data-cta="play-level-1" class="btn-primary font-extrabold text-lg px-8 py-4 rounded-2xl inline-flex items-center justify-center min-h-[44px]">Play Level 1 free</a>
+          <p class="mt-4 text-sm font-bold text-hint">Level 1 free · no account · nothing leaves your device</p>
+        </div>
+
+        <!-- Email capture -->
+        <div class="mt-12 bg-card rounded-card soft-shadow p-6 sm:p-8 text-left">
+          <h3 class="text-xl font-extrabold text-deepteal">Want the parent's guide first?</h3>
+          <p class="mt-1 text-deepteal/70 font-semibold">A short, no-pressure email on how to get the most from daily practice.</p>
+          <form id="email-form" novalidate class="mt-5 flex flex-col sm:flex-row gap-3" aria-describedby="email-status">
+            <div class="flex-1">
+              <label for="email" class="sr-only">Your email address</label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"
+                     class="w-full rounded-xl border-2 border-track bg-page px-4 py-3.5 text-deepteal font-semibold placeholder:text-hint min-h-[44px] focus:border-teal outline-none" />
+            </div>
+            <button type="submit" class="btn-primary font-extrabold px-6 py-3.5 rounded-xl min-h-[44px] whitespace-nowrap">Notify me at launch</button>
+          </form>
+          <p id="email-status" role="status" aria-live="polite" class="mt-3 text-sm font-extrabold min-h-[1.25rem]"></p>
+          <p class="mt-2 text-xs text-hint font-normal">No spam. One email, then it's up to you.</p>
+          <!-- LAUNCH TODO: wire this form to a real email service (e.g. Formspree/Buttondown). It currently shows a success state without sending. -->
+          <!-- LAUNCH TODO: create /privacy, /terms and /refunds pages (linked in the footer) and confirm the money-back guarantee terms. -->
+          <!-- LAUNCH TODO: replace bracketed [placeholders] (founder name/credentials, testimonials, beta count) with real, permission-granted content before going live. -->
+          <!-- LAUNCH TODO: build Tailwind at compile time instead of the Play CDN to avoid a flash of unstyled content on first paint. -->
+          <!-- LAUNCH TODO (optional): add a real photo/screenshot of a child at a music stand and the in-app UI to raise trust and premium feel. -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ 12. FOOTER ============ -->
+  <footer class="px-5 sm:px-8 py-12" style="background:#0B3D3A;padding-bottom:max(3rem,env(safe-area-inset-bottom));">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <p class="font-extrabold text-white text-lg mb-1">Flute Hero</p>
+        <p class="text-mint/80 font-semibold text-sm max-w-md">Always listening, always improving — and always private. No accounts, no tracking, nothing recorded. Everything stays on your child's device.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm font-bold">
+        <a href="#pricing" class="text-mint hover:text-white">Pricing</a>
+        <a href="#how" class="text-mint hover:text-white">How it works</a>
+        <a href="mailto:[hello@flutehero.app]?subject=Teacher%20partnership" class="text-mint hover:text-white">For teachers: partnership</a>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto mt-8 pt-6 border-t flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm text-mint/60 font-semibold" style="border-color:rgba(106,236,225,0.2);">
+      <p>© <span id="year">2026</span> Flute Hero. Made with care for small musicians.</p>
+      <nav class="flex gap-5" aria-label="Legal">
+        <a href="/privacy.html" class="hover:text-white">Privacy</a>
+        <a href="/terms.html" class="hover:text-white">Terms</a>
+        <a href="/refunds.html" class="hover:text-white">Refunds</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Year
+      var y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+
+      // Sticky nav shadow
+      var nav = document.getElementById('site-nav');
+      function onScroll() {
+        if (window.scrollY > 12) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Scroll reveal
+      var reveals = document.querySelectorAll('.reveal');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('is-visible'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+
+      // Email form — no backend
+      var form = document.getElementById('email-form');
+      var input = document.getElementById('email');
+      var status = document.getElementById('email-status');
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (form) {
+        form.addEventListener('submit', function (ev) {
+          ev.preventDefault();
+          var val = (input.value || '').trim();
+          if (!emailRe.test(val)) {
+            status.textContent = 'Please enter a valid email address.';
+            status.style.color = '#F5A623';
+            input.setAttribute('aria-invalid', 'true');
+            input.focus();
+            return;
+          }
+          input.removeAttribute('aria-invalid');
+          // NOTE: no backend yet — do NOT claim delivery. Honest interim message until a real form service is wired.
+          status.textContent = 'Sign-up opens at launch — for now, tap “Play Level 1 free” above to start right now.';
+          status.style.color = '#0B3D3A';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
