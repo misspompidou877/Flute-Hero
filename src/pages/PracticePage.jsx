@@ -11,10 +11,12 @@ import BadgeToast from '../components/BadgeToast'
 import FluteCharacter from '../components/FluteCharacter'
 import PaywallCard from '../components/paywall/PaywallCard'
 
-// Two stacked staff lines of 4 bars each = 8 bars per page (the "reads like real
-// sheet music" layout the redesign asks for).
-const MEASURES_PER_PAGE = 8
-const MEASURES_PER_ROW = 4
+// 2 bars per page so each bar is large and easy to read for young beginners.
+// The page auto-advances as you play (see the "Sync page to current note"
+// effect), so following along still flows. SongScore treats MEASURES_PER_ROW as
+// a maximum and lays the 2 bars out to best fill the available space.
+const MEASURES_PER_PAGE = 2
+const MEASURES_PER_ROW = 2
 // Tablet-width screens (iPad portrait ~744–820px) render the practice layout in
 // portrait per the CLAUDE.md "portrait + landscape on iPad" rule; only narrower
 // phones in portrait get the rotate prompt. (The redesign prompt's own worked
