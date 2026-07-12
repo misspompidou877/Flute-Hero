@@ -62,8 +62,26 @@ function renderScore(el, notes, currentNoteIndex, beatsPerMeasure, timeSignature
   let noteOffset = 0
   for (let i = 0; i < startMeasure; i++) noteOffset += allMeasures[i].length
 
-  const perRow = measuresPerRow || DEFAULT_MEASURES_PER_ROW
+  // Adaptive columns. `measuresPerRow` is treated as a MAXIMUM; we pick the
+  // fewest measures-per-row (⇒ the widest, most readable staves, and the most
+  // vertical space used) whose rows still fit the container height at 1:1.
+  // Without this, a short song like Hot Cross Buns renders as one thin wide
+  // strip that the SVG's preserveAspectRatio scaling then shrinks into the
+  // middle — squashing the notes and leaving big empty margins left and right.
+  const perRowMax = measuresPerRow || DEFAULT_MEASURES_PER_ROW
   const totalWidth = Math.max(el.clientWidth || MIN_WIDTH, MIN_WIDTH)
+  const containerHeight = el.clientHeight || 0
+  const perRowFloor = Math.min(2, measures.length)
+
+  let perRow = perRowMax
+  if (containerHeight > 0) {
+    for (let p = perRowFloor; p <= perRowMax; p++) {
+      const rowsNeeded = Math.ceil(measures.length / p)
+      if (rowsNeeded * ROW_HEIGHT + 40 <= containerHeight) { perRow = p; break }
+    }
+  }
+  perRow = Math.max(1, Math.min(perRow, measures.length))
+
   const staveWidth = Math.floor((totalWidth - STAVE_X * 2) / perRow)
 
   const rows = []
