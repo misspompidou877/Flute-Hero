@@ -1,10 +1,10 @@
 // ─── Freemium config + copy ───────────────────────────────────────────────
-// The free tier is all of Level 1 (B·A·G). A 10-day free full-access trial
-// (src/utils/trial.js) also grants every level while it's active. After the
-// trial, Level 1 stays free forever and Levels 2–8 need a one-time unlock
-// via the math-gated parent zone. Entitlement is a single client-side flag
-// (progress.isPremium) — no backend, no accounts. See ProgressContext.jsx
-// for how this maps to currentLevel.
+// Access is content-limited, not time-limited (there is no trial). The two
+// songs flagged `free: true` at every level unlock once a grown-up adds an
+// email (entitlement.emailUnlocked; see src/utils/entitlements.js). A one-time
+// purchase (progress.isPremium) unlocks every song. For notes/games/fingering,
+// non-premium users sit at the Level 1 free baseline (FREE_MAX_LEVEL below).
+// No backend, no accounts.
 //
 // Kids never see a price (flute-hero-redesign-brief.md §3). Every string in
 // PAYWALL below is kid-facing and must stay price-free — all purchase
@@ -42,6 +42,27 @@ export const PAYWALL = {
   // success state after a grown-up unlocks everything
   unlockedHeadline: 'You’re all unlocked! 🎉',
   unlockedSubhead: 'Every level and song is now open. Have fun!',
+}
+
+// ─── Email-gated free-song tier ───────────────────────────────────────────
+// There is no time-based trial (that was unenforceable client-side). Instead
+// the two songs flagged `free: true` at EVERY level unlock once a grown-up
+// adds an email (entitlement.emailUnlocked; see src/utils/entitlements.js).
+// A brand-new guest can still play the onboarding "taste" song first. Copy
+// below is kid-facing → warm, no prices.
+export const FREE_SONGS_PER_LEVEL = 2
+
+export const EMAIL_GATE = {
+  eyebrow: 'Unlock your free songs',
+  headline: '2 free songs at every level',
+  subhead: 'Ask a grown-up to add their email — it opens a free song to play at every level.',
+  placeholder: 'Grown-up’s email',
+  button: 'Unlock free songs',
+  maybeLater: 'Maybe later',
+  invalid: 'Please check that email and try again.',
+  // Small chip + button shown on a locked free song (needs email)
+  lockedTag: 'Free',
+  lockedCta: 'Unlock',
 }
 
 // ─── Parent-facing pricing (math-gated parent zone ONLY) ──────────────────

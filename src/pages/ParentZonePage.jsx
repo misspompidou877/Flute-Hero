@@ -8,7 +8,6 @@ import {
   PARENT_PRICE_LABEL,
   PREMIUM_BENEFITS,
 } from '../data/freemium'
-import { getTrialDay } from '../utils/trial'
 import MathGate from '../components/parent/MathGate'
 
 /*
@@ -141,8 +140,8 @@ export default function ParentZonePage() {
   // ── Real, non-fabricated stats ──
   const firstName = readFirstName()
   const childRef = firstName || 'your child'
-  const daysPractised = practiceDays.length > 0 ? practiceDays.length : getTrialDay()
-  const daysLabel = practiceDays.length > 0 ? 'Days practised' : 'Days since starting'
+  const daysPractised = practiceDays.length
+  const daysLabel = 'Days practised'
   const completedSongs = safeGetJSON('progress.completedSongs', [])
   const songsLearned = Array.isArray(completedSongs) ? completedSongs.length : 0
   const skillsSentence = masteredNotes.length
@@ -321,8 +320,8 @@ export default function ParentZonePage() {
             fontSize: 13, fontWeight: 500, color: HINT, marginTop: 14,
             padding: '12px', borderRadius: 12, background: TRACK, lineHeight: 1.6,
           }}>
-            Free 10-day trial, then Level 1 stays free forever. One payment unlocks
-            Levels 2–8 for good. No subscription, no auto-renew.
+            Two free songs at every level — just add your email. One payment
+            unlocks every song for good. No subscription, no auto-renew.
           </p>
 
           <button

@@ -1,8 +1,9 @@
 /*
- * Step 10 — Optional save prompt: "So Piper remembers you!" Email is OPTIONAL
- * and stored ONLY on-device (localStorage `profile.saveEmail`) — no backend, no
- * send (CLAUDE.md). Guest mode is fully supported: "Maybe later" continues with
- * everything unlocked. No prices, no purchase language anywhere.
+ * Step 10 — Unlock the free songs. A grown-up's email opens the 2 free songs
+ * at every level (entitlement.emailUnlocked). Email is OPTIONAL and stored
+ * ONLY on-device (localStorage `profile.saveEmail`) — no backend, no send
+ * (CLAUDE.md). Soft gate: "Maybe later" still finishes onboarding and hands
+ * off into the first "taste" song. No prices, no purchase language anywhere.
  *
  * Fires `save_prompt_shown` on view and `save_accepted` when an email is saved.
  * Either path calls onDone() to finish onboarding.
@@ -32,13 +33,13 @@ export default function SaveStep({ onDone }) {
 
   return (
     <div style={{ animation: 'fh-rise 500ms ease both', width: '100%' }}>
-      <div style={{ fontSize: 52 }} aria-hidden="true">💾</div>
+      <div style={{ fontSize: 52 }} aria-hidden="true">🔓</div>
       <h2 style={{ fontSize: 26, fontWeight: 800, color: '#0B3D3A', marginTop: 8 }}>
-        So Piper remembers you!
+        Unlock your free songs!
       </h2>
       <p style={{ fontSize: 16, fontWeight: 600, color: '#0B3D3A', marginTop: 10, lineHeight: 1.5 }}>
-        A grown-up can add an email so your progress stays safe. It's optional — we
-        keep it right here on your device.
+        Ask a grown-up to add an email and you get a free song to play at every
+        level! It's optional — we keep it right here on your device.
       </p>
 
       <input
@@ -69,7 +70,7 @@ export default function SaveStep({ onDone }) {
 
       <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 12 }}>
         <PrimaryButton onClick={save} disabled={!looksLikeEmail(email)}>
-          Save & play!
+          Unlock free songs!
         </PrimaryButton>
         <SecondaryButton onClick={() => onDone()}>
           Maybe later — let's play!
