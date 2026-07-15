@@ -217,7 +217,9 @@ export default function PracticePage() {
     setCurrentPage(Math.floor(measure / MEASURES_PER_PAGE))
   }, [currentNoteIndex, noteToMeasure])
 
-  // Note advancement (500ms in-tune hold within 70 cents)
+  // Note advancement (350ms in-tune hold within 70 cents). 500ms felt sluggish
+  // on iPhone/iPad — with the mic hook's ~120ms sustain gate in front of this,
+  // 350ms still filters transients but registers close to half a second sooner.
   useEffect(() => {
     if (!song || currentNoteIndex >= (song.notes?.length ?? 0)) return
     if (!frequency) {
@@ -235,7 +237,7 @@ export default function PracticePage() {
     if (inTune) {
       if (inTuneStartRef.current === null) {
         inTuneStartRef.current = Date.now()
-      } else if (Date.now() - inTuneStartRef.current >= 500) {
+      } else if (Date.now() - inTuneStartRef.current >= 350) {
         inTuneStartRef.current = null
         setMasteryDots(0)
         masteryRef.current = 0
@@ -516,7 +518,9 @@ export default function PracticePage() {
         style={{
           flex: 1, display: 'grid', gap: 10, minHeight: 0,
           ...(compact
-            ? { gridTemplateColumns: 'minmax(0, 1.6fr) minmax(0, 1fr)', gridTemplateRows: 'minmax(0, 1fr)' }
+            // 1.4fr (was 1.6fr) gives the fingering rail more width on
+            // landscape phones — the diagram was too small to read on iPhone.
+            ? { gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)', gridTemplateRows: 'minmax(0, 1fr)' }
             : { gridTemplateRows: 'minmax(0, 1fr) auto' }),
           padding: '0 calc(14px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left))',
         }}
@@ -611,7 +615,9 @@ export default function PracticePage() {
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 0, overflow: 'auto' }}>
               {expectedNoteId ? (
-                <FingeringDiagramForNote noteId={expectedNoteId} compact />
+                // zoom on landscape phones: crops the diagram viewBox to just
+                // the finger holes so they render large enough to read.
+                <FingeringDiagramForNote noteId={expectedNoteId} compact zoom={compact} />
               ) : (
                 <p style={{ fontSize: 12, color: '#D3D1C7', fontWeight: 600 }}>No note</p>
               )}

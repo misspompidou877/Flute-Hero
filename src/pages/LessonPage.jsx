@@ -156,7 +156,7 @@ export default function LessonPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { progress, markNoteMastered } = useProgress()
-  const { note, cents, isActive, startListening, stopListening, earnedBadge, clearEarnedBadge } = useMicrophone()
+  const { note, frequency, cents, isActive, startListening, stopListening, earnedBadge, clearEarnedBadge } = useMicrophone()
 
   const noteParam = searchParams.get('note')
   const currentNoteId = (noteParam && NOTES[noteParam])
@@ -182,21 +182,30 @@ export default function LessonPage() {
     consecutiveRef.current = 0
   }, [currentNoteId])
 
-  // Mastery tracking: 3 × 500ms in-tune holds
+  // Mastery tracking: 3 × 350ms in-tune holds ON THE LESSON NOTE.
+  //
+  // Measured against the lesson note's own frequency, not the hook's `cents`
+  // (which is the offset from whatever semitone is NEAREST — under the old
+  // check, any in-tune note counted toward mastering this one). Octaves are
+  // folded so an overblown G5 still counts for the G4 lesson. Keyed on the
+  // unrounded `frequency` so a steadily-held note keeps re-firing this effect
+  // and the hold timer is actually re-checked (rounded values froze it).
   useEffect(() => {
-    if (!isActive) {
+    if (!isActive || frequency === null) {
       inTuneStartRef.current = null
       return
     }
-    if (cents === null) {
-      inTuneStartRef.current = null
-      return
-    }
+    const targetFreq = NOTES[currentNoteId]?.freq
+    if (!targetFreq) return
 
-    if (Math.abs(cents) <= 20) {
+    const rawCents = 1200 * Math.log2(frequency / targetFreq)
+    const mod = ((rawCents % 1200) + 1200) % 1200
+    const centsFromTarget = mod > 600 ? mod - 1200 : mod
+
+    if (Math.abs(centsFromTarget) <= 20) {
       if (inTuneStartRef.current === null) {
         inTuneStartRef.current = Date.now()
-      } else if (Date.now() - inTuneStartRef.current >= 500) {
+      } else if (Date.now() - inTuneStartRef.current >= 350) {
         inTuneStartRef.current = null
         consecutiveRef.current = Math.min(consecutiveRef.current + 1, 3)
         setMasteryDots(consecutiveRef.current)
@@ -212,7 +221,7 @@ export default function LessonPage() {
       }
       inTuneStartRef.current = null
     }
-  }, [cents, isActive, currentNoteId, markNoteMastered])
+  }, [frequency, isActive, currentNoteId, markNoteMastered])
 
   function handleHearNote() {
     if (noteData?.freq) {

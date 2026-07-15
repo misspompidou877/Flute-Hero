@@ -77,7 +77,7 @@ function playReferenceTone(audioRef, frequency) {
   oscillator.stop(now + 0.95)
 }
 
-function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostKeys = false, compact = false }) {
+function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostKeys = false, compact = false, zoom = false }) {
   const audioRef = useRef(null)
   const freq = NOTES[noteName]?.freq
   const displayName = NOTES[noteName]?.label ?? noteName
@@ -92,11 +92,18 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
   // practice view. In compact mode it scales to fit its container (preserving
   // aspect via the default xMidYMid meet) so the whole chart is always visible
   // on short landscape phones.
+  //
+  // zoom (landscape-phone practice rail): crop the viewBox to just the finger
+  // holes (incl. the G# pinky key above LH3 and both thumb keys) so they render
+  // ~70% larger in the same space. The full diagram wastes most of its width on
+  // the head joint and hand labels, which made the holes unreadable on iPhone.
+  // Bounds cover x 281–700 / y 64–175 of hole geometry, with a small margin
+  // chosen to also crop out the label text above and below.
   const diagramSvg = (
     <svg
       className={compact ? undefined : 'h-auto w-full'}
       style={compact ? { width: '100%', height: '100%', display: 'block' } : undefined}
-      viewBox={showGhostKeys ? '0 0 800 210' : '0 0 740 210'}
+      viewBox={zoom ? '272 60 440 116' : showGhostKeys ? '0 0 800 210' : '0 0 740 210'}
       role="img"
       aria-label={`${noteName} flute fingering`}
     >
@@ -250,7 +257,7 @@ function FingeringDiagram({ noteName, tip, closedHoles, variantLabel, showGhostK
   )
 }
 
-export function FingeringDiagramForNote({ noteId, compact = false }) {
+export function FingeringDiagramForNote({ noteId, compact = false, zoom = false }) {
   const noteData = NOTES[noteId]
   if (!noteData) return null
   return (
@@ -261,6 +268,7 @@ export function FingeringDiagramForNote({ noteId, compact = false }) {
       variantLabel={noteData.variantLabel}
       showGhostKeys={true}
       compact={compact}
+      zoom={zoom}
     />
   )
 }

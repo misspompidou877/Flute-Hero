@@ -9,8 +9,10 @@ const FIRST_NOTE_SET = new Set(['B4', 'A4', 'G4'])
 // never stay on one semitone long enough to qualify.
 const SUSTAIN_MS = 120
 // Volume floor (RMS of the time-domain buffer). Below this we treat the frame
-// as silence so faint background noise can't trip the detector.
-const RMS_GATE = 0.012
+// as silence so faint background noise can't trip the detector. 0.012 was too
+// strict on iPhone/iPad mics: low notes like G4 (all left-hand fingers down)
+// come out quieter and breathier than B4/A4 and were gated out entirely.
+const RMS_GATE = 0.008
 
 export function useMicrophone() {
   const [isActive, setIsActive] = useState(false)
@@ -87,9 +89,11 @@ export function useMicrophone() {
             audio.context.sampleRate
           )
 
-        // 0.7 clarity gate: a beginner child's tone is breathy and rarely hits
-        // the 0.9+ clarity of a pure sine, so 0.8 rejected too many real notes.
-        if (rms >= RMS_GATE && clarity > 0.7 && pitch > 60 && pitch < 1500) {
+        // 0.6 clarity gate: a beginner child's tone is breathy and rarely hits
+        // the 0.9+ clarity of a pure sine. 0.7 still rejected the lowest notes
+        // (G4 and below) whose flute timbre is harmonic-rich and scores lower
+        // clarity than B4/A4 — the sustain gate below handles false positives.
+        if (rms >= RMS_GATE && clarity > 0.6 && pitch > 60 && pitch < 1500) {
           const noteNames = [
             'C','C#','D','D#','E','F',
             'F#','G','G#','A','A#','B'
@@ -116,7 +120,14 @@ export function useMicrophone() {
 
           if (now - candidateSince >= SUSTAIN_MS) {
             setNote(detectedNote)
-            setFrequency(Math.round(pitch))
+            // Deliberately NOT rounded: pages time their "held in tune" checks
+            // in effects keyed on this value. A steadily-held note rounds to
+            // the same integer every frame, so the state never changed, the
+            // effect never re-ran, and the hold timer was never re-checked —
+            // notes took far too long to register. The raw float wobbles
+            // every frame, so dependent effects re-fire continuously. Round
+            // at the display site if it's ever shown.
+            setFrequency(pitch)
             setCents(centsOff)
 
             if (FIRST_NOTE_SET.has(detectedNote)) {
