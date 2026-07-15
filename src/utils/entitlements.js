@@ -26,6 +26,18 @@ const EMAIL_UNLOCK_KEY = 'entitlement.emailUnlocked';
  */
 export const GUEST_SAMPLE_SONG_ID = 'hot-cross-buns';
 
+/**
+ * Reserved demo address: entering it in any email prompt (onboarding SaveStep
+ * or /unlock-free) grants full premium instead of just the free-song tier.
+ * For demoing the complete app on the deployed site — not advertised anywhere.
+ */
+export const DEMO_UNLOCK_EMAIL = 'demo@trill.app';
+
+/** Case-insensitive check for the reserved demo address. */
+export function isDemoEmail(email) {
+  return String(email ?? '').trim().toLowerCase() === DEMO_UNLOCK_EMAIL;
+}
+
 /** True once a grown-up has added an email, unlocking the free-song tier. */
 export function isEmailUnlocked() {
   try {

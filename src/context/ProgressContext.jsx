@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { STORAGE_KEY, defaultProgress } from './progressDefaults'
 import { FREE_MAX_LEVEL } from '../data/freemium'
-import { isEmailUnlocked, markEmailUnlocked } from '../utils/entitlements'
+import { isEmailUnlocked, markEmailUnlocked, isDemoEmail } from '../utils/entitlements'
 
 const ProgressContext = createContext(null)
 
@@ -95,6 +95,10 @@ export function ProgressProvider({ children }) {
         }
         markEmailUnlocked()
         setEmailUnlockedState(true)
+        // Reserved demo address grants full premium (see entitlements.js).
+        if (isDemoEmail(email)) {
+          setProgress(prev => (prev.isPremium ? prev : save({ ...prev, isPremium: true })))
+        }
       },
     }
   }, [progress, emailUnlocked])
