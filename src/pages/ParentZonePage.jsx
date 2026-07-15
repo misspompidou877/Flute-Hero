@@ -110,7 +110,7 @@ function CardTitle({ children }) {
 
 export default function ParentZonePage() {
   const navigate = useNavigate()
-  const { progress, unlockPremium } = useProgress()
+  const { progress } = useProgress()
   const { isPremium, masteredNotes } = progress
   const { practiceDays } = useStreak()
 

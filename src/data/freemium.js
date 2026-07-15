@@ -69,3 +69,8 @@ export const EMAIL_GATE = {
 // Never import these into a kid-facing screen or component.
 export const PARENT_PRICE = '$24.99'
 export const PARENT_PRICE_LABEL = 'One-time purchase — yours forever, no subscription'
+
+// Shown on /unlock while real checkout (Lemon Squeezy) is not wired up yet.
+// The old placeholder button granted premium for free — now closed off.
+export const CHECKOUT_CLOSED_NOTICE =
+  'Checkout isn’t open just yet — we’re putting the finishing touches on payments. Check back soon!'

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../context/ProgressContext'
 import {
@@ -5,6 +6,7 @@ import {
   PARENT_PRICE,
   PARENT_PRICE_LABEL,
   PAYWALL,
+  CHECKOUT_CLOSED_NOTICE,
 } from '../data/freemium'
 
 /*
@@ -14,8 +16,10 @@ import {
  * Parent Zone). Palette is v2.0 TEAL — text on bright fills is Deep Teal,
  * never white.
  *
- * The purchase step is still a placeholder: the button flips the client-side
- * `isPremium` flag via unlockPremium(). No backend, no accounts.
+ * Checkout is NOT wired up yet (Lemon Squeezy — see LAUNCH_CHECKLIST §1).
+ * The old placeholder button flipped `isPremium` for free; it is now closed
+ * off and shows a "checkout coming soon" notice instead. The only unlock
+ * paths today are the reserved demo email (see src/utils/entitlements.js).
  */
 
 const DEEP_TEAL = '#0B3D3A'
@@ -25,12 +29,14 @@ const MUTED = '#999999'
 
 export default function UnlockPage() {
   const navigate = useNavigate()
-  const { progress: { isPremium }, unlockPremium } = useProgress()
+  const { progress: { isPremium } } = useProgress()
+  const [notice, setNotice] = useState(false)
 
   function handleUnlock() {
-    // TODO: real Lemon Squeezy checkout — see LAUNCH_CHECKLIST.
-    // For now this flips the client-side entitlement flag only.
-    unlockPremium()
+    // TODO: real Lemon Squeezy checkout — see LAUNCH_CHECKLIST §1.
+    // Deliberately does NOT grant premium: the old placeholder unlocked the
+    // whole app for free. Until checkout is live, just show a notice.
+    setNotice(true)
   }
 
   // Already premium (or just unlocked): confirmation state.
@@ -134,6 +140,18 @@ export default function UnlockPage() {
       >
         Unlock all levels — {PARENT_PRICE}
       </button>
+
+      {notice && (
+        <p
+          role="alert"
+          style={{
+            fontSize: 13, fontWeight: 700, color: '#F5A623', marginTop: 12,
+            maxWidth: 340, textAlign: 'center', lineHeight: 1.5,
+          }}
+        >
+          {CHECKOUT_CLOSED_NOTICE}
+        </p>
+      )}
 
       <p style={{ fontSize: 12, fontWeight: 600, color: MUTED, marginTop: 10 }}>
         {PARENT_PRICE_LABEL}
